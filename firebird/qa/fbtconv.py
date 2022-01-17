@@ -61,7 +61,7 @@ CHARACTER_SETS    = [None, 'NONE','ASCII','BIG_5','CYRL','DOS437','DOS737','DOS7
                     'WIN1258','LATIN2']
 PAGE_SIZES        = [None,'1024','2048','4096','8192','16384','32768']
 TYPE_ISQL         = 'ISQL'
-TYPE_PYTHON       = 'Python'
+TYPE_PYTHON       = 'PYTHON'
 TEST_TYPES        = [TYPE_ISQL, TYPE_PYTHON]
 PLATFORMS         = ['Windows','Linux','MacOS','FreeBSD','Solaris','HP-UX']
 UNKNOWN           = 'Unknown'
@@ -88,7 +88,7 @@ class TestVersion:
         self.id: str = id
         self.platform: str = platform
         self.firebird_version: Version = parse(firebird_version)
-        self.test_type: str = test_type
+        self.test_type: str = test_type.upper()
         self.test_script: str = clean_last(test_script)
         self.database: str = database
         self.expected_stdout: str = clean_last('' if expected_stdout.strip() == '' else expected_stdout)
