@@ -115,6 +115,7 @@ def set_tool(tool: str):
                     path = path.with_suffix('.exe')
                     if not path.is_file():
                         pytest.exit(f"Can't find '{tool}' in {_vars_['bin-dir']}")
+                _vars_[rdb_tool] = path
     _vars_[tool] = path
 
 def pytest_configure(config):
