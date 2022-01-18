@@ -107,7 +107,14 @@ def set_tool(tool: str):
     if not path.is_file():
         path = path.with_suffix('.exe')
         if not path.is_file():
-            pytest.exit(f"Can't find '{tool}' in {_vars_['bin-dir']}")
+            # If server is Red Database, try using rdb prefix to find tool
+            if _vars_['is_rdb']:
+                rdb_tool = tool.replace('fb', 'rdb')
+                path: Path = _vars_['bin-dir'] / rdb_tool
+                if not path.is_file():
+                    path = path.with_suffix('.exe')
+                    if not path.is_file():
+                        pytest.exit(f"Can't find '{tool}' in {_vars_['bin-dir']}")
     _vars_[tool] = path
 
 def pytest_configure(config):
@@ -184,12 +191,7 @@ def pytest_configure(config):
         srv_version = srv.info.get_info(SrvInfoCode.SERVER_VERSION)
         _vars_['is_rdb'] = any(srv_version.find(check) > -1 for check in ['RedDatabase', 'Red Database'])
     # tools
-    tools = ['isql', 'gbak', 'nbackup', 'gstat', 'gfix', 'gsec']
-    if _vars_['is_rdb']:
-        tools.append('rdbsvcmgr')
-    else:
-        tools.append('fbsvcmgr')
-    for tool in tools:
+    for tool in ['isql', 'gbak', 'nbackup', 'gstat', 'gfix', 'gsec', 'fbsvcmgr']:
         set_tool(tool)
     # Driver encoding for NONE charset
     CHARSET_MAP['NONE'] = 'utf-8'
