@@ -167,6 +167,7 @@ def pytest_configure(config):
     # THIS should load the driver API, do not connect db or server earlier!
     with connect_server(_vars_['server'], user='SYSDBA',
                         password=_vars_['password']) as srv:
+        from firebird.driver import SrvInfoCode
         _vars_['version'] = parse(srv.info.version.replace('-dev', ''))
         _vars_['home-dir'] = Path(srv.info.home_directory)
         if bindir := config.getoption('bin_dir'):
@@ -180,8 +181,15 @@ def pytest_configure(config):
         _vars_['bin-dir'] = Path(bindir) if bindir else _vars_['home-dir']
         _vars_['security-db'] = Path(srv.info.security_database)
         _vars_['arch'] = srv.info.architecture
+        srv_version = srv.info.get_info(SrvInfoCode.SERVER_VERSION)
+        _vars_['is_rdb'] = any(srv_version.find(check) > -1 for check in ['RedDatabase', 'Red Database'])
     # tools
-    for tool in ['isql', 'gbak', 'nbackup', 'gstat', 'gfix', 'gsec', 'fbsvcmgr']:
+    tools = ['isql', 'gbak', 'nbackup', 'gstat', 'gfix', 'gsec']
+    if _vars_['is_rdb']:
+        tools.append('rdbsvcmgr')
+    else:
+        tools.append('fbsvcmgr')
+    for tool in tools:
         set_tool(tool)
     # Driver encoding for NONE charset
     CHARSET_MAP['NONE'] = 'utf-8'
