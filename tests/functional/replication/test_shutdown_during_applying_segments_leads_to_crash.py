@@ -68,11 +68,29 @@ NOTES:
         Success
     
     4. ### ACHTUNG ###
-       On linux test atually "silently" FAILS, without showing any error (but FB process is terminated!).
-       Will be investigated later.
+        On linux test actually "silently" FAILS, without showing any error (but FB process is terminated!).
+        Will be investigated later.
+
+    [06.10.022] pzotov
+        FB crashed on CentOS-7. Sent report to dimitr et al.
+
+        Changed code: attempt to make actions in the 'finally' section more robust.
+        If test fails at some intermediate point then we must not assume
+        that all of its databases (master or replica) are closed.
+
+        Rather, some of them can be opened by engine, so we must change
+        their state to FULL SHUTDOWN before re-creation.
+
+        This means that we must delete DB file by call OS utilities rather
+        than use drop database ("act.db.drop()") - because database now is
+        unavaliable (and reverting to online can be NOT desirable).
+
+        This is only first attempt.
+        Sooner of all, it will be changed many times further.
 
     Checked on 5.0.0.691, 4.0.1.2692 - both CS and SS. Both on Windows and Linux.
 """
+import locale
 import os
 import shutil
 import re
@@ -254,13 +272,19 @@ def wait_for_data_in_replica( act_db_main: Action, max_allowed_time_for_wait, pr
 @pytest.mark.version('>=4.0.1')
 def test_1(act_db_main: Action,  act_db_repl: Action, capsys):
 
-    #assert '' == capsys.readouterr().out
-
+    db_files_map = {}
     ###################
     somewhat_failed = 1
     ###################
     try:
 
+        for a in (act_db_main,act_db_repl):
+            with a.db.connect(no_db_triggers = True) as con:
+                # Put into map ACTUAL FILE NAME od database, NOT alias!
+                db_files_map[ a ] = con.info.name
+
+        #assert '' == capsys.readouterr().out
+        
         N_ROWS = 30000
         FLD_WIDTH = 700
 
@@ -430,8 +454,13 @@ def test_1(act_db_main: Action,  act_db_repl: Action, capsys):
             # If any previous assert failed, we have to RECREATE both master and slave databases.
             # Otherwise further execution of this test or other replication-related tests most likely will fail.
             for a in (act_db_main,act_db_repl):
-                d = a.db.db_path
-                a.db.drop()
+                d = a.db.db_path # this is ALIAS, not filename
+                a.gfix(switches=['-shut', 'full', '-force', '0', a.db.dsn], io_enc = locale.getpreferredencoding(), combine_output = True)
+
+                # get database FILE name, NOT alias:
+                actual_db_file = db_files_map[ a ] 
+                Path(actual_db_file).unlink()
+                
                 dbx = create_database(str(d), user = a.db.user)
                 dbx.close()
                 with a.connect_server() as srv:
