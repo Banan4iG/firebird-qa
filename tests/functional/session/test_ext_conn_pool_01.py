@@ -73,6 +73,7 @@ ADD_DELAY_FOR_RARE = 2
 #
 ITER_LOOP_CNT = 3
 
+@pytest.mark.skip("FIXME: hanging on CI")
 @pytest.mark.version('>=4.0')
 def test_1(act: Action, tmp_user_freq: User, tmp_user_rare: User, tmp_cleaner_role: Role, capsys):
 
