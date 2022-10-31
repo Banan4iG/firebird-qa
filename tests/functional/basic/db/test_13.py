@@ -44,6 +44,8 @@ test_script = """
 
 act = isql_act('db', test_script, substitutions=[('GEN_DESCR_BLOB_ID.*', '')])
 
+# version: 3.0
+
 expected_stdout = """
     RDB$FIELD_NAME                  RDB$DESCRIPTION
     RDB$FIELD_NAME                  RDB$GENERATOR_ID
@@ -156,8 +158,135 @@ expected_stdout = """
     Records affected: 11
 """
 
-@pytest.mark.version('>=3.0')
+@pytest.mark.version('>=3.0,<4.0')
 def test_1(act: Action):
     act.expected_stdout = expected_stdout
+    act.execute()
+    assert act.clean_stdout == act.clean_expected_stdout
+
+# version: 4.0
+
+expected_stdout_2 = """
+    RDB$FIELD_NAME                  RDB$DESCRIPTION                                                                              
+    RDB$FIELD_NAME                  RDB$GENERATOR_ID
+    RDB$FIELD_NAME                  RDB$GENERATOR_INCREMENT
+    RDB$FIELD_NAME                  RDB$GENERATOR_NAME
+    RDB$FIELD_NAME                  RDB$INITIAL_VALUE
+    RDB$FIELD_NAME                  RDB$OWNER_NAME
+    RDB$FIELD_NAME                  RDB$SECURITY_CLASS
+    RDB$FIELD_NAME                  RDB$SYSTEM_FLAG
+
+    Records affected: 8
+    
+    RDB$GENERATOR_ID                1
+    RDB$GENERATOR_NAME              RDB$SECURITY_CLASS                                                                           
+    RDB$SYSTEM_FLAG                 1
+    RDB$INITIAL_VALUE               0
+    RDB$GENERATOR_INCREMENT         0
+    RDB$OWNER_NAME                  SYSDBA                                                                                       
+    GEN_DESCR_BLOB_ID               <null>
+    
+    RDB$GENERATOR_ID                2
+    RDB$GENERATOR_NAME              SQL$DEFAULT                                                                                  
+    RDB$SYSTEM_FLAG                 1
+    RDB$INITIAL_VALUE               0
+    RDB$GENERATOR_INCREMENT         0
+    RDB$OWNER_NAME                  SYSDBA                                                                                       
+    GEN_DESCR_BLOB_ID               <null>
+    
+    RDB$GENERATOR_ID                3
+    RDB$GENERATOR_NAME              RDB$PROCEDURES                                                                               
+    RDB$SYSTEM_FLAG                 1
+    RDB$INITIAL_VALUE               0
+    RDB$GENERATOR_INCREMENT         0
+    RDB$OWNER_NAME                  SYSDBA                                                                                       
+    GEN_DESCR_BLOB_ID               14:1e0
+    Procedure ID
+    
+    RDB$GENERATOR_ID                4
+    RDB$GENERATOR_NAME              RDB$EXCEPTIONS                                                                               
+    RDB$SYSTEM_FLAG                 1
+    RDB$INITIAL_VALUE               0
+    RDB$GENERATOR_INCREMENT         0
+    RDB$OWNER_NAME                  SYSDBA                                                                                       
+    GEN_DESCR_BLOB_ID               14:1e1
+    Exception ID
+    
+    RDB$GENERATOR_ID                5
+    RDB$GENERATOR_NAME              RDB$CONSTRAINT_NAME                                                                          
+    RDB$SYSTEM_FLAG                 1
+    RDB$INITIAL_VALUE               0
+    RDB$GENERATOR_INCREMENT         0
+    RDB$OWNER_NAME                  SYSDBA                                                                                       
+    GEN_DESCR_BLOB_ID               14:1e2
+    Implicit constraint name
+    
+    RDB$GENERATOR_ID                6
+    RDB$GENERATOR_NAME              RDB$FIELD_NAME                                                                               
+    RDB$SYSTEM_FLAG                 1
+    RDB$INITIAL_VALUE               0
+    RDB$GENERATOR_INCREMENT         0
+    RDB$OWNER_NAME                  SYSDBA                                                                                       
+    GEN_DESCR_BLOB_ID               14:1e3
+    Implicit domain name
+    
+    RDB$GENERATOR_ID                7
+    RDB$GENERATOR_NAME              RDB$INDEX_NAME                                                                               
+    RDB$SYSTEM_FLAG                 1
+    RDB$INITIAL_VALUE               0
+    RDB$GENERATOR_INCREMENT         0
+    RDB$OWNER_NAME                  SYSDBA                                                                                       
+    GEN_DESCR_BLOB_ID               14:1e4
+    Implicit index name
+    
+    RDB$GENERATOR_ID                8
+    RDB$GENERATOR_NAME              RDB$TRIGGER_NAME                                                                             
+    RDB$SYSTEM_FLAG                 1
+    RDB$INITIAL_VALUE               0
+    RDB$GENERATOR_INCREMENT         0
+    RDB$OWNER_NAME                  SYSDBA                                                                                       
+    GEN_DESCR_BLOB_ID               14:1e5
+    Implicit trigger name
+    
+    RDB$GENERATOR_ID                9
+    RDB$GENERATOR_NAME              RDB$BACKUP_HISTORY                                                                           
+    RDB$SYSTEM_FLAG                 1
+    RDB$INITIAL_VALUE               0
+    RDB$GENERATOR_INCREMENT         0
+    RDB$OWNER_NAME                  SYSDBA                                                                                       
+    GEN_DESCR_BLOB_ID               14:1e6
+    Nbackup technology
+    
+    RDB$GENERATOR_ID                10
+    RDB$GENERATOR_NAME              RDB$FUNCTIONS                                                                                
+    RDB$SYSTEM_FLAG                 1
+    RDB$INITIAL_VALUE               0
+    RDB$GENERATOR_INCREMENT         0
+    RDB$OWNER_NAME                  SYSDBA                                                                                       
+    GEN_DESCR_BLOB_ID               14:1e7
+    Function ID
+    
+    RDB$GENERATOR_ID                11
+    RDB$GENERATOR_NAME              RDB$GENERATOR_NAME                                                                           
+    RDB$SYSTEM_FLAG                 1
+    RDB$INITIAL_VALUE               0
+    RDB$GENERATOR_INCREMENT         0
+    RDB$OWNER_NAME                  SYSDBA                                                                                       
+    GEN_DESCR_BLOB_ID               14:1e8
+    Implicit generator name
+    
+	RDB$GENERATOR_ID                12
+	RDB$GENERATOR_NAME              RDB$TABLESPACES
+	RDB$SYSTEM_FLAG                 1
+	RDB$INITIAL_VALUE               0
+	RDB$GENERATOR_INCREMENT         0
+	RDB$OWNER_NAME                  SYSDBA
+	Tablespace ID
+    Records affected: 12
+"""
+
+@pytest.mark.version('>=4.0')
+def test_2(act: Action):
+    act.expected_stdout = expected_stdout_2
     act.execute()
     assert act.clean_stdout == act.clean_expected_stdout

@@ -3059,6 +3059,7 @@ def test_2(act: Action):
 # version: 5.0
 
 expected_stdout_3 = """
+    RDB$FIELD_NAME                  RDB$ADAPTER
 
     RDB$FIELD_NAME                  RDB$DBKEY_LENGTH
 
@@ -3078,11 +3079,15 @@ expected_stdout_3 = """
 
     RDB$FIELD_NAME                  RDB$OWNER_NAME
 
+    RDB$FIELD_NAME                  RDB$POINTER_PAGE
+
     RDB$FIELD_NAME                  RDB$RELATION_ID
 
     RDB$FIELD_NAME                  RDB$RELATION_NAME
 
     RDB$FIELD_NAME                  RDB$RELATION_TYPE
+
+    RDB$FIELD_NAME                  RDB$ROOT_PAGE
 
     RDB$FIELD_NAME                  RDB$RUNTIME
 
@@ -3091,6 +3096,8 @@ expected_stdout_3 = """
     RDB$FIELD_NAME                  RDB$SQL_SECURITY
 
     RDB$FIELD_NAME                  RDB$SYSTEM_FLAG
+
+    RDB$FIELD_NAME                  RDB$TABLESPACE_NAME
 
     RDB$FIELD_NAME                  RDB$VIEW_BLR
 
@@ -4689,6 +4696,12 @@ expected_stdout_3 = """
     RDB$SYSTEM_FLAG                 1
 
     RDB$FIELD_NAME                  RDB$SYSTEM_PRIVILEGES
+    RDB$TYPE                        27
+    RDB$TYPE_NAME                   PROFILE_ANY_ATTACHMENT
+    RDB$DESCRIPTION                 <null>
+    RDB$SYSTEM_FLAG                 1
+
+    RDB$FIELD_NAME                  RDB$SYSTEM_PRIVILEGES
     RDB$TYPE                        2
     RDB$TYPE_NAME                   READ_RAW_PAGES
     RDB$DESCRIPTION                 <null>
@@ -4857,13 +4870,30 @@ expected_stdout_3 = """
     RDB$SYSTEM_FLAG                 1
 
 
-    Records affected: 293
+    Records affected: 294
 
     Are ordered columns unique ?    1
 
 
     Records affected: 1
 """
+
+test_script = """
+    set list on;
+
+    -- Query for check whether fields list of table was changed:
+    select rf.rdb$field_name
+    from rdb$relation_fields rf
+    where rf.rdb$relation_name = upper('rdb$relations')
+    order by rf.rdb$field_name;
+
+    set count on;
+    set blob all;
+    select * from rdb$types order by rdb$field_name, rdb$type_name;
+    select iif(count(distinct rdb$field_name || rdb$type_name) = count(*), 1, 0) as "Are ordered columns unique ?" from rdb$types;
+"""
+
+act = isql_act('db', test_script)
 
 ###@pytest.mark.skip("FIXME: see notes")
 @pytest.mark.version('>=5.0')

@@ -228,218 +228,287 @@ def test_1(act: Action):
 # version: 4.0
 
 expected_stdout_2 = """
-    RDB$CONSTRAINT_NAME             RDB$INDEX_0
+    RDB$CONSTRAINT_NAME             RDB$INDEX_0                                                                                                                                                                                                                                                 
+    RDB$CONSTRAINT_TYPE             UNIQUE     
+    RDB$RELATION_NAME               RDB$RELATIONS                                                                                                                                                                                                                                               
+    RDB$DEFERRABLE                  NO 
+    RDB$INITIALLY_DEFERRED          NO 
+    RDB$INDEX_NAME                  RDB$INDEX_0                                                                                                                                                                                                                                                 
+
+    RDB$CONSTRAINT_NAME             RDB$INDEX_2                                                                                                                                                                                                                                                 
+    RDB$CONSTRAINT_TYPE             UNIQUE     
+    RDB$RELATION_NAME               RDB$FIELDS                                                                                                                                                                                                                                                  
+    RDB$DEFERRABLE                  NO 
+    RDB$INITIALLY_DEFERRED          NO 
+    RDB$INDEX_NAME                  RDB$INDEX_2                                                                                                                                                                                                                                                 
+
+    RDB$CONSTRAINT_NAME             RDB$INDEX_5                                                                                                                                                                                                                                                 
+    RDB$CONSTRAINT_TYPE             UNIQUE     
+    RDB$RELATION_NAME               RDB$INDICES                                                                                                                                                                                                                                                 
+    RDB$DEFERRABLE                  NO 
+    RDB$INITIALLY_DEFERRED          NO 
+    RDB$INDEX_NAME                  RDB$INDEX_5                                                                                                                                                                                                                                                 
+
+    RDB$CONSTRAINT_NAME             RDB$INDEX_6                                                                                                                                                                                                                                                 
+    RDB$CONSTRAINT_TYPE             UNIQUE     
+    RDB$RELATION_NAME               RDB$INDEX_SEGMENTS                                                                                                                                                                                                                                          
+    RDB$DEFERRABLE                  NO 
+    RDB$INITIALLY_DEFERRED          NO 
+    RDB$INDEX_NAME                  RDB$INDEX_6                                                                                                                                                                                                                                                 
+
+    RDB$CONSTRAINT_NAME             RDB$INDEX_7                                                                                                                                                                                                                                                 
+    RDB$CONSTRAINT_TYPE             UNIQUE     
+    RDB$RELATION_NAME               RDB$SECURITY_CLASSES                                                                                                                                                                                                                                        
+    RDB$DEFERRABLE                  NO 
+    RDB$INITIALLY_DEFERRED          NO 
+    RDB$INDEX_NAME                  RDB$INDEX_7                                                                                                                                                                                                                                                 
+
+    RDB$CONSTRAINT_NAME             RDB$INDEX_8                                                                                                                                                                                                                                                 
+    RDB$CONSTRAINT_TYPE             UNIQUE     
+    RDB$RELATION_NAME               RDB$TRIGGERS                                                                                                                                                                                                                                                
+    RDB$DEFERRABLE                  NO 
+    RDB$INITIALLY_DEFERRED          NO 
+    RDB$INDEX_NAME                  RDB$INDEX_8                                                                                                                                                                                                                                                 
+
+    RDB$CONSTRAINT_NAME             RDB$INDEX_9                                                                                                                                                                                                                                                 
+    RDB$CONSTRAINT_TYPE             UNIQUE     
+    RDB$RELATION_NAME               RDB$FUNCTIONS                                                                                                                                                                                                                                               
+    RDB$DEFERRABLE                  NO 
+    RDB$INITIALLY_DEFERRED          NO 
+    RDB$INDEX_NAME                  RDB$INDEX_9                                                                                                                                                                                                                                                 
+
+    RDB$CONSTRAINT_NAME             RDB$INDEX_10                                                                                                                                                                                                                                                
+    RDB$CONSTRAINT_TYPE             UNIQUE     
+    RDB$RELATION_NAME               RDB$FUNCTION_ARGUMENTS                                                                                                                                                                                                                                      
+    RDB$DEFERRABLE                  NO 
+    RDB$INITIALLY_DEFERRED          NO 
+    RDB$INDEX_NAME                  RDB$INDEX_10                                                                                                                                                                                                                                                
+
+    RDB$CONSTRAINT_NAME             RDB$INDEX_11                                                                                                                                                                                                                                                
+    RDB$CONSTRAINT_TYPE             UNIQUE     
+    RDB$RELATION_NAME               RDB$GENERATORS                                                                                                                                                                                                                                              
+    RDB$DEFERRABLE                  NO 
+    RDB$INITIALLY_DEFERRED          NO 
+    RDB$INDEX_NAME                  RDB$INDEX_11                                                                                                                                                                                                                                                
+
+    RDB$CONSTRAINT_NAME             RDB$INDEX_12                                                                                                                                                                                                                                                
+    RDB$CONSTRAINT_TYPE             UNIQUE     
+    RDB$RELATION_NAME               RDB$RELATION_CONSTRAINTS                                                                                                                                                                                                                                    
+    RDB$DEFERRABLE                  NO 
+    RDB$INITIALLY_DEFERRED          NO 
+    RDB$INDEX_NAME                  RDB$INDEX_12                                                                                                                                                                                                                                                
+
+    RDB$CONSTRAINT_NAME             RDB$INDEX_13                                                                                                                                                                                                                                                
+    RDB$CONSTRAINT_TYPE             UNIQUE     
+    RDB$RELATION_NAME               RDB$REF_CONSTRAINTS                                                                                                                                                                                                                                         
+    RDB$DEFERRABLE                  NO 
+    RDB$INITIALLY_DEFERRED          NO 
+    RDB$INDEX_NAME                  RDB$INDEX_13                                                                                                                                                                                                                                                
+
+    RDB$CONSTRAINT_NAME             RDB$INDEX_14                                                                                                                                                                                                                                                
+    RDB$CONSTRAINT_TYPE             UNIQUE     
+    RDB$RELATION_NAME               RDB$CHECK_CONSTRAINTS                                                                                                                                                                                                                                       
+    RDB$DEFERRABLE                  NO 
+    RDB$INITIALLY_DEFERRED          NO 
+    RDB$INDEX_NAME                  RDB$INDEX_14                                                                                                                                                                                                                                                
+
+    RDB$CONSTRAINT_NAME             RDB$INDEX_15                                                                                                                                                                                                                                                
+    RDB$CONSTRAINT_TYPE             UNIQUE     
+    RDB$RELATION_NAME               RDB$RELATION_FIELDS                                                                                                                                                                                                                                         
+    RDB$DEFERRABLE                  NO 
+    RDB$INITIALLY_DEFERRED          NO 
+    RDB$INDEX_NAME                  RDB$INDEX_15                                                                                                                                                                                                                                                
+
+    RDB$CONSTRAINT_NAME             RDB$INDEX_16                                                                                                                                                                                                                                                
+    RDB$CONSTRAINT_TYPE             UNIQUE     
+    RDB$RELATION_NAME               RDB$FORMATS                                                                                                                                                                                                                                                 
+    RDB$DEFERRABLE                  NO 
+    RDB$INITIALLY_DEFERRED          NO 
+    RDB$INDEX_NAME                  RDB$INDEX_16                                                                                                                                                                                                                                                
+
+    RDB$CONSTRAINT_NAME             RDB$INDEX_17                                                                                                                                                                                                                                                
+    RDB$CONSTRAINT_TYPE             UNIQUE     
+    RDB$RELATION_NAME               RDB$FILTERS                                                                                                                                                                                                                                                 
+    RDB$DEFERRABLE                  NO 
+    RDB$INITIALLY_DEFERRED          NO 
+    RDB$INDEX_NAME                  RDB$INDEX_17                                                                                                                                                                                                                                                
+
+    RDB$CONSTRAINT_NAME             RDB$INDEX_18                                                                                                                                                                                                                                                
+    RDB$CONSTRAINT_TYPE             UNIQUE     
+    RDB$RELATION_NAME               RDB$PROCEDURE_PARAMETERS                                                                                                                                                                                                                                    
+    RDB$DEFERRABLE                  NO 
+    RDB$INITIALLY_DEFERRED          NO 
+    RDB$INDEX_NAME                  RDB$INDEX_18                                                                                                                                                                                                                                                
+
+    RDB$CONSTRAINT_NAME             RDB$INDEX_19                                                                                                                                                                                                                                                
+    RDB$CONSTRAINT_TYPE             UNIQUE     
+    RDB$RELATION_NAME               RDB$CHARACTER_SETS                                                                                                                                                                                                                                          
+    RDB$DEFERRABLE                  NO 
+    RDB$INITIALLY_DEFERRED          NO 
+    RDB$INDEX_NAME                  RDB$INDEX_19                                                                                                                                                                                                                                                
+
+    RDB$CONSTRAINT_NAME             RDB$INDEX_20                                                                                                                                                                                                                                                
+    RDB$CONSTRAINT_TYPE             UNIQUE     
+    RDB$RELATION_NAME               RDB$COLLATIONS                                                                                                                                                                                                                                              
+    RDB$DEFERRABLE                  NO 
+    RDB$INITIALLY_DEFERRED          NO 
+    RDB$INDEX_NAME                  RDB$INDEX_20                                                                                                                                                                                                                                                
+
+    RDB$CONSTRAINT_NAME             RDB$INDEX_21                                                                                                                                                                                                                                                
+    RDB$CONSTRAINT_TYPE             UNIQUE     
+    RDB$RELATION_NAME               RDB$PROCEDURES                                                                                                                                                                                                                                              
+    RDB$DEFERRABLE                  NO 
+    RDB$INITIALLY_DEFERRED          NO 
+    RDB$INDEX_NAME                  RDB$INDEX_21                                                                                                                                                                                                                                                
+
+    RDB$CONSTRAINT_NAME             RDB$INDEX_22                                                                                                                                                                                                                                                
+    RDB$CONSTRAINT_TYPE             UNIQUE     
+    RDB$RELATION_NAME               RDB$PROCEDURES                                                                                                                                                                                                                                              
+    RDB$DEFERRABLE                  NO 
+    RDB$INITIALLY_DEFERRED          NO 
+    RDB$INDEX_NAME                  RDB$INDEX_22                                                                                                                                                                                                                                                
+
+    RDB$CONSTRAINT_NAME             RDB$INDEX_23                                                                                                                                                                                                                                                
+    RDB$CONSTRAINT_TYPE             UNIQUE     
+    RDB$RELATION_NAME               RDB$EXCEPTIONS                                                                                                                                                                                                                                              
+    RDB$DEFERRABLE                  NO 
+    RDB$INITIALLY_DEFERRED          NO 
+    RDB$INDEX_NAME                  RDB$INDEX_23                                                                                                                                                                                                                                                
+
+    RDB$CONSTRAINT_NAME             RDB$INDEX_24                                                                                                                                                                                                                                                
+    RDB$CONSTRAINT_TYPE             UNIQUE     
+    RDB$RELATION_NAME               RDB$EXCEPTIONS                                                                                                                                                                                                                                              
+    RDB$DEFERRABLE                  NO 
+    RDB$INITIALLY_DEFERRED          NO 
+    RDB$INDEX_NAME                  RDB$INDEX_24                                                                                                                                                                                                                                                
+
+    RDB$CONSTRAINT_NAME             RDB$INDEX_25                                                                                                                                                                                                                                                
+    RDB$CONSTRAINT_TYPE             UNIQUE     
+    RDB$RELATION_NAME               RDB$CHARACTER_SETS                                                                                                                                                                                                                                          
+    RDB$DEFERRABLE                  NO 
+    RDB$INITIALLY_DEFERRED          NO 
+    RDB$INDEX_NAME                  RDB$INDEX_25                                                                                                                                                                                                                                                
+
+    RDB$CONSTRAINT_NAME             RDB$INDEX_26                                                                                                                                                                                                                                                
+    RDB$CONSTRAINT_TYPE             UNIQUE     
+    RDB$RELATION_NAME               RDB$COLLATIONS                                                                                                                                                                                                                                              
+    RDB$DEFERRABLE                  NO 
+    RDB$INITIALLY_DEFERRED          NO 
+    RDB$INDEX_NAME                  RDB$INDEX_26                                                                                                                                                                                                                                                
+
+    RDB$CONSTRAINT_NAME             RDB$INDEX_32                                                                                                                                                                                                                                                
+    RDB$CONSTRAINT_TYPE             UNIQUE     
+    RDB$RELATION_NAME               RDB$TRANSACTIONS                                                                                                                                                                                                                                            
+    RDB$DEFERRABLE                  NO 
+    RDB$INITIALLY_DEFERRED          NO 
+    RDB$INDEX_NAME                  RDB$INDEX_32                                                                                                                                                                                                                                                
+
+    RDB$CONSTRAINT_NAME             RDB$INDEX_33                                                                                                                                                                                                                                                
+    RDB$CONSTRAINT_TYPE             UNIQUE     
+    RDB$RELATION_NAME               RDB$VIEW_RELATIONS                                                                                                                                                                                                                                          
+    RDB$DEFERRABLE                  NO 
+    RDB$INITIALLY_DEFERRED          NO 
+    RDB$INDEX_NAME                  RDB$INDEX_33                                                                                                                                                                                                                                                
+
+    RDB$CONSTRAINT_NAME             RDB$INDEX_35                                                                                                                                                                                                                                                
+    RDB$CONSTRAINT_TYPE             UNIQUE     
+    RDB$RELATION_NAME               RDB$TRIGGER_MESSAGES                                                                                                                                                                                                                                        
+    RDB$DEFERRABLE                  NO 
+    RDB$INITIALLY_DEFERRED          NO 
+    RDB$INDEX_NAME                  RDB$INDEX_35                                                                                                                                                                                                                                                
+
+    RDB$CONSTRAINT_NAME             RDB$INDEX_36                                                                                                                                                                                                                                                
+    RDB$CONSTRAINT_TYPE             UNIQUE     
+    RDB$RELATION_NAME               RDB$FIELD_DIMENSIONS                                                                                                                                                                                                                                        
+    RDB$DEFERRABLE                  NO 
+    RDB$INITIALLY_DEFERRED          NO 
+    RDB$INDEX_NAME                  RDB$INDEX_36                                                                                                                                                                                                                                                
+
+    RDB$CONSTRAINT_NAME             RDB$INDEX_39                                                                                                                                                                                                                                                
+    RDB$CONSTRAINT_TYPE             UNIQUE     
+    RDB$RELATION_NAME               RDB$ROLES                                                                                                                                                                                                                                                   
+    RDB$DEFERRABLE                  NO 
+    RDB$INITIALLY_DEFERRED          NO 
+    RDB$INDEX_NAME                  RDB$INDEX_39                                                                                                                                                                                                                                                
+
+    RDB$CONSTRAINT_NAME             RDB$INDEX_44                                                                                                                                                                                                                                                
+    RDB$CONSTRAINT_TYPE             UNIQUE     
+    RDB$RELATION_NAME               RDB$BACKUP_HISTORY                                                                                                                                                                                                                                          
+    RDB$DEFERRABLE                  NO 
+    RDB$INITIALLY_DEFERRED          NO 
+    RDB$INDEX_NAME                  RDB$INDEX_44                                                                                                                                                                                                                                                
+
+    RDB$CONSTRAINT_NAME             RDB$INDEX_45                                                                                                                                                                                                                                                
+    RDB$CONSTRAINT_TYPE             UNIQUE     
+    RDB$RELATION_NAME               RDB$FILTERS                                                                                                                                                                                                                                                 
+    RDB$DEFERRABLE                  NO 
+    RDB$INITIALLY_DEFERRED          NO 
+    RDB$INDEX_NAME                  RDB$INDEX_45                                                                                                                                                                                                                                                
+
+    RDB$CONSTRAINT_NAME             RDB$INDEX_46                                                                                                                                                                                                                                                
+    RDB$CONSTRAINT_TYPE             UNIQUE     
+    RDB$RELATION_NAME               RDB$GENERATORS                                                                                                                                                                                                                                              
+    RDB$DEFERRABLE                  NO 
+    RDB$INITIALLY_DEFERRED          NO 
+    RDB$INDEX_NAME                  RDB$INDEX_46                                                                                                                                                                                                                                                
+
+    RDB$CONSTRAINT_NAME             RDB$INDEX_47                                                                                                                                                                                                                                                
+    RDB$CONSTRAINT_TYPE             UNIQUE     
+    RDB$RELATION_NAME               RDB$PACKAGES                                                                                                                                                                                                                                                
+    RDB$DEFERRABLE                  NO 
+    RDB$INITIALLY_DEFERRED          NO 
+    RDB$INDEX_NAME                  RDB$INDEX_47                                                                                                                                                                                                                                                
+
+    RDB$CONSTRAINT_NAME             RDB$INDEX_52                                                                                                                                                                                                                                                
+    RDB$CONSTRAINT_TYPE             UNIQUE     
+    RDB$RELATION_NAME               RDB$AUTH_MAPPING                                                                                                                                                                                                                                            
+    RDB$DEFERRABLE                  NO 
+    RDB$INITIALLY_DEFERRED          NO 
+    RDB$INDEX_NAME                  RDB$INDEX_52                                                                                                                                                                                                                                                
+
+    RDB$CONSTRAINT_NAME             RDB$INDEX_53                                                                                                                                                                                                                                                
+    RDB$CONSTRAINT_TYPE             UNIQUE     
+    RDB$RELATION_NAME               RDB$FUNCTIONS                                                                                                                                                                                                                                               
+    RDB$DEFERRABLE                  NO 
+    RDB$INITIALLY_DEFERRED          NO 
+    RDB$INDEX_NAME                  RDB$INDEX_53                                                                                                                                                                                                                                                
+
+    RDB$CONSTRAINT_NAME             RDB$INDEX_54                                                                                                                                                                                                                                                
+    RDB$CONSTRAINT_TYPE             UNIQUE     
+    RDB$RELATION_NAME               RDB$BACKUP_HISTORY                                                                                                                                                                                                                                          
+    RDB$DEFERRABLE                  NO 
+    RDB$INITIALLY_DEFERRED          NO 
+    RDB$INDEX_NAME                  RDB$INDEX_54                                                                                                                                                                                                                                                
+
+    RDB$CONSTRAINT_NAME             RDB$INDEX_55                                                                                                                                                                                                                                                
+    RDB$CONSTRAINT_TYPE             UNIQUE     
+    RDB$RELATION_NAME               RDB$PUBLICATIONS                                                                                                                                                                                                                                            
+    RDB$DEFERRABLE                  NO 
+    RDB$INITIALLY_DEFERRED          NO 
+    RDB$INDEX_NAME                  RDB$INDEX_55                                                                                                                                                                                                                                                
+
+    RDB$CONSTRAINT_NAME             RDB$INDEX_56                                                                                                                                                                                                                                                
+    RDB$CONSTRAINT_TYPE             UNIQUE     
+    RDB$RELATION_NAME               RDB$PUBLICATION_TABLES                                                                                                                                                                                                                                      
+    RDB$DEFERRABLE                  NO 
+    RDB$INITIALLY_DEFERRED          NO 
+    RDB$INDEX_NAME                  RDB$INDEX_56                                                                                                                                                                                                                                                
+
+    RDB$CONSTRAINT_NAME             RDB$INDEX_57                                                                                                                                                                                                                                                
+    RDB$CONSTRAINT_TYPE             UNIQUE     
+    RDB$RELATION_NAME               RDB$TABLESPACES                                                                                                                                                                                                                                             
+    RDB$DEFERRABLE                  NO 
+    RDB$INITIALLY_DEFERRED          NO 
+    RDB$INDEX_NAME                  RDB$INDEX_57
+
+    RDB$CONSTRAINT_NAME             RDB$INDEX_58
     RDB$CONSTRAINT_TYPE             UNIQUE
-    RDB$RELATION_NAME               RDB$RELATIONS
+    RDB$RELATION_NAME               RDB$TABLESPACES
     RDB$DEFERRABLE                  NO
     RDB$INITIALLY_DEFERRED          NO
-    RDB$INDEX_NAME                  RDB$INDEX_0
+    RDB$INDEX_NAME                  RDB$INDEX_58
 
-    RDB$CONSTRAINT_NAME             RDB$INDEX_2
-    RDB$CONSTRAINT_TYPE             UNIQUE
-    RDB$RELATION_NAME               RDB$FIELDS
-    RDB$DEFERRABLE                  NO
-    RDB$INITIALLY_DEFERRED          NO
-    RDB$INDEX_NAME                  RDB$INDEX_2
-
-    RDB$CONSTRAINT_NAME             RDB$INDEX_5
-    RDB$CONSTRAINT_TYPE             UNIQUE
-    RDB$RELATION_NAME               RDB$INDICES
-    RDB$DEFERRABLE                  NO
-    RDB$INITIALLY_DEFERRED          NO
-    RDB$INDEX_NAME                  RDB$INDEX_5
-
-    RDB$CONSTRAINT_NAME             RDB$INDEX_7
-    RDB$CONSTRAINT_TYPE             UNIQUE
-    RDB$RELATION_NAME               RDB$SECURITY_CLASSES
-    RDB$DEFERRABLE                  NO
-    RDB$INITIALLY_DEFERRED          NO
-    RDB$INDEX_NAME                  RDB$INDEX_7
-
-    RDB$CONSTRAINT_NAME             RDB$INDEX_8
-    RDB$CONSTRAINT_TYPE             UNIQUE
-    RDB$RELATION_NAME               RDB$TRIGGERS
-    RDB$DEFERRABLE                  NO
-    RDB$INITIALLY_DEFERRED          NO
-    RDB$INDEX_NAME                  RDB$INDEX_8
-
-    RDB$CONSTRAINT_NAME             RDB$INDEX_9
-    RDB$CONSTRAINT_TYPE             UNIQUE
-    RDB$RELATION_NAME               RDB$FUNCTIONS
-    RDB$DEFERRABLE                  NO
-    RDB$INITIALLY_DEFERRED          NO
-    RDB$INDEX_NAME                  RDB$INDEX_9
-
-    RDB$CONSTRAINT_NAME             RDB$INDEX_11
-    RDB$CONSTRAINT_TYPE             UNIQUE
-    RDB$RELATION_NAME               RDB$GENERATORS
-    RDB$DEFERRABLE                  NO
-    RDB$INITIALLY_DEFERRED          NO
-    RDB$INDEX_NAME                  RDB$INDEX_11
-
-    RDB$CONSTRAINT_NAME             RDB$INDEX_12
-    RDB$CONSTRAINT_TYPE             UNIQUE
-    RDB$RELATION_NAME               RDB$RELATION_CONSTRAINTS
-    RDB$DEFERRABLE                  NO
-    RDB$INITIALLY_DEFERRED          NO
-    RDB$INDEX_NAME                  RDB$INDEX_12
-
-    RDB$CONSTRAINT_NAME             RDB$INDEX_13
-    RDB$CONSTRAINT_TYPE             UNIQUE
-    RDB$RELATION_NAME               RDB$REF_CONSTRAINTS
-    RDB$DEFERRABLE                  NO
-    RDB$INITIALLY_DEFERRED          NO
-    RDB$INDEX_NAME                  RDB$INDEX_13
-
-    RDB$CONSTRAINT_NAME             RDB$INDEX_15
-    RDB$CONSTRAINT_TYPE             UNIQUE
-    RDB$RELATION_NAME               RDB$RELATION_FIELDS
-    RDB$DEFERRABLE                  NO
-    RDB$INITIALLY_DEFERRED          NO
-    RDB$INDEX_NAME                  RDB$INDEX_15
-
-    RDB$CONSTRAINT_NAME             RDB$INDEX_17
-    RDB$CONSTRAINT_TYPE             UNIQUE
-    RDB$RELATION_NAME               RDB$FILTERS
-    RDB$DEFERRABLE                  NO
-    RDB$INITIALLY_DEFERRED          NO
-    RDB$INDEX_NAME                  RDB$INDEX_17
-
-    RDB$CONSTRAINT_NAME             RDB$INDEX_18
-    RDB$CONSTRAINT_TYPE             UNIQUE
-    RDB$RELATION_NAME               RDB$PROCEDURE_PARAMETERS
-    RDB$DEFERRABLE                  NO
-    RDB$INITIALLY_DEFERRED          NO
-    RDB$INDEX_NAME                  RDB$INDEX_18
-
-    RDB$CONSTRAINT_NAME             RDB$INDEX_19
-    RDB$CONSTRAINT_TYPE             UNIQUE
-    RDB$RELATION_NAME               RDB$CHARACTER_SETS
-    RDB$DEFERRABLE                  NO
-    RDB$INITIALLY_DEFERRED          NO
-    RDB$INDEX_NAME                  RDB$INDEX_19
-
-    RDB$CONSTRAINT_NAME             RDB$INDEX_20
-    RDB$CONSTRAINT_TYPE             UNIQUE
-    RDB$RELATION_NAME               RDB$COLLATIONS
-    RDB$DEFERRABLE                  NO
-    RDB$INITIALLY_DEFERRED          NO
-    RDB$INDEX_NAME                  RDB$INDEX_20
-
-    RDB$CONSTRAINT_NAME             RDB$INDEX_21
-    RDB$CONSTRAINT_TYPE             UNIQUE
-    RDB$RELATION_NAME               RDB$PROCEDURES
-    RDB$DEFERRABLE                  NO
-    RDB$INITIALLY_DEFERRED          NO
-    RDB$INDEX_NAME                  RDB$INDEX_21
-
-    RDB$CONSTRAINT_NAME             RDB$INDEX_22
-    RDB$CONSTRAINT_TYPE             UNIQUE
-    RDB$RELATION_NAME               RDB$PROCEDURES
-    RDB$DEFERRABLE                  NO
-    RDB$INITIALLY_DEFERRED          NO
-    RDB$INDEX_NAME                  RDB$INDEX_22
-
-    RDB$CONSTRAINT_NAME             RDB$INDEX_23
-    RDB$CONSTRAINT_TYPE             UNIQUE
-    RDB$RELATION_NAME               RDB$EXCEPTIONS
-    RDB$DEFERRABLE                  NO
-    RDB$INITIALLY_DEFERRED          NO
-    RDB$INDEX_NAME                  RDB$INDEX_23
-
-    RDB$CONSTRAINT_NAME             RDB$INDEX_24
-    RDB$CONSTRAINT_TYPE             UNIQUE
-    RDB$RELATION_NAME               RDB$EXCEPTIONS
-    RDB$DEFERRABLE                  NO
-    RDB$INITIALLY_DEFERRED          NO
-    RDB$INDEX_NAME                  RDB$INDEX_24
-
-    RDB$CONSTRAINT_NAME             RDB$INDEX_25
-    RDB$CONSTRAINT_TYPE             UNIQUE
-    RDB$RELATION_NAME               RDB$CHARACTER_SETS
-    RDB$DEFERRABLE                  NO
-    RDB$INITIALLY_DEFERRED          NO
-    RDB$INDEX_NAME                  RDB$INDEX_25
-
-    RDB$CONSTRAINT_NAME             RDB$INDEX_26
-    RDB$CONSTRAINT_TYPE             UNIQUE
-    RDB$RELATION_NAME               RDB$COLLATIONS
-    RDB$DEFERRABLE                  NO
-    RDB$INITIALLY_DEFERRED          NO
-    RDB$INDEX_NAME                  RDB$INDEX_26
-
-    RDB$CONSTRAINT_NAME             RDB$INDEX_32
-    RDB$CONSTRAINT_TYPE             UNIQUE
-    RDB$RELATION_NAME               RDB$TRANSACTIONS
-    RDB$DEFERRABLE                  NO
-    RDB$INITIALLY_DEFERRED          NO
-    RDB$INDEX_NAME                  RDB$INDEX_32
-
-    RDB$CONSTRAINT_NAME             RDB$INDEX_39
-    RDB$CONSTRAINT_TYPE             UNIQUE
-    RDB$RELATION_NAME               RDB$ROLES
-    RDB$DEFERRABLE                  NO
-    RDB$INITIALLY_DEFERRED          NO
-    RDB$INDEX_NAME                  RDB$INDEX_39
-
-    RDB$CONSTRAINT_NAME             RDB$INDEX_44
-    RDB$CONSTRAINT_TYPE             UNIQUE
-    RDB$RELATION_NAME               RDB$BACKUP_HISTORY
-    RDB$DEFERRABLE                  NO
-    RDB$INITIALLY_DEFERRED          NO
-    RDB$INDEX_NAME                  RDB$INDEX_44
-
-    RDB$CONSTRAINT_NAME             RDB$INDEX_45
-    RDB$CONSTRAINT_TYPE             UNIQUE
-    RDB$RELATION_NAME               RDB$FILTERS
-    RDB$DEFERRABLE                  NO
-    RDB$INITIALLY_DEFERRED          NO
-    RDB$INDEX_NAME                  RDB$INDEX_45
-
-    RDB$CONSTRAINT_NAME             RDB$INDEX_46
-    RDB$CONSTRAINT_TYPE             UNIQUE
-    RDB$RELATION_NAME               RDB$GENERATORS
-    RDB$DEFERRABLE                  NO
-    RDB$INITIALLY_DEFERRED          NO
-    RDB$INDEX_NAME                  RDB$INDEX_46
-
-    RDB$CONSTRAINT_NAME             RDB$INDEX_47
-    RDB$CONSTRAINT_TYPE             UNIQUE
-    RDB$RELATION_NAME               RDB$PACKAGES
-    RDB$DEFERRABLE                  NO
-    RDB$INITIALLY_DEFERRED          NO
-    RDB$INDEX_NAME                  RDB$INDEX_47
-
-    RDB$CONSTRAINT_NAME             RDB$INDEX_53
-    RDB$CONSTRAINT_TYPE             UNIQUE
-    RDB$RELATION_NAME               RDB$FUNCTIONS
-    RDB$DEFERRABLE                  NO
-    RDB$INITIALLY_DEFERRED          NO
-    RDB$INDEX_NAME                  RDB$INDEX_53
-
-    RDB$CONSTRAINT_NAME             RDB$INDEX_54
-    RDB$CONSTRAINT_TYPE             UNIQUE
-    RDB$RELATION_NAME               RDB$BACKUP_HISTORY
-    RDB$DEFERRABLE                  NO
-    RDB$INITIALLY_DEFERRED          NO
-    RDB$INDEX_NAME                  RDB$INDEX_54
-
-    RDB$CONSTRAINT_NAME             RDB$INDEX_55
-    RDB$CONSTRAINT_TYPE             UNIQUE
-    RDB$RELATION_NAME               RDB$PUBLICATIONS
-    RDB$DEFERRABLE                  NO
-    RDB$INITIALLY_DEFERRED          NO
-    RDB$INDEX_NAME                  RDB$INDEX_55
-
-    RDB$CONSTRAINT_NAME             RDB$INDEX_56
-    RDB$CONSTRAINT_TYPE             UNIQUE
-    RDB$RELATION_NAME               RDB$PUBLICATION_TABLES
-    RDB$DEFERRABLE                  NO
-    RDB$INITIALLY_DEFERRED          NO
-    RDB$INDEX_NAME                  RDB$INDEX_56
-
-
-    Records affected: 30
+    Records affected: 40
 """
 
 @pytest.mark.version('>=4.0')

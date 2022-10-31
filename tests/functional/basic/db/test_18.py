@@ -677,8 +677,348 @@ expected_stdout_2 = """
     Records affected: 78
 """
 
-@pytest.mark.version('>=4.0')
+@pytest.mark.version('>=4.0,<5.0')
 def test_2(act: Action):
     act.expected_stdout = expected_stdout_2
+    act.execute()
+    assert act.clean_stdout == act.clean_expected_stdout
+
+# version: 5.0
+
+expected_stdout_3 = """
+    RDB$FIELD_NAME                  RDB$PAGE_NUMBER                                                                                                                                                                                                                                             
+    RDB$FIELD_NAME                  RDB$PAGE_SEQUENCE                                                                                                                                                                                                                                           
+    RDB$FIELD_NAME                  RDB$PAGE_TYPE                                                                                                                                                                                                                                               
+    RDB$FIELD_NAME                  RDB$RELATION_ID                                                                                                                                                                                                                                             
+
+    Records affected: 4
+
+
+    RDB$RELATION_ID                 0
+    RDB$PAGE_SEQUENCE               0
+    RDB$PAGE_TYPE                   3
+
+    RDB$RELATION_ID                 0
+    RDB$PAGE_SEQUENCE               0
+    RDB$PAGE_TYPE                   4
+
+    RDB$RELATION_ID                 0
+    RDB$PAGE_SEQUENCE               0
+    RDB$PAGE_TYPE                   6
+
+    RDB$RELATION_ID                 0
+    RDB$PAGE_SEQUENCE               0
+    RDB$PAGE_TYPE                   9
+
+    RDB$RELATION_ID                 1
+    RDB$PAGE_SEQUENCE               0
+    RDB$PAGE_TYPE                   4
+
+    RDB$RELATION_ID                 1
+    RDB$PAGE_SEQUENCE               0
+    RDB$PAGE_TYPE                   6
+
+    RDB$RELATION_ID                 2
+    RDB$PAGE_SEQUENCE               0
+    RDB$PAGE_TYPE                   4
+
+    RDB$RELATION_ID                 2
+    RDB$PAGE_SEQUENCE               0
+    RDB$PAGE_TYPE                   6
+
+    RDB$RELATION_ID                 3
+    RDB$PAGE_SEQUENCE               0
+    RDB$PAGE_TYPE                   4
+
+    RDB$RELATION_ID                 3
+    RDB$PAGE_SEQUENCE               0
+    RDB$PAGE_TYPE                   6
+
+    RDB$RELATION_ID                 4
+    RDB$PAGE_SEQUENCE               0
+    RDB$PAGE_TYPE                   4
+
+    RDB$RELATION_ID                 4
+    RDB$PAGE_SEQUENCE               0
+    RDB$PAGE_TYPE                   6
+
+    RDB$RELATION_ID                 5
+    RDB$PAGE_SEQUENCE               0
+    RDB$PAGE_TYPE                   4
+
+    RDB$RELATION_ID                 5
+    RDB$PAGE_SEQUENCE               0
+    RDB$PAGE_TYPE                   6
+
+    RDB$RELATION_ID                 6
+    RDB$PAGE_SEQUENCE               0
+    RDB$PAGE_TYPE                   4
+
+    RDB$RELATION_ID                 6
+    RDB$PAGE_SEQUENCE               0
+    RDB$PAGE_TYPE                   6
+
+    RDB$RELATION_ID                 7
+    RDB$PAGE_SEQUENCE               0
+    RDB$PAGE_TYPE                   4
+
+    RDB$RELATION_ID                 7
+    RDB$PAGE_SEQUENCE               0
+    RDB$PAGE_TYPE                   6
+
+    RDB$RELATION_ID                 8
+    RDB$PAGE_SEQUENCE               0
+    RDB$PAGE_TYPE                   4
+
+    RDB$RELATION_ID                 8
+    RDB$PAGE_SEQUENCE               0
+    RDB$PAGE_TYPE                   6
+
+    RDB$RELATION_ID                 9
+    RDB$PAGE_SEQUENCE               0
+    RDB$PAGE_TYPE                   4
+
+    RDB$RELATION_ID                 9
+    RDB$PAGE_SEQUENCE               0
+    RDB$PAGE_TYPE                   6
+
+    RDB$RELATION_ID                 10
+    RDB$PAGE_SEQUENCE               0
+    RDB$PAGE_TYPE                   4
+
+    RDB$RELATION_ID                 10
+    RDB$PAGE_SEQUENCE               0
+    RDB$PAGE_TYPE                   6
+
+    RDB$RELATION_ID                 11
+    RDB$PAGE_SEQUENCE               0
+    RDB$PAGE_TYPE                   4
+
+    RDB$RELATION_ID                 11
+    RDB$PAGE_SEQUENCE               0
+    RDB$PAGE_TYPE                   6
+
+    RDB$RELATION_ID                 12
+    RDB$PAGE_SEQUENCE               0
+    RDB$PAGE_TYPE                   4
+
+    RDB$RELATION_ID                 12
+    RDB$PAGE_SEQUENCE               0
+    RDB$PAGE_TYPE                   6
+
+    RDB$RELATION_ID                 13
+    RDB$PAGE_SEQUENCE               0
+    RDB$PAGE_TYPE                   4
+
+    RDB$RELATION_ID                 13
+    RDB$PAGE_SEQUENCE               0
+    RDB$PAGE_TYPE                   6
+
+    RDB$RELATION_ID                 14
+    RDB$PAGE_SEQUENCE               0
+    RDB$PAGE_TYPE                   4
+
+    RDB$RELATION_ID                 14
+    RDB$PAGE_SEQUENCE               0
+    RDB$PAGE_TYPE                   6
+
+    RDB$RELATION_ID                 15
+    RDB$PAGE_SEQUENCE               0
+    RDB$PAGE_TYPE                   4
+
+    RDB$RELATION_ID                 15
+    RDB$PAGE_SEQUENCE               0
+    RDB$PAGE_TYPE                   6
+
+    RDB$RELATION_ID                 16
+    RDB$PAGE_SEQUENCE               0
+    RDB$PAGE_TYPE                   4
+
+    RDB$RELATION_ID                 16
+    RDB$PAGE_SEQUENCE               0
+    RDB$PAGE_TYPE                   6
+
+    RDB$RELATION_ID                 17
+    RDB$PAGE_SEQUENCE               0
+    RDB$PAGE_TYPE                   4
+
+    RDB$RELATION_ID                 17
+    RDB$PAGE_SEQUENCE               0
+    RDB$PAGE_TYPE                   6
+
+    RDB$RELATION_ID                 18
+    RDB$PAGE_SEQUENCE               0
+    RDB$PAGE_TYPE                   4
+
+    RDB$RELATION_ID                 18
+    RDB$PAGE_SEQUENCE               0
+    RDB$PAGE_TYPE                   6
+
+    RDB$RELATION_ID                 19
+    RDB$PAGE_SEQUENCE               0
+    RDB$PAGE_TYPE                   4
+
+    RDB$RELATION_ID                 19
+    RDB$PAGE_SEQUENCE               0
+    RDB$PAGE_TYPE                   6
+
+    RDB$RELATION_ID                 20
+    RDB$PAGE_SEQUENCE               0
+    RDB$PAGE_TYPE                   4
+
+    RDB$RELATION_ID                 20
+    RDB$PAGE_SEQUENCE               0
+    RDB$PAGE_TYPE                   6
+
+    RDB$RELATION_ID                 21
+    RDB$PAGE_SEQUENCE               0
+    RDB$PAGE_TYPE                   4
+
+    RDB$RELATION_ID                 21
+    RDB$PAGE_SEQUENCE               0
+    RDB$PAGE_TYPE                   6
+
+    RDB$RELATION_ID                 22
+    RDB$PAGE_SEQUENCE               0
+    RDB$PAGE_TYPE                   4
+
+    RDB$RELATION_ID                 22
+    RDB$PAGE_SEQUENCE               0
+    RDB$PAGE_TYPE                   6
+
+    RDB$RELATION_ID                 23
+    RDB$PAGE_SEQUENCE               0
+    RDB$PAGE_TYPE                   4
+
+    RDB$RELATION_ID                 23
+    RDB$PAGE_SEQUENCE               0
+    RDB$PAGE_TYPE                   6
+
+    RDB$RELATION_ID                 24
+    RDB$PAGE_SEQUENCE               0
+    RDB$PAGE_TYPE                   4
+
+    RDB$RELATION_ID                 24
+    RDB$PAGE_SEQUENCE               0
+    RDB$PAGE_TYPE                   6
+
+    RDB$RELATION_ID                 25
+    RDB$PAGE_SEQUENCE               0
+    RDB$PAGE_TYPE                   4
+
+    RDB$RELATION_ID                 25
+    RDB$PAGE_SEQUENCE               0
+    RDB$PAGE_TYPE                   6
+
+    RDB$RELATION_ID                 26
+    RDB$PAGE_SEQUENCE               0
+    RDB$PAGE_TYPE                   4
+
+    RDB$RELATION_ID                 26
+    RDB$PAGE_SEQUENCE               0
+    RDB$PAGE_TYPE                   6
+
+    RDB$RELATION_ID                 27
+    RDB$PAGE_SEQUENCE               0
+    RDB$PAGE_TYPE                   4
+
+    RDB$RELATION_ID                 27
+    RDB$PAGE_SEQUENCE               0
+    RDB$PAGE_TYPE                   6
+
+    RDB$RELATION_ID                 28
+    RDB$PAGE_SEQUENCE               0
+    RDB$PAGE_TYPE                   4
+
+    RDB$RELATION_ID                 28
+    RDB$PAGE_SEQUENCE               0
+    RDB$PAGE_TYPE                   6
+
+    RDB$RELATION_ID                 29
+    RDB$PAGE_SEQUENCE               0
+    RDB$PAGE_TYPE                   4
+
+    RDB$RELATION_ID                 29
+    RDB$PAGE_SEQUENCE               0
+    RDB$PAGE_TYPE                   6
+
+    RDB$RELATION_ID                 30
+    RDB$PAGE_SEQUENCE               0
+    RDB$PAGE_TYPE                   4
+
+    RDB$RELATION_ID                 30
+    RDB$PAGE_SEQUENCE               0
+    RDB$PAGE_TYPE                   6
+
+    RDB$RELATION_ID                 31
+    RDB$PAGE_SEQUENCE               0
+    RDB$PAGE_TYPE                   4
+
+    RDB$RELATION_ID                 31
+    RDB$PAGE_SEQUENCE               0
+    RDB$PAGE_TYPE                   6
+
+    RDB$RELATION_ID                 32
+    RDB$PAGE_SEQUENCE               0
+    RDB$PAGE_TYPE                   4
+
+    RDB$RELATION_ID                 32
+    RDB$PAGE_SEQUENCE               0
+    RDB$PAGE_TYPE                   6
+
+    RDB$RELATION_ID                 42
+    RDB$PAGE_SEQUENCE               0
+    RDB$PAGE_TYPE                   4
+
+    RDB$RELATION_ID                 42
+    RDB$PAGE_SEQUENCE               0
+    RDB$PAGE_TYPE                   6
+
+    RDB$RELATION_ID                 45
+    RDB$PAGE_SEQUENCE               0
+    RDB$PAGE_TYPE                   4
+
+    RDB$RELATION_ID                 45
+    RDB$PAGE_SEQUENCE               0
+    RDB$PAGE_TYPE                   6
+
+    RDB$RELATION_ID                 47
+    RDB$PAGE_SEQUENCE               0
+    RDB$PAGE_TYPE                   4
+
+    RDB$RELATION_ID                 47
+    RDB$PAGE_SEQUENCE               0
+    RDB$PAGE_TYPE                   6
+
+    RDB$RELATION_ID                 51
+    RDB$PAGE_SEQUENCE               0
+    RDB$PAGE_TYPE                   4
+
+    RDB$RELATION_ID                 51
+    RDB$PAGE_SEQUENCE               0
+    RDB$PAGE_TYPE                   6
+
+    RDB$RELATION_ID                 52
+    RDB$PAGE_SEQUENCE               0
+    RDB$PAGE_TYPE                   4
+
+    RDB$RELATION_ID                 52
+    RDB$PAGE_SEQUENCE               0
+    RDB$PAGE_TYPE                   6
+
+	RDB$RELATION_ID                 58
+	RDB$PAGE_SEQUENCE               0
+	RDB$PAGE_TYPE                   4
+	
+	RDB$RELATION_ID                 58
+	RDB$PAGE_SEQUENCE               0
+	RDB$PAGE_TYPE                   6
+
+    Records affected: 80
+"""
+
+@pytest.mark.version('>=5.0')
+def test_3(act: Action):
+    act.expected_stdout = expected_stdout_3
     act.execute()
     assert act.clean_stdout == act.clean_expected_stdout

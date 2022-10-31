@@ -1662,6 +1662,16 @@ expected_stdout = """
     RDB$SECURITY_CLASS              SQL$340
     RDB$OWNER_NAME                  SYSDBA
 
+    RDB$COLLATION_NAME              WIN1251_CI_AI
+    RDB$COLLATION_ID                3
+    RDB$CHARACTER_SET_ID            52
+    RDB$COLLATION_ATTRIBUTES        7
+    RDB$SYSTEM_FLAG                 1
+    RDB$DESCRIPTION                 <null>
+    RDB$FUNCTION_NAME               <null>
+    RDB$BASE_COLLATION_NAME         <null>
+    RDB$OWNER_NAME                  SYSDBA
+
     RDB$COLLATION_NAME              WIN1251_UA
     RDB$COLLATION_ID                2
     RDB$CHARACTER_SET_ID            52
@@ -1831,7 +1841,7 @@ expected_stdout = """
     RDB$OWNER_NAME                  SYSDBA
 
 
-    Records affected: 149
+    Records affected: 150
 """
 
 @pytest.mark.version('>=3.0')

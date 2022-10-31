@@ -62,8 +62,65 @@ expected_stdout_2 = """
     Records affected: 1
 """
 
-@pytest.mark.version('>=4.0')
+@pytest.mark.version('>=4.0,<5.0')
 def test_2(act: Action):
     act.expected_stdout = expected_stdout_2
+    act.execute()
+    assert act.clean_stdout == act.clean_expected_stdout
+
+# version: 5.0
+
+expected_stdout_3 = """
+    RDB$FUNCTION_NAME               START_SESSION                                                                                                                                                                                                                                               
+    RDB$FUNCTION_TYPE               <null>
+    RDB$QUERY_NAME                  <null>
+    RDB$DESCRIPTION                 <null>
+    RDB$MODULE_NAME                 <null>
+    RDB$ENTRYPOINT                  <null>
+    RDB$RETURN_ARGUMENT             0
+    RDB$SYSTEM_FLAG                 1
+    RDB$ENGINE_NAME                 SYSTEM                                                                                                                                                                                                                                                      
+    RDB$PACKAGE_NAME                RDB$PROFILER                                                                                                                                                                                                                                                
+    RDB$PRIVATE_FLAG                0
+    RDB$FUNCTION_SOURCE             <null>
+    RDB$FUNCTION_ID                 2
+    RDB$FUNCTION_BLR                <null>
+    RDB$VALID_BLR                   1
+    RDB$DEBUG_INFO                  <null>
+    RDB$SECURITY_CLASS              <null>
+    RDB$OWNER_NAME                  SYSDBA                                                                                                                                                                                                                                                      
+    RDB$LEGACY_FLAG                 <null>
+    RDB$DETERMINISTIC_FLAG          <null>
+    RDB$SQL_SECURITY                <null>
+
+    RDB$FUNCTION_NAME               DATABASE_VERSION                                                                                                                                                                                                                                            
+    RDB$FUNCTION_TYPE               <null>
+    RDB$QUERY_NAME                  <null>
+    RDB$DESCRIPTION                 <null>
+    RDB$MODULE_NAME                 <null>
+    RDB$ENTRYPOINT                  <null>
+    RDB$RETURN_ARGUMENT             0
+    RDB$SYSTEM_FLAG                 1
+    RDB$ENGINE_NAME                 SYSTEM                                                                                                                                                                                                                                                      
+    RDB$PACKAGE_NAME                RDB$TIME_ZONE_UTIL                                                                                                                                                                                                                                          
+    RDB$PRIVATE_FLAG                0
+    RDB$FUNCTION_SOURCE             <null>
+    RDB$FUNCTION_ID                 1
+    RDB$FUNCTION_BLR                <null>
+    RDB$VALID_BLR                   1
+    RDB$DEBUG_INFO                  <null>
+    RDB$SECURITY_CLASS              <null>
+    RDB$OWNER_NAME                  SYSDBA                                                                                                                                                                                                                                                      
+    RDB$LEGACY_FLAG                 <null>
+    RDB$DETERMINISTIC_FLAG          <null>
+    RDB$SQL_SECURITY                <null>
+
+
+    Records affected: 2
+"""
+
+@pytest.mark.version('>=5.0')
+def test_3(act: Action):
+    act.expected_stdout = expected_stdout_3
     act.execute()
     assert act.clean_stdout == act.clean_expected_stdout
