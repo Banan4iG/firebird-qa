@@ -5,7 +5,6 @@ ID:          isql-04
 ISSUE:       1383
 TITLE:       ISQL - SHOW SYSTEM parameters
 DESCRIPTION: Extend ISQL SHOW SYSTEM command to accept parameters TABLES, COLLATIONS and FUNCTIONS
-JIRA:        CORE-978
 FBTEST:      functional.basic.isql.03
 
 NOTES:
@@ -470,6 +469,8 @@ expected_stdout_3 = """
     RDB$GENERATORS
     RDB$INDEX_SEGMENTS
     RDB$INDICES
+    RDB$JOBS
+    RDB$JOBS_LOG
     RDB$KEYWORDS
     RDB$LOG_FILES
     RDB$PACKAGES
@@ -484,6 +485,7 @@ expected_stdout_3 = """
     RDB$RELATION_FIELDS
     RDB$ROLES
     RDB$SECURITY_CLASSES
+    RDB$TABLESPACES
     RDB$TIME_ZONES
     RDB$TRANSACTIONS
     RDB$TRIGGERS
@@ -493,6 +495,7 @@ expected_stdout_3 = """
     RDB$VIEW_RELATIONS
     SEC$DB_CREATORS
     SEC$GLOBAL_AUTH_MAPPING
+    SEC$POLICIES
     SEC$USERS
     SEC$USER_ATTRIBUTES
 
@@ -631,6 +634,7 @@ expected_stdout_3 = """
     UTF8, CHARACTER SET UTF8, PAD SPACE, SYSTEM
     WIN1250, CHARACTER SET WIN1250, PAD SPACE, SYSTEM
     WIN1251, CHARACTER SET WIN1251, PAD SPACE, SYSTEM
+    WIN1251_CI_AI, CHARACTER SET WIN1251, PAD SPACE, CASE INSENSITIVE, ACCENT INSENSITIVE, SYSTEM
     WIN1251_UA, CHARACTER SET WIN1251, PAD SPACE, SYSTEM
     WIN1252, CHARACTER SET WIN1252, PAD SPACE, SYSTEM
     WIN1253, CHARACTER SET WIN1253, PAD SPACE, SYSTEM
@@ -647,8 +651,12 @@ expected_stdout_3 = """
     WIN_PTBR, CHARACTER SET WIN1252, PAD SPACE, CASE INSENSITIVE, ACCENT INSENSITIVE, SYSTEM
 """
 
+expected_stderr = "There are no user-defined functions in this database"
+
 @pytest.mark.version('>=5.0')
 def test_3(act: Action):
     act.expected_stdout = expected_stdout_3
+    act.expected_stderr = expected_stderr
     act.execute()
     assert act.clean_stdout == act.clean_expected_stdout
+    assert act.clean_stderr == act.clean_expected_stderr
