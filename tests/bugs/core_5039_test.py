@@ -38,11 +38,11 @@ def test_1(act_1: Action):
 
 # version: 4.0
 
-act_2 = python_act('db', substitutions=[('Server version: .* Firebird \\d+\\.\\d+.*',
-                                         'Server version: Firebird')])
+act_2 = python_act('db', substitutions=[('Server version: .* RedDatabase \\d+\\.\\d+.*',
+                                         'Server version: RedDatabase')])
 
 expected_stdout_2 = """
-    Server version: Firebird
+    Server version: RedDatabase
 """
 
 @pytest.mark.version('>=4.0')

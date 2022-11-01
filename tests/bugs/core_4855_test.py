@@ -49,6 +49,7 @@ INSERTED_ROWS                   OK, LOT OF.
 
 heavy_script = """
 recreate sequence g;
+recreate sequence gstop;
 recreate table test(id int, s varchar( 36 ) unique using index test_s_unq);
 recreate table stop(id int);
 commit;
@@ -57,7 +58,7 @@ set transaction read committed;
 set term ^;
 execute block returns( inserted_rows varchar(20) ) as
 begin
-  while ( not exists(select * from stop) ) do
+  while ( gen_id(gstop,1) >=0 ) do
   begin
     insert into test(id, s) values( gen_id(g,1), rpad('', 36, uuid_to_char(gen_uuid())) );
   end
@@ -92,7 +93,7 @@ def test_1(act: Action, heavy_script_file: Path, heavy_output: Path, capsys):
                 srv.database.validate(database=act.db.db_path, lock_timeout=1,
                                       callback=print)
             # Stopping ISQL that is doing now 'heavy DML' (bulk-inserts):
-            act.isql(switches=[], input='insert into stop(id) values(1); commit;')
+            act.isql(switches=[], input='set generator gstop to -10; commit;')
         finally:
             p_heavy_sql.terminate()
     #

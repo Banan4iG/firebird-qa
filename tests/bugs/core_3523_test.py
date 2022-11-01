@@ -33,6 +33,7 @@ expected_stdout = """
            4
 """
 
+@pytest.mark.skip("Run only on Firebird")
 @pytest.mark.version('>=3')
 def test_1(act: Action):
     act.expected_stdout = expected_stdout

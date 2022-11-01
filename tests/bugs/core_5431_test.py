@@ -58,9 +58,8 @@ expected_stdout = """
 """
 
 expected_stderr = """
-    Statement failed, SQLSTATE = 42000
-    invalid request BLR at offset 47
-    -generator RDB is not defined
+    Statement failed, SQLSTATE = 23000
+    validation error for column "TEST1"."ID", value "*** null ***"
 """
 
 @pytest.mark.version('>=4.0')

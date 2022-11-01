@@ -94,7 +94,36 @@ expected_stderr = """
     At procedure 'P03' line: 3, col: 3
     At procedure 'P02' line: 3, col: 3
     At procedure 'P03' line: 3, col: 3
-    At p...
+    At procedure 'P02' line: 3, col: 3
+    At procedure 'P03' line: 3, col: 3
+    At procedure 'P02' line: 3, col: 3
+    At procedure 'P03' line: 3, col: 3
+    At procedure 'P02' line: 3, col: 3
+    At procedure 'P03' line: 3, col: 3
+    At procedure 'P02' line: 3, col: 3
+    At procedure 'P03' line: 3, col: 3
+    At procedure 'P02' line: 3, col: 3
+    At procedure 'P03' line: 3, col: 3
+    At procedure 'P02' line: 3, col: 3
+    At procedure 'P03' line: 3, col: 3
+    At procedure 'P02' line: 3, col: 3
+    At procedure 'P03' line: 3, col: 3
+    At procedure 'P02' line: 3, col: 3
+    At procedure 'P03' line: 3, col: 3
+    At procedure 'P02' line: 3, col: 3
+    At procedure 'P03' line: 3, col: 3
+    At procedure 'P02' line: 3, col: 3
+    At procedure 'P03' line: 3, col: 3
+    At procedure 'P02' line: 3, col: 3
+    At procedure 'P03' line: 3, col: 3
+    At procedure 'P02' line: 3, col: 3
+    At procedure 'P03' line: 3, col: 3
+    At procedure 'P02' line: 3, col: 3
+    At procedure 'P03' line: 3, col: 3
+    At procedure 'P02' line: 3, col: 3
+    At procedure 'P03' line: 3, col: 3
+    At procedure 'P02' line: 3, col: 3
+    At procedure 'P03' line: 3, col: 3
 """
 
 @pytest.mark.version('>=3.0')

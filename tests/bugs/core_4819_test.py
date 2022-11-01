@@ -245,20 +245,25 @@ def test_1(act: Action):
 # version: 4.0
 
 expected_stderr_2 = """
-    Statement failed, SQLSTATE = 42000
-    attempted update of read-only column TEST.X
+    Statement failed, SQLSTATE = 2F000
+    Error while parsing trigger TEST_AUD1's BLR
+    -attempted update of read-only column TEST.X
 
-    Statement failed, SQLSTATE = 42000
-    attempted update of read-only column TEST.X
-
-    Statement failed, SQLSTATE = 42000
-    attempted update of read-only column TEST.X
-
-    Statement failed, SQLSTATE = 42000
-    attempted update of read-only column TEST.X
-
-    Statement failed, SQLSTATE = 42000
-    attempted update of read-only column TEST.X
+    Statement failed, SQLSTATE = 2F000
+    Error while parsing trigger TEST_AUD2's BLR
+    -attempted update of read-only column TEST.X
+    
+    Statement failed, SQLSTATE = 2F000
+    Error while parsing trigger TEST_AUD2's BLR
+    -attempted update of read-only column TEST.X
+    
+    Statement failed, SQLSTATE = 2F000
+    Error while parsing trigger TEST_AUD2's BLR
+    -attempted update of read-only column TEST.X
+    
+    Statement failed, SQLSTATE = 2F000
+    Error while parsing trigger TEST_AUD2's BLR
+    -attempted update of read-only column TEST.X
 
     Statement failed, SQLSTATE = 42000
     attempted update of read-only column CE.Y

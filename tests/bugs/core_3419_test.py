@@ -61,7 +61,29 @@ expected_stderr = """
     At trigger 'TRG_TRANS_START' line: 5, col: 9
     At trigger 'TRG_TRANS_START' line: 5, col: 9
     At trigger 'TRG_TRANS_START' line: 5, col: 9
-    At trigger 'TRG_TRANS_START' ...
+    At trigger 'TRG_TRANS_START' line: 5, col: 9
+    At trigger 'TRG_TRANS_START' line: 5, col: 9
+    At trigger 'TRG_TRANS_START' line: 5, col: 9
+    At trigger 'TRG_TRANS_START' line: 5, col: 9
+    At trigger 'TRG_TRANS_START' line: 5, col: 9
+    At trigger 'TRG_TRANS_START' line: 5, col: 9
+    At trigger 'TRG_TRANS_START' line: 5, col: 9
+    At trigger 'TRG_TRANS_START' line: 5, col: 9
+    At trigger 'TRG_TRANS_START' line: 5, col: 9
+    At trigger 'TRG_TRANS_START' line: 5, col: 9
+    At trigger 'TRG_TRANS_START' line: 5, col: 9
+    At trigger 'TRG_TRANS_START' line: 5, col: 9
+    At trigger 'TRG_TRANS_START' line: 5, col: 9
+    At trigger 'TRG_TRANS_START' line: 5, col: 9
+    At trigger 'TRG_TRANS_START' line: 5, col: 9
+    At trigger 'TRG_TRANS_START' line: 5, col: 9
+    At trigger 'TRG_TRANS_START' line: 5, col: 9
+    At trigger 'TRG_TRANS_START' line: 5, col: 9
+    At trigger 'TRG_TRANS_START' line: 5, col: 9
+    At trigger 'TRG_TRANS_START' line: 5, col: 9
+    At trigger 'TRG_TRANS_START' line: 5, col: 9
+    At trigger 'TRG_TRANS_START' line: 5, col: 9
+    At trigger 'TRG_TRANS_START' line: 5, col: 9
 """
 
 @pytest.mark.version('>=3')
