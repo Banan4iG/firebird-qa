@@ -37,7 +37,7 @@ act = python_act('db', substitutions=[('^((?!((records fetched)|tag_for)).)*$', 
 
 expected_stdout = """
     select /* tag_for_include */ 1 as k1 from rdb$types rows 15
-    15 records fetched
+    15 records fetched without sorting
 """
 
 test_script = """

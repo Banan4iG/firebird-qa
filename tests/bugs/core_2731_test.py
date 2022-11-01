@@ -59,8 +59,8 @@ test_script = """
     delete from mon$attachments where mon$attachment_id != current_connection;
     commit;
 """
-
-act = isql_act('db', test_script, substitutions=[('[-]{0,1}At block line: [\\d]+, col: [\\d]+', '')])
+substitutions=[('[-]{0,1}At block line: [\\d]+, col: [\\d]+', ''), ('Data source : Firebird::localhost:[\d\w\\/:\.\-_]*test.fdb','Data source : Firebird::localhost:temp_directory/test.fdb')]
+act = isql_act('db', test_script, substitutions=substitutions)
 
 expected_stderr = """
     Statement failed, SQLSTATE = 42000
@@ -81,8 +81,17 @@ expected_stderr = """
     335544926 : Execute statement error at isc_dsql_execute2 :
     335544926 : Execute statement error at isc_dsql_execute2 :
     335544926 : Execute statement error at isc_dsql_execute2 :
+    335544926 : Execute statement error at isc_dsql_execute2 :
     335544926 : Execute statement...
-    -At block line: 5, col: 5
+    335544842 :
+    Statement : execute block as
+    declare variable SQL type of column SQL_SOURCE.SQL_SOURCE;
+    begin
+    select first(1) SQL_SOURCE from SQL_SOURCE into :SQL;
+    execute statement :SQL
+    -- YOUR DB
+    on external 'localhos
+    Data source : Firebird::localhost:/tmp/pytest-of-root/pytest-0/test_1452/test.fdb
 """
 
 @pytest.mark.version('>=3')

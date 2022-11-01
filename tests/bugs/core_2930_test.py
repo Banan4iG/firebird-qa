@@ -26,7 +26,7 @@ drop view v1;
 show procedure p1;
 """
 
-act = isql_act('db', test_script)
+act = isql_act('db', test_script, substitutions=[('=','')])
 
 expected_stdout = """Procedure text:
 =============================================================================

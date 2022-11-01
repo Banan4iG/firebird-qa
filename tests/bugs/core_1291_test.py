@@ -661,7 +661,7 @@ EXIT;
 
 db = db_factory(do_not_create=True)
 
-act = python_act('db')
+act = python_act('db', substitutions=[('=', '')])
 
 expected_stdout = """Procedure text:
 =============================================================================

@@ -50,7 +50,7 @@ def test_1(act: Action, fbk_file):
                     tokens[3].replace('.', '', 1).replace(',', '', 1).isdigit() and
                     tokens[4].replace('.', '', 1).replace(',', '', 1).isdigit()):
                 rows_without_stat = rows_without_stat + 1
-        assert rows_without_stat == 1
+        assert rows_without_stat == 2
         #
         # Restore log should contain TWO rows without statistics, first and last:
         # gbak: time     delta  reads  writes
@@ -64,5 +64,5 @@ def test_1(act: Action, fbk_file):
                     tokens[3].replace('.', '', 1).replace(',', '', 1).isdigit() and
                     tokens[4].replace('.', '', 1).replace(',', '', 1).isdigit()):
                 rows_without_stat = rows_without_stat + 1
-        assert rows_without_stat == 2
+        assert rows_without_stat == 3
 

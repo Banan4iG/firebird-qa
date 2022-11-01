@@ -105,13 +105,6 @@ test_script = """
 
         union all
 
-        select ----------- core-3523
-             'm'
-            ,'[p-k]'
-        from rdb$database
-
-        union all
-
         ------------------- core-3754
 
         select '1', '(1|2){0,}' from rdb$database union all select
@@ -223,11 +216,6 @@ expected_stdout = """
     PTN                             %[0-9]+.[0-9]+.[0-9]+((.?[0-9]+)*)[[:WHITESPACE:]]%
     str similar to ptn              1
     subs(str similar to ptn)        WI-T3.0.0.31780 Firebird 3.0 Beta 2
-
-    STR                             m
-    PTN                             [p-k]
-    str similar to ptn              0
-    subs(str similar to ptn)        <null>
 
     STR                             1
     PTN                             (1|2){0,}

@@ -18,13 +18,13 @@ db = db_factory(init=init_script)
 
 test_script = """comment on generator T is 'comment';
 commit;
-show comment on generator T;
+show comment T;
 comment on generator T is 'comment';
 commit;
-show comment on generator T;
+show comment T;
 comment on generator T is 'different comment';
 commit;
-show comment on generator T;
+show comment T;
 """
 
 act = isql_act('db', test_script)
