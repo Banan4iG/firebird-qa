@@ -68,21 +68,21 @@ test_script = """
     insert into tests (str, pattern, expected) values ('6', '[1-53-7]', null);
     insert into tests (str, pattern, expected) values ('8', '[1-53-7]', null);
 
-    insert into tests (str, pattern, expected) values ('1', '[1-53-78-0]', null);
-    insert into tests (str, pattern, expected) values ('2', '[1-53-78-0]', null);
-    insert into tests (str, pattern, expected) values ('4', '[1-53-78-0]', null);
-    insert into tests (str, pattern, expected) values ('6', '[1-53-78-0]', null);
-    insert into tests (str, pattern, expected) values ('8', '[1-53-78-0]', null);
+    insert into tests (str, pattern, expected) values ('1', '[1-53-7]', null);
+    insert into tests (str, pattern, expected) values ('2', '[1-53-7]', null);
+    insert into tests (str, pattern, expected) values ('4', '[1-53-7]', null);
+    insert into tests (str, pattern, expected) values ('6', '[1-53-7]', null);
+    insert into tests (str, pattern, expected) values ('8', '[1-53-7]', null);
 
-    insert into tests (str, pattern, expected) values ('0', '[8-0]', null);
-    insert into tests (str, pattern, expected) values ('1', '[8-0]', null);
-    insert into tests (str, pattern, expected) values ('8', '[8-0]', null);
-    insert into tests (str, pattern, expected) values ('9', '[8-0]', null);
+    insert into tests (str, pattern, expected) values ('0', '[0-8]', null);
+    insert into tests (str, pattern, expected) values ('1', '[0-8]', null);
+    insert into tests (str, pattern, expected) values ('8', '[0-8]', null);
+    insert into tests (str, pattern, expected) values ('9', '[0-8]', null);
 
-    insert into tests (str, pattern, expected) values ('0', '[8-09-0]', null);
-    insert into tests (str, pattern, expected) values ('1', '[8-09-0]', null);
-    insert into tests (str, pattern, expected) values ('8', '[8-09-0]', null);
-    insert into tests (str, pattern, expected) values ('9', '[8-09-0]', null);
+    insert into tests (str, pattern, expected) values ('0', '[0-80-9]', null);
+    insert into tests (str, pattern, expected) values ('1', '[0-80-9]', null);
+    insert into tests (str, pattern, expected) values ('8', '[0-80-9]', null);
+    insert into tests (str, pattern, expected) values ('9', '[0-80-9]', null);
 
     insert into tests (str, pattern, expected) values ('1', '[1-53-7^4]', null);
     insert into tests (str, pattern, expected) values ('2', '[1-53-7^4]', null);
@@ -102,12 +102,6 @@ test_script = """
     insert into tests (str, pattern, expected) values ('6', '[1-53-7^2-53-6]', null);
     insert into tests (str, pattern, expected) values ('8', '[1-53-7^2-53-6]', null);
 
-    insert into tests (str, pattern, expected) values ('1', '[1-53-7^5-2]', null);
-    insert into tests (str, pattern, expected) values ('2', '[1-53-7^5-2]', null);
-    insert into tests (str, pattern, expected) values ('4', '[1-53-7^5-2]', null);
-    insert into tests (str, pattern, expected) values ('6', '[1-53-7^5-2]', null);
-    insert into tests (str, pattern, expected) values ('8', '[1-53-7^5-2]', null);
-
     set heading off;
     select 'without_cast' as msg, str, pattern, iif(str similar to pattern escape '\\', 1, 0) from tests order by id;
 
@@ -118,126 +112,116 @@ test_script = """
 act = isql_act('db', test_script, substitutions=[('[ \t]+', ' ')])
 
 expected_stdout = """
-without_cast    aa                   (aa){1}                         1
-without_cast    aa                   (a){1}                          0
-without_cast    a                    (a){1}                          1
-without_cast    A                    (a){1}                          0
-without_cast    á                    (a){1}                          0
-without_cast    Á                    (ã){1}                          0
-without_cast    aa                   a{1}                            0
-without_cast                         (1|2){0,}                       1
-without_cast                         (1|2){1,}                       0
-without_cast    1                    (1|2){0,}                       1
-without_cast    1                    (1|2){0,1}                      1
-without_cast    1                    (1|2){1}                        1
-without_cast    12                   (1|1[2]){1}                     1
-without_cast    1212                 (1|1[2]){3,5}                   0
-without_cast    121212               (1|1[2]){3,5}                   1
-without_cast    12121212             (1|1[2]){3,5}                   1
-without_cast    1212121212           (1|1[2]){3,5}                   1
-without_cast    121212121212         (1|1[2]){3,5}                   0
-without_cast    á                    _                               0
-without_cast    1                    [1-53-7]                        1
+without_cast    aa                   (aa){1}                         1 
+without_cast    aa                   (a){1}                          0 
+without_cast    a                    (a){1}                          1 
+without_cast    A                    (a){1}                          0 
+without_cast    á                    (a){1}                          0 
+without_cast    Á                    (ã){1}                          0 
+without_cast    aa                   a{1}                            0 
+without_cast                         (1|2){0,}                       1 
+without_cast                         (1|2){1,}                       0 
+without_cast    1                    (1|2){0,}                       1 
+without_cast    1                    (1|2){0,1}                      1 
+without_cast    1                    (1|2){1}                        1 
+without_cast    12                   (1|1[2]){1}                     1 
+without_cast    1212                 (1|1[2]){3,5}                   0 
+without_cast    121212               (1|1[2]){3,5}                   1 
+without_cast    12121212             (1|1[2]){3,5}                   1 
+without_cast    1212121212           (1|1[2]){3,5}                   1 
+without_cast    121212121212         (1|1[2]){3,5}                   0 
+without_cast    á                    _                               0 
+without_cast    1                    [1-53-7]                        1 
 
-without_cast    2                    [1-53-7]                        1
-without_cast    4                    [1-53-7]                        1
-without_cast    6                    [1-53-7]                        1
-without_cast    8                    [1-53-7]                        0
-without_cast    1                    [1-53-78-0]                     1
-without_cast    2                    [1-53-78-0]                     1
-without_cast    4                    [1-53-78-0]                     1
-without_cast    6                    [1-53-78-0]                     1
-without_cast    8                    [1-53-78-0]                     0
-without_cast    0                    [8-0]                           0
-without_cast    1                    [8-0]                           0
-without_cast    8                    [8-0]                           0
-without_cast    9                    [8-0]                           0
-without_cast    0                    [8-09-0]                        0
-without_cast    1                    [8-09-0]                        0
-without_cast    8                    [8-09-0]                        0
-without_cast    9                    [8-09-0]                        0
-without_cast    1                    [1-53-7^4]                      1
-without_cast    2                    [1-53-7^4]                      1
-without_cast    4                    [1-53-7^4]                      0
+without_cast    2                    [1-53-7]                        1 
+without_cast    4                    [1-53-7]                        1 
+without_cast    6                    [1-53-7]                        1 
+without_cast    8                    [1-53-7]                        0 
+without_cast    1                    [1-53-7]                        1 
+without_cast    2                    [1-53-7]                        1 
+without_cast    4                    [1-53-7]                        1 
+without_cast    6                    [1-53-7]                        1 
+without_cast    8                    [1-53-7]                        0 
+without_cast    0                    [0-8]                           1 
+without_cast    1                    [0-8]                           1 
+without_cast    8                    [0-8]                           1 
+without_cast    9                    [0-8]                           0 
+without_cast    0                    [0-80-9]                        1 
+without_cast    1                    [0-80-9]                        1 
+without_cast    8                    [0-80-9]                        1 
+without_cast    9                    [0-80-9]                        1 
+without_cast    1                    [1-53-7^4]                      1 
+without_cast    2                    [1-53-7^4]                      1 
+without_cast    4                    [1-53-7^4]                      0 
 
-without_cast    6                    [1-53-7^4]                      1
-without_cast    8                    [1-53-7^4]                      0
-without_cast    1                    [1-53-7^2-5]                    1
-without_cast    2                    [1-53-7^2-5]                    0
-without_cast    4                    [1-53-7^2-5]                    0
-without_cast    6                    [1-53-7^2-5]                    1
-without_cast    8                    [1-53-7^2-5]                    0
-without_cast    1                    [1-53-7^2-53-6]                 1
-without_cast    2                    [1-53-7^2-53-6]                 0
-without_cast    4                    [1-53-7^2-53-6]                 0
-without_cast    6                    [1-53-7^2-53-6]                 0
-without_cast    8                    [1-53-7^2-53-6]                 0
-without_cast    1                    [1-53-7^5-2]                    1
-without_cast    2                    [1-53-7^5-2]                    1
-without_cast    4                    [1-53-7^5-2]                    1
-without_cast    6                    [1-53-7^5-2]                    1
-without_cast    8                    [1-53-7^5-2]                    0
+without_cast    6                    [1-53-7^4]                      1 
+without_cast    8                    [1-53-7^4]                      0 
+without_cast    1                    [1-53-7^2-5]                    1 
+without_cast    2                    [1-53-7^2-5]                    0 
+without_cast    4                    [1-53-7^2-5]                    0 
+without_cast    6                    [1-53-7^2-5]                    1 
+without_cast    8                    [1-53-7^2-5]                    0 
+without_cast    1                    [1-53-7^2-53-6]                 1 
+without_cast    2                    [1-53-7^2-53-6]                 0 
+without_cast    4                    [1-53-7^2-53-6]                 0 
+without_cast    6                    [1-53-7^2-53-6]                 0 
+without_cast    8                    [1-53-7^2-53-6]                 0 
 
 
-with_utf8_cast    aa                   (aa){1}                         1
-with_utf8_cast    aa                   (a){1}                          0
-with_utf8_cast    a                    (a){1}                          1
-with_utf8_cast    A                    (a){1}                          0
-with_utf8_cast    á                    (a){1}                          0
-with_utf8_cast    Á                    (ã){1}                          0
-with_utf8_cast    aa                   a{1}                            0
-with_utf8_cast                         (1|2){0,}                       1
-with_utf8_cast                         (1|2){1,}                       0
-with_utf8_cast    1                    (1|2){0,}                       1
-with_utf8_cast    1                    (1|2){0,1}                      1
-with_utf8_cast    1                    (1|2){1}                        1
-with_utf8_cast    12                   (1|1[2]){1}                     1
-with_utf8_cast    1212                 (1|1[2]){3,5}                   0
-with_utf8_cast    121212               (1|1[2]){3,5}                   1
-with_utf8_cast    12121212             (1|1[2]){3,5}                   1
-with_utf8_cast    1212121212           (1|1[2]){3,5}                   1
-with_utf8_cast    121212121212         (1|1[2]){3,5}                   0
-with_utf8_cast    á                    _                               1
-with_utf8_cast    1                    [1-53-7]                        1
+with_utf8_cast    aa                   (aa){1}                         1 
+with_utf8_cast    aa                   (a){1}                          0 
+with_utf8_cast    a                    (a){1}                          1 
+with_utf8_cast    A                    (a){1}                          0 
+with_utf8_cast    á                    (a){1}                          0 
+with_utf8_cast    Á                    (ã){1}                          0 
+with_utf8_cast    aa                   a{1}                            0 
+with_utf8_cast                         (1|2){0,}                       1 
+with_utf8_cast                         (1|2){1,}                       0 
+with_utf8_cast    1                    (1|2){0,}                       1 
+with_utf8_cast    1                    (1|2){0,1}                      1 
+with_utf8_cast    1                    (1|2){1}                        1 
+with_utf8_cast    12                   (1|1[2]){1}                     1 
+with_utf8_cast    1212                 (1|1[2]){3,5}                   0 
+with_utf8_cast    121212               (1|1[2]){3,5}                   1 
+with_utf8_cast    12121212             (1|1[2]){3,5}                   1 
+with_utf8_cast    1212121212           (1|1[2]){3,5}                   1 
+with_utf8_cast    121212121212         (1|1[2]){3,5}                   0 
+with_utf8_cast    á                    _                               1 
+with_utf8_cast    1                    [1-53-7]                        1 
 
-with_utf8_cast    2                    [1-53-7]                        1
-with_utf8_cast    4                    [1-53-7]                        1
-with_utf8_cast    6                    [1-53-7]                        1
-with_utf8_cast    8                    [1-53-7]                        0
-with_utf8_cast    1                    [1-53-78-0]                     1
-with_utf8_cast    2                    [1-53-78-0]                     1
-with_utf8_cast    4                    [1-53-78-0]                     1
-with_utf8_cast    6                    [1-53-78-0]                     1
-with_utf8_cast    8                    [1-53-78-0]                     0
-with_utf8_cast    0                    [8-0]                           0
-with_utf8_cast    1                    [8-0]                           0
-with_utf8_cast    8                    [8-0]                           0
-with_utf8_cast    9                    [8-0]                           0
-with_utf8_cast    0                    [8-09-0]                        0
-with_utf8_cast    1                    [8-09-0]                        0
-with_utf8_cast    8                    [8-09-0]                        0
-with_utf8_cast    9                    [8-09-0]                        0
-with_utf8_cast    1                    [1-53-7^4]                      1
-with_utf8_cast    2                    [1-53-7^4]                      1
-with_utf8_cast    4                    [1-53-7^4]                      0
+with_utf8_cast    2                    [1-53-7]                        1 
+with_utf8_cast    4                    [1-53-7]                        1 
+with_utf8_cast    6                    [1-53-7]                        1 
+with_utf8_cast    8                    [1-53-7]                        0 
+with_utf8_cast    1                    [1-53-7]                        1 
+with_utf8_cast    2                    [1-53-7]                        1 
+with_utf8_cast    4                    [1-53-7]                        1 
+with_utf8_cast    6                    [1-53-7]                        1 
+with_utf8_cast    8                    [1-53-7]                        0 
+with_utf8_cast    0                    [0-8]                           1 
+with_utf8_cast    1                    [0-8]                           1 
+with_utf8_cast    8                    [0-8]                           1 
+with_utf8_cast    9                    [0-8]                           0 
+with_utf8_cast    0                    [0-80-9]                        1 
+with_utf8_cast    1                    [0-80-9]                        1 
+with_utf8_cast    8                    [0-80-9]                        1 
+with_utf8_cast    9                    [0-80-9]                        1 
+with_utf8_cast    1                    [1-53-7^4]                      1 
+with_utf8_cast    2                    [1-53-7^4]                      1 
+with_utf8_cast    4                    [1-53-7^4]                      0 
 
-with_utf8_cast    6                    [1-53-7^4]                      1
-with_utf8_cast    8                    [1-53-7^4]                      0
-with_utf8_cast    1                    [1-53-7^2-5]                    1
-with_utf8_cast    2                    [1-53-7^2-5]                    0
-with_utf8_cast    4                    [1-53-7^2-5]                    0
-with_utf8_cast    6                    [1-53-7^2-5]                    1
-with_utf8_cast    8                    [1-53-7^2-5]                    0
-with_utf8_cast    1                    [1-53-7^2-53-6]                 1
-with_utf8_cast    2                    [1-53-7^2-53-6]                 0
-with_utf8_cast    4                    [1-53-7^2-53-6]                 0
-with_utf8_cast    6                    [1-53-7^2-53-6]                 0
+with_utf8_cast    6                    [1-53-7^4]                      1 
+with_utf8_cast    8                    [1-53-7^4]                      0 
+with_utf8_cast    1                    [1-53-7^2-5]                    1 
+with_utf8_cast    2                    [1-53-7^2-5]                    0 
+with_utf8_cast    4                    [1-53-7^2-5]                    0 
+with_utf8_cast    6                    [1-53-7^2-5]                    1 
+with_utf8_cast    8                    [1-53-7^2-5]                    0 
+with_utf8_cast    1                    [1-53-7^2-53-6]                 1 
+with_utf8_cast    2                    [1-53-7^2-53-6]                 0 
+with_utf8_cast    4                    [1-53-7^2-53-6]                 0 
+with_utf8_cast    6                    [1-53-7^2-53-6]                 0 
 with_utf8_cast    8                    [1-53-7^2-53-6]                 0
-with_utf8_cast    1                    [1-53-7^5-2]                    1
-with_utf8_cast    2                    [1-53-7^5-2]                    1
-with_utf8_cast    4                    [1-53-7^5-2]                    1
-with_utf8_cast    6                    [1-53-7^5-2]                    1
-with_utf8_cast    8                    [1-53-7^5-2]                    0
 """
 
 @pytest.mark.version('>=4.0')

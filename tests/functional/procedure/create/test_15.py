@@ -31,7 +31,7 @@ db = db_factory(init=init_script)
 test_script = """SHOW PROCEDURE NEW_PROCEDURE;
 SELECT * FROM NEW_PROCEDURE('TEST');"""
 
-act = isql_act('db', test_script)
+act = isql_act('db', test_script, substitutions=[('=============================================================================','')])
 
 expected_stdout = """Procedure text:
 =============================================================================

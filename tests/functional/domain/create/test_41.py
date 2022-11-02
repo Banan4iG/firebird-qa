@@ -14,11 +14,10 @@ db = db_factory(init="CREATE DOMAIN test AS INTEGER;")
 
 act = isql_act('db', "CREATE DOMAIN test AS VARCHAR(32);")
 
-expected_stderr = """Statement failed, SQLSTATE = 23000
+expected_stderr = """Statement failed, SQLSTATE = 42000
 unsuccessful metadata update
 -CREATE DOMAIN TEST failed
--violation of PRIMARY or UNIQUE KEY constraint "RDB$INDEX_2" on table "RDB$FIELDS"
--Problematic key value is ("RDB$FIELD_NAME" = 'TEST')"""
+-Domain TEST already exists"""
 
 @pytest.mark.version('>=3.0')
 def test_1(act: Action):

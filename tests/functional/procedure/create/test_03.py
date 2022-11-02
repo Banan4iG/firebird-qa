@@ -35,7 +35,7 @@ SET TERM ;^
 commit;
 SHOW PROCEDURE test;"""
 
-act = isql_act('db', test_script)
+act = isql_act('db', test_script, substitutions=[('=============================================================================','')])
 
 expected_stdout = """Procedure text:
 =============================================================================

@@ -31,18 +31,20 @@ test_script = """
     SHOW TRIGGER tg;
 """
 
-act = isql_act('db', test_script, substitutions=[('\\+.*', ''), ('\\=.*', ''), ('Trigger text.*', '')])
+act = isql_act('db', test_script, substitutions=[('\\+.*', ''), ('\\=.*', ''), ('Trigger text.*', ''), ('=' * 77,'')])
 
 # version: 2.5.0
 
 expected_stdout_1 = """
-    Triggers on Table TEST:
-    TG, Sequence: 0, Type: BEFORE UPDATE, Active
-    AS
-    BEGIN
-      new.id=1;
-    END
-    +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Triggers on Table TEST:
+TG, Sequence: 0, Type: BEFORE UPDATE, Active
+Trigger text:
+=============================================================================
+AS
+BEGIN
+  new.id=1;
+END
+=============================================================================
 """
 
 expected_stderr_1 = """
@@ -61,18 +63,21 @@ def test_1(act: Action):
 # version: 4.0.0
 
 expected_stdout_2 = """
-    Triggers on Table TEST:
-    TG, Sequence: 0, Type: BEFORE UPDATE, Active
-    AS
-    BEGIN
-      new.id=1;
-    END
-    +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Triggers on Table TEST:
+TG, Sequence: 0, Type: BEFORE UPDATE, Active
+Trigger text:
+=============================================================================
+AS
+BEGIN
+  new.id=1;
+END
+=============================================================================
 """
 
 expected_stderr_2 = """
-    Statement failed, SQLSTATE = 42000
-    attempted update of read-only column TEST.ID
+Statement failed, SQLSTATE = 2F000
+Error while parsing trigger TG's BLR
+-attempted update of read-only column TEST.ID 
 """
 
 @pytest.mark.version('>=4.0.0')

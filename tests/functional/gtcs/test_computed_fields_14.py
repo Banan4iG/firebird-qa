@@ -50,8 +50,7 @@ test_script = """
 """
 
 act = isql_act('db', test_script, substitutions=[('=', ''), ('[ \t]+', ' '),
-                                                 ('attempted update of read-only column.*',
-                                                  'attempted update of read-only column')])
+                                                 ('attempted update of read-only column AF', 'attempted update of read-only column\n-AF')])
 
 expected_stdout = """
     point-1 10 30
@@ -61,9 +60,11 @@ expected_stdout = """
 expected_stderr = """
     Statement failed, SQLSTATE 42000
     attempted update of read-only column
+    -AF
 
     Statement failed, SQLSTATE 42000
     attempted update of read-only column
+    -AF
 
     Statement failed, SQLSTATE 42000
     unsuccessful metadata update
@@ -74,6 +75,7 @@ expected_stderr = """
     Dynamic SQL Error
     -SQL error code -804
     -Count of read-write columns does not equal count of values
+    -At line 1, column 1
 """
 
 @pytest.mark.version('>=3')
