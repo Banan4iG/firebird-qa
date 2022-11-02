@@ -76,11 +76,15 @@ expected_stderr = """
     -expression evaluation not supported
     -Argument for LOG10 must be positive
 
-    Statement failed, SQLSTATE = HY000
-    Expression evaluation error for index "TEST_EVAL3" on table "TEST"
-    -Context variable FOO_&_BAR is not found in namespace SYSTEM
-    Statement failed, SQLSTATE = 22012
+    Statement failed, SQLSTATE = 42000
+    unsuccessful metadata update
+    -key size exceeds implementation restriction for index "TEST_EVAL3"
+    Statement failed, SQLSTATE = 42000
+    unsuccessful metadata update
+    -DROP INDEX TEST_EVAL3 failed
+    -Index not found
 
+    Statement failed, SQLSTATE = 22012
     Expression evaluation error for index "TEST_EVAL4" on table "TEST"
     -arithmetic exception, numeric overflow, or string truncation
     -Integer divide by zero.  The code attempted to divide an integer value by an integer divisor of zero.

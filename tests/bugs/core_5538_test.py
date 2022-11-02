@@ -118,7 +118,7 @@ def test_1(act: Action, fbk_file: Path, fdb_file: Path, capsys):
     # 1. Check that we can use patterns for include data only from several selected tables:
     for i, p in enumerate(['test_doc%', 'test_d(o|u)ra', '%_w(i|o|_)n[[:DIGIT:]]', 'test_a[[:ALPHA:]]{1,}a']):
         act.reset()
-        act.gbak(switches=['-b', act.db.dsn, str(fbk_file), '-include', p])
+        act.gbak(switches=['-b', 'OVERWRITE', act.db.dsn, str(fbk_file), '-include', p])
         act.reset()
         act.gbak(switches=['-rep', str(fbk_file), act.get_dsn(fdb_file)])
         act.reset()
@@ -139,7 +139,7 @@ def test_1(act: Action, fbk_file: Path, fdb_file: Path, capsys):
     skip_ptn = 'test_d(o|u)%'
     for i, p in enumerate(['test_d%', 'test_(a|b)[[:ALPHA:]]+a']):
         act.reset()
-        act.gbak(switches=['-b', act.db.dsn, str(fbk_file), '-include_data', p, '-skip_data', skip_ptn])
+        act.gbak(switches=['-b', 'OVERWRITE', act.db.dsn, str(fbk_file), '-include_data', p, '-skip_data', skip_ptn])
         act.reset()
         act.gbak(switches=['-rep', str(fbk_file), act.get_dsn(fdb_file)])
         act.reset()

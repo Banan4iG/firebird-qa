@@ -16,13 +16,15 @@ from firebird.qa import *
 
 substitutions = [('database .*tmp_core_5771.fdb already exists.',
                   'database tmp_core_5771.fdb already exists.'),
-                 ('opened file .*tmp_core_5771.fbk', 'opened file tmp_core_5771.fbk')]
+                 ('opened file .*tmp_core_5771.fbk', 'opened file tmp_core_5771.fbk'),
+                 ('gbak:started.*','gbak:started')]
 
 db = db_factory()
 
 act = python_act('db', substitutions=substitutions)
 
 expected_stdout = """
+    gbak:started
     gbak:opened file tmp_core_5771.fbk
 """
 

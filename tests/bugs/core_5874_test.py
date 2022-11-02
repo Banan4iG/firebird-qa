@@ -39,14 +39,14 @@ test_script = """
 act = isql_act('db', test_script)
 
 expected_stderr = """
-    Statement failed, SQLSTATE = 42000
-    attempted update of read-only column TEST.hozzáadása
+Statement failed, SQLSTATE = 42000
+attempted update of read-only column hozzáadása
 
-    Statement failed, SQLSTATE = 42000
-    attempted update of read-only column TEST.hozzáadása
+Statement failed, SQLSTATE = 42000
+attempted update of read-only column hozzáadása
 
-    Statement failed, SQLSTATE = 42000
-    attempted update of read-only column TEST.hozzáadása
+Statement failed, SQLSTATE = 42000
+attempted update of read-only column hozzáadása
 """
 
 @pytest.mark.version('>=4.0')

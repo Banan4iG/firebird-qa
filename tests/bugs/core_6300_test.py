@@ -36,9 +36,9 @@ expected_stdout = """
     :  name: MON$NEXT_ATTACHMENT  alias: MON$NEXT_ATTACHMENT
     04: sqltype: 580 INT64 Nullable scale: 0 subtype: 0 len: 8
     :  name: MON$NEXT_STATEMENT  alias: MON$NEXT_STATEMENT
-    05: sqltype: 448 VARYING Nullable scale: 0 subtype: 0 len: 255 charset: 0 NONE
+    05: sqltype: 448 VARYING Nullable scale: 0 subtype: 0 len: 8192 charset: 0 NONE
     :  name: RDB$GET_CONTEXT  alias: RDB$GET_CONTEXT
-    06: sqltype: 448 VARYING Nullable scale: 0 subtype: 0 len: 255 charset: 0 NONE
+    06: sqltype: 448 VARYING Nullable scale: 0 subtype: 0 len: 8192 charset: 0 NONE
     :  name: RDB$GET_CONTEXT  alias: RDB$GET_CONTEXT
 """
 

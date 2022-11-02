@@ -36,8 +36,8 @@ expected_stderr = """
     Statement failed, SQLSTATE = 42000
     Invalid SIMILAR TO pattern
 
-    Statement failed, SQLSTATE = 42000
-    Invalid SIMILAR TO pattern
+    Statement failed, SQLSTATE = 22025
+    Invalid ESCAPE sequence
 """
 
 @pytest.mark.version('>=4.0')

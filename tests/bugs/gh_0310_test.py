@@ -25,6 +25,8 @@ act = isql_act('db', test_script)
 expected_stdout = """
     RDB$KEYWORD_NAME                ABS
     RDB$KEYWORD_RESERVED            <false>
+    RDB$KEYWORD_NAME                ABSENT
+    RDB$KEYWORD_RESERVED            <false>
     RDB$KEYWORD_NAME                ABSOLUTE
     RDB$KEYWORD_RESERVED            <false>
     RDB$KEYWORD_NAME                ACCENT
@@ -36,6 +38,8 @@ expected_stdout = """
     RDB$KEYWORD_NAME                ACTION
     RDB$KEYWORD_RESERVED            <false>
     RDB$KEYWORD_NAME                ACTIVE
+    RDB$KEYWORD_RESERVED            <false>
+    RDB$KEYWORD_NAME                ADAPTER
     RDB$KEYWORD_RESERVED            <false>
     RDB$KEYWORD_NAME                ADD
     RDB$KEYWORD_RESERVED            <true>
@@ -53,6 +57,8 @@ expected_stdout = """
     RDB$KEYWORD_RESERVED            <true>
     RDB$KEYWORD_NAME                ANY
     RDB$KEYWORD_RESERVED            <true>
+    RDB$KEYWORD_NAME                ARRAY
+    RDB$KEYWORD_RESERVED            <false>
     RDB$KEYWORD_NAME                AS
     RDB$KEYWORD_RESERVED            <true>
     RDB$KEYWORD_NAME                ASC
@@ -74,6 +80,10 @@ expected_stdout = """
     RDB$KEYWORD_NAME                ATAN2
     RDB$KEYWORD_RESERVED            <false>
     RDB$KEYWORD_NAME                ATANH
+    RDB$KEYWORD_RESERVED            <false>
+    RDB$KEYWORD_NAME                AUTHID
+    RDB$KEYWORD_RESERVED            <false>
+    RDB$KEYWORD_NAME                AUTH_FACTORS
     RDB$KEYWORD_RESERVED            <false>
     RDB$KEYWORD_NAME                AUTO
     RDB$KEYWORD_RESERVED            <false>
@@ -115,6 +125,8 @@ expected_stdout = """
     RDB$KEYWORD_RESERVED            <true>
     RDB$KEYWORD_NAME                BLOB
     RDB$KEYWORD_RESERVED            <true>
+    RDB$KEYWORD_NAME                BLOB_APPEND
+    RDB$KEYWORD_RESERVED            <false>
     RDB$KEYWORD_NAME                BLOCK
     RDB$KEYWORD_RESERVED            <false>
     RDB$KEYWORD_NAME                BODY
@@ -138,6 +150,8 @@ expected_stdout = """
     RDB$KEYWORD_NAME                CEIL
     RDB$KEYWORD_RESERVED            <false>
     RDB$KEYWORD_NAME                CEILING
+    RDB$KEYWORD_RESERVED            <false>
+    RDB$KEYWORD_NAME                CERTIFICATE
     RDB$KEYWORD_RESERVED            <false>
     RDB$KEYWORD_NAME                CHAR
     RDB$KEYWORD_RESERVED            <true>
@@ -163,6 +177,10 @@ expected_stdout = """
     RDB$KEYWORD_RESERVED            <false>
     RDB$KEYWORD_NAME                COLUMN
     RDB$KEYWORD_RESERVED            <true>
+    RDB$KEYWORD_NAME                COLUMNS
+    RDB$KEYWORD_RESERVED            <false>
+    RDB$KEYWORD_NAME                COMMAND
+    RDB$KEYWORD_RESERVED            <false>
     RDB$KEYWORD_NAME                COMMENT
     RDB$KEYWORD_RESERVED            <true>
     RDB$KEYWORD_NAME                COMMIT
@@ -187,6 +205,8 @@ expected_stdout = """
     RDB$KEYWORD_RESERVED            <true>
     RDB$KEYWORD_NAME                CONTAINING
     RDB$KEYWORD_RESERVED            <false>
+    RDB$KEYWORD_NAME                CONTENTS
+    RDB$KEYWORD_RESERVED            <false>
     RDB$KEYWORD_NAME                CONTINUE
     RDB$KEYWORD_RESERVED            <false>
     RDB$KEYWORD_NAME                CORR
@@ -205,8 +225,12 @@ expected_stdout = """
     RDB$KEYWORD_RESERVED            <true>
     RDB$KEYWORD_NAME                COVAR_SAMP
     RDB$KEYWORD_RESERVED            <true>
+    RDB$KEYWORD_NAME                CPU_LOAD
+    RDB$KEYWORD_RESERVED            <false>
     RDB$KEYWORD_NAME                CREATE
     RDB$KEYWORD_RESERVED            <true>
+    RDB$KEYWORD_NAME                CREATE_FILE
+    RDB$KEYWORD_RESERVED            <false>
     RDB$KEYWORD_NAME                CROSS
     RDB$KEYWORD_RESERVED            <true>
     RDB$KEYWORD_NAME                CRYPT_HASH
@@ -227,6 +251,8 @@ expected_stdout = """
     RDB$KEYWORD_RESERVED            <true>
     RDB$KEYWORD_NAME                CURRENT_DATE
     RDB$KEYWORD_RESERVED            <true>
+    RDB$KEYWORD_NAME                CURRENT_LABEL
+    RDB$KEYWORD_RESERVED            <false>
     RDB$KEYWORD_NAME                CURRENT_ROLE
     RDB$KEYWORD_RESERVED            <true>
     RDB$KEYWORD_NAME                CURRENT_TIME
@@ -239,6 +265,8 @@ expected_stdout = """
     RDB$KEYWORD_RESERVED            <true>
     RDB$KEYWORD_NAME                CURSOR
     RDB$KEYWORD_RESERVED            <true>
+    RDB$KEYWORD_NAME                DAMLEV
+    RDB$KEYWORD_RESERVED            <false>
     RDB$KEYWORD_NAME                DATA
     RDB$KEYWORD_RESERVED            <false>
     RDB$KEYWORD_NAME                DATABASE
@@ -273,6 +301,8 @@ expected_stdout = """
     RDB$KEYWORD_RESERVED            <false>
     RDB$KEYWORD_NAME                DELETE
     RDB$KEYWORD_RESERVED            <true>
+    RDB$KEYWORD_NAME                DELETE_FILE
+    RDB$KEYWORD_RESERVED            <false>
     RDB$KEYWORD_NAME                DELETING
     RDB$KEYWORD_RESERVED            <true>
     RDB$KEYWORD_NAME                DENSE_RANK
@@ -301,8 +331,12 @@ expected_stdout = """
     RDB$KEYWORD_RESERVED            <true>
     RDB$KEYWORD_NAME                DROP
     RDB$KEYWORD_RESERVED            <true>
+    RDB$KEYWORD_NAME                DUMP
+    RDB$KEYWORD_RESERVED            <false>
     RDB$KEYWORD_NAME                ELSE
     RDB$KEYWORD_RESERVED            <true>
+    RDB$KEYWORD_NAME                EMPTY
+    RDB$KEYWORD_RESERVED            <false>
     RDB$KEYWORD_NAME                ENABLE
     RDB$KEYWORD_RESERVED            <false>
     RDB$KEYWORD_NAME                ENCRYPT
@@ -312,6 +346,8 @@ expected_stdout = """
     RDB$KEYWORD_NAME                ENGINE
     RDB$KEYWORD_RESERVED            <false>
     RDB$KEYWORD_NAME                ENTRY_POINT
+    RDB$KEYWORD_RESERVED            <false>
+    RDB$KEYWORD_NAME                ERROR
     RDB$KEYWORD_RESERVED            <false>
     RDB$KEYWORD_NAME                ESCAPE
     RDB$KEYWORD_RESERVED            <true>
@@ -361,6 +397,8 @@ expected_stdout = """
     RDB$KEYWORD_RESERVED            <true>
     RDB$KEYWORD_NAME                FOREIGN
     RDB$KEYWORD_RESERVED            <true>
+    RDB$KEYWORD_NAME                FORMAT
+    RDB$KEYWORD_RESERVED            <false>
     RDB$KEYWORD_NAME                FREE_IT
     RDB$KEYWORD_RESERVED            <false>
     RDB$KEYWORD_NAME                FROM
@@ -381,13 +419,21 @@ expected_stdout = """
     RDB$KEYWORD_RESERVED            <false>
     RDB$KEYWORD_NAME                GLOBAL
     RDB$KEYWORD_RESERVED            <true>
+    RDB$KEYWORD_NAME                GOSTPASSWORD
+    RDB$KEYWORD_RESERVED            <false>
     RDB$KEYWORD_NAME                GRANT
     RDB$KEYWORD_RESERVED            <true>
     RDB$KEYWORD_NAME                GRANTED
     RDB$KEYWORD_RESERVED            <false>
     RDB$KEYWORD_NAME                GROUP
     RDB$KEYWORD_RESERVED            <true>
+    RDB$KEYWORD_NAME                GSS
+    RDB$KEYWORD_RESERVED            <false>
     RDB$KEYWORD_NAME                HASH
+    RDB$KEYWORD_RESERVED            <false>
+    RDB$KEYWORD_NAME                HASHAGG
+    RDB$KEYWORD_RESERVED            <true>
+    RDB$KEYWORD_NAME                HASH_CP
     RDB$KEYWORD_RESERVED            <false>
     RDB$KEYWORD_NAME                HAVING
     RDB$KEYWORD_RESERVED            <true>
@@ -413,10 +459,14 @@ expected_stdout = """
     RDB$KEYWORD_RESERVED            <false>
     RDB$KEYWORD_NAME                INCLUDE
     RDB$KEYWORD_RESERVED            <false>
+    RDB$KEYWORD_NAME                INCLUDING
+    RDB$KEYWORD_RESERVED            <false>
     RDB$KEYWORD_NAME                INCREMENT
     RDB$KEYWORD_RESERVED            <false>
     RDB$KEYWORD_NAME                INDEX
     RDB$KEYWORD_RESERVED            <true>
+    RDB$KEYWORD_NAME                INITIAL_LABEL
+    RDB$KEYWORD_RESERVED            <false>
     RDB$KEYWORD_NAME                INNER
     RDB$KEYWORD_RESERVED            <true>
     RDB$KEYWORD_NAME                INPUT_TYPE
@@ -441,11 +491,39 @@ expected_stdout = """
     RDB$KEYWORD_RESERVED            <true>
     RDB$KEYWORD_NAME                ISOLATION
     RDB$KEYWORD_RESERVED            <false>
+    RDB$KEYWORD_NAME                IS_LABEL_VALID
+    RDB$KEYWORD_RESERVED            <false>
     RDB$KEYWORD_NAME                IV
+    RDB$KEYWORD_RESERVED            <false>
+    RDB$KEYWORD_NAME                JOB
     RDB$KEYWORD_RESERVED            <false>
     RDB$KEYWORD_NAME                JOIN
     RDB$KEYWORD_RESERVED            <true>
+    RDB$KEYWORD_NAME                JSON
+    RDB$KEYWORD_RESERVED            <false>
+    RDB$KEYWORD_NAME                JSON_ARRAY
+    RDB$KEYWORD_RESERVED            <false>
+    RDB$KEYWORD_NAME                JSON_ARRAYAGG
+    RDB$KEYWORD_RESERVED            <false>
+    RDB$KEYWORD_NAME                JSON_EXISTS
+    RDB$KEYWORD_RESERVED            <false>
+    RDB$KEYWORD_NAME                JSON_MODIFY
+    RDB$KEYWORD_RESERVED            <false>
+    RDB$KEYWORD_NAME                JSON_OBJECT
+    RDB$KEYWORD_RESERVED            <false>
+    RDB$KEYWORD_NAME                JSON_OBJECTAGG
+    RDB$KEYWORD_RESERVED            <false>
+    RDB$KEYWORD_NAME                JSON_QUERY
+    RDB$KEYWORD_RESERVED            <false>
+    RDB$KEYWORD_NAME                JSON_TABLE
+    RDB$KEYWORD_RESERVED            <false>
+    RDB$KEYWORD_NAME                JSON_VALUE
+    RDB$KEYWORD_RESERVED            <false>
+    RDB$KEYWORD_NAME                KEEP
+    RDB$KEYWORD_RESERVED            <false>
     RDB$KEYWORD_NAME                KEY
+    RDB$KEYWORD_RESERVED            <false>
+    RDB$KEYWORD_NAME                KEYS
     RDB$KEYWORD_RESERVED            <false>
     RDB$KEYWORD_NAME                LAG
     RDB$KEYWORD_RESERVED            <false>
@@ -459,6 +537,12 @@ expected_stdout = """
     RDB$KEYWORD_RESERVED            <false>
     RDB$KEYWORD_NAME                LATERAL
     RDB$KEYWORD_RESERVED            <true>
+    RDB$KEYWORD_NAME                LDAP_ATTR
+    RDB$KEYWORD_RESERVED            <false>
+    RDB$KEYWORD_NAME                LDAP_GROUPS
+    RDB$KEYWORD_RESERVED            <false>
+    RDB$KEYWORD_NAME                LDAP_USER_GROUPS
+    RDB$KEYWORD_RESERVED            <false>
     RDB$KEYWORD_NAME                LEAD
     RDB$KEYWORD_RESERVED            <false>
     RDB$KEYWORD_NAME                LEADING
@@ -519,6 +603,14 @@ expected_stdout = """
     RDB$KEYWORD_RESERVED            <true>
     RDB$KEYWORD_NAME                MAXVALUE
     RDB$KEYWORD_RESERVED            <false>
+    RDB$KEYWORD_NAME                MAX_FAILED_COUNT
+    RDB$KEYWORD_RESERVED            <false>
+    RDB$KEYWORD_NAME                MAX_IDLE_TIME
+    RDB$KEYWORD_RESERVED            <false>
+    RDB$KEYWORD_NAME                MAX_SESSIONS
+    RDB$KEYWORD_RESERVED            <false>
+    RDB$KEYWORD_NAME                MAX_UNUSED_DAYS
+    RDB$KEYWORD_RESERVED            <false>
     RDB$KEYWORD_NAME                MERGE
     RDB$KEYWORD_RESERVED            <true>
     RDB$KEYWORD_NAME                MESSAGE
@@ -575,20 +667,32 @@ expected_stdout = """
     RDB$KEYWORD_RESERVED            <false>
     RDB$KEYWORD_NAME                NUMERIC
     RDB$KEYWORD_RESERVED            <true>
+    RDB$KEYWORD_NAME                OBJECT
+    RDB$KEYWORD_RESERVED            <false>
     RDB$KEYWORD_NAME                OCTET_LENGTH
     RDB$KEYWORD_RESERVED            <true>
     RDB$KEYWORD_NAME                OF
     RDB$KEYWORD_RESERVED            <true>
+    RDB$KEYWORD_NAME                OFFLINE
+    RDB$KEYWORD_RESERVED            <false>
     RDB$KEYWORD_NAME                OFFSET
     RDB$KEYWORD_RESERVED            <true>
     RDB$KEYWORD_NAME                OLDEST
     RDB$KEYWORD_RESERVED            <false>
+    RDB$KEYWORD_NAME                OMIT
+    RDB$KEYWORD_RESERVED            <false>
     RDB$KEYWORD_NAME                ON
     RDB$KEYWORD_RESERVED            <true>
+    RDB$KEYWORD_NAME                ONCE
+    RDB$KEYWORD_RESERVED            <false>
+    RDB$KEYWORD_NAME                ONLINE
+    RDB$KEYWORD_RESERVED            <false>
     RDB$KEYWORD_NAME                ONLY
     RDB$KEYWORD_RESERVED            <true>
     RDB$KEYWORD_NAME                OPEN
     RDB$KEYWORD_RESERVED            <true>
+    RDB$KEYWORD_NAME                OPTIMIZE
+    RDB$KEYWORD_RESERVED            <false>
     RDB$KEYWORD_NAME                OPTION
     RDB$KEYWORD_RESERVED            <false>
     RDB$KEYWORD_NAME                OR
@@ -611,6 +715,8 @@ expected_stdout = """
     RDB$KEYWORD_RESERVED            <false>
     RDB$KEYWORD_NAME                OVERRIDING
     RDB$KEYWORD_RESERVED            <false>
+    RDB$KEYWORD_NAME                OWNER
+    RDB$KEYWORD_RESERVED            <false>
     RDB$KEYWORD_NAME                PACKAGE
     RDB$KEYWORD_RESERVED            <false>
     RDB$KEYWORD_NAME                PAD
@@ -631,6 +737,8 @@ expected_stdout = """
     RDB$KEYWORD_RESERVED            <false>
     RDB$KEYWORD_NAME                PI
     RDB$KEYWORD_RESERVED            <false>
+    RDB$KEYWORD_NAME                PIN
+    RDB$KEYWORD_RESERVED            <false>
     RDB$KEYWORD_NAME                PKCS_1_5
     RDB$KEYWORD_RESERVED            <false>
     RDB$KEYWORD_NAME                PLACING
@@ -638,6 +746,8 @@ expected_stdout = """
     RDB$KEYWORD_NAME                PLAN
     RDB$KEYWORD_RESERVED            <true>
     RDB$KEYWORD_NAME                PLUGIN
+    RDB$KEYWORD_RESERVED            <false>
+    RDB$KEYWORD_NAME                POLICY
     RDB$KEYWORD_RESERVED            <false>
     RDB$KEYWORD_NAME                POOL
     RDB$KEYWORD_RESERVED            <false>
@@ -654,7 +764,7 @@ expected_stdout = """
     RDB$KEYWORD_NAME                PRESERVE
     RDB$KEYWORD_RESERVED            <false>
     RDB$KEYWORD_NAME                PRIMARY
-    RDB$KEYWORD_RESERVED            <true>
+    RDB$KEYWORD_RESERVED            <false>
     RDB$KEYWORD_NAME                PRIOR
     RDB$KEYWORD_RESERVED            <false>
     RDB$KEYWORD_NAME                PRIVILEGE
@@ -665,9 +775,23 @@ expected_stdout = """
     RDB$KEYWORD_RESERVED            <true>
     RDB$KEYWORD_NAME                PROTECTED
     RDB$KEYWORD_RESERVED            <false>
+    RDB$KEYWORD_NAME                PSWD_MIN_LEN
+    RDB$KEYWORD_RESERVED            <false>
+    RDB$KEYWORD_NAME                PSWD_NEED_CHAR
+    RDB$KEYWORD_RESERVED            <false>
+    RDB$KEYWORD_NAME                PSWD_NEED_DIFF_CASE
+    RDB$KEYWORD_RESERVED            <false>
+    RDB$KEYWORD_NAME                PSWD_NEED_DIGIT
+    RDB$KEYWORD_RESERVED            <false>
+    RDB$KEYWORD_NAME                PSWD_UNIQUE_COUNT
+    RDB$KEYWORD_RESERVED            <false>
+    RDB$KEYWORD_NAME                PSWD_VALID_DAYS
+    RDB$KEYWORD_RESERVED            <false>
     RDB$KEYWORD_NAME                PUBLICATION
     RDB$KEYWORD_RESERVED            <true>
     RDB$KEYWORD_NAME                QUANTIZE
+    RDB$KEYWORD_RESERVED            <false>
+    RDB$KEYWORD_NAME                QUOTES
     RDB$KEYWORD_RESERVED            <false>
     RDB$KEYWORD_NAME                RAND
     RDB$KEYWORD_RESERVED            <false>
@@ -693,6 +817,8 @@ expected_stdout = """
     RDB$KEYWORD_RESERVED            <true>
     RDB$KEYWORD_NAME                READ
     RDB$KEYWORD_RESERVED            <false>
+    RDB$KEYWORD_NAME                READ_FILE
+    RDB$KEYWORD_RESERVED            <false>
     RDB$KEYWORD_NAME                REAL
     RDB$KEYWORD_RESERVED            <true>
     RDB$KEYWORD_NAME                RECORD_VERSION
@@ -703,6 +829,8 @@ expected_stdout = """
     RDB$KEYWORD_RESERVED            <true>
     RDB$KEYWORD_NAME                REFERENCES
     RDB$KEYWORD_RESERVED            <true>
+    RDB$KEYWORD_NAME                REGEXP_SUBSTR
+    RDB$KEYWORD_RESERVED            <false>
     RDB$KEYWORD_NAME                REGR_AVGX
     RDB$KEYWORD_RESERVED            <true>
     RDB$KEYWORD_NAME                REGR_AVGY
@@ -785,10 +913,14 @@ expected_stdout = """
     RDB$KEYWORD_RESERVED            <false>
     RDB$KEYWORD_NAME                RSA_VERIFY_HASH
     RDB$KEYWORD_RESERVED            <false>
+    RDB$KEYWORD_NAME                RUN
+    RDB$KEYWORD_RESERVED            <false>
     RDB$KEYWORD_NAME                SALT_LENGTH
     RDB$KEYWORD_RESERVED            <false>
     RDB$KEYWORD_NAME                SAVEPOINT
     RDB$KEYWORD_RESERVED            <true>
+    RDB$KEYWORD_NAME                SCALAR
+    RDB$KEYWORD_RESERVED            <false>
     RDB$KEYWORD_NAME                SCALAR_ARRAY
     RDB$KEYWORD_RESERVED            <false>
     RDB$KEYWORD_NAME                SCHEMA
@@ -853,6 +985,8 @@ expected_stdout = """
     RDB$KEYWORD_RESERVED            <true>
     RDB$KEYWORD_NAME                SQRT
     RDB$KEYWORD_RESERVED            <false>
+    RDB$KEYWORD_NAME                SRP
+    RDB$KEYWORD_RESERVED            <false>
     RDB$KEYWORD_NAME                STABILITY
     RDB$KEYWORD_RESERVED            <false>
     RDB$KEYWORD_NAME                START
@@ -869,6 +1003,8 @@ expected_stdout = """
     RDB$KEYWORD_RESERVED            <true>
     RDB$KEYWORD_NAME                STDDEV_SAMP
     RDB$KEYWORD_RESERVED            <true>
+    RDB$KEYWORD_NAME                STRING
+    RDB$KEYWORD_RESERVED            <false>
     RDB$KEYWORD_NAME                SUBSTRING
     RDB$KEYWORD_RESERVED            <false>
     RDB$KEYWORD_NAME                SUB_TYPE
@@ -881,6 +1017,8 @@ expected_stdout = """
     RDB$KEYWORD_RESERVED            <false>
     RDB$KEYWORD_NAME                TABLE
     RDB$KEYWORD_RESERVED            <true>
+    RDB$KEYWORD_NAME                TABLESPACE
+    RDB$KEYWORD_RESERVED            <false>
     RDB$KEYWORD_NAME                TAGS
     RDB$KEYWORD_RESERVED            <false>
     RDB$KEYWORD_NAME                TAN
@@ -935,6 +1073,8 @@ expected_stdout = """
     RDB$KEYWORD_RESERVED            <true>
     RDB$KEYWORD_NAME                UNCOMMITTED
     RDB$KEYWORD_RESERVED            <false>
+    RDB$KEYWORD_NAME                UNCONDITIONAL
+    RDB$KEYWORD_RESERVED            <false>
     RDB$KEYWORD_NAME                UNDO
     RDB$KEYWORD_RESERVED            <false>
     RDB$KEYWORD_NAME                UNICODE_CHAR
@@ -959,6 +1099,8 @@ expected_stdout = """
     RDB$KEYWORD_RESERVED            <true>
     RDB$KEYWORD_NAME                USING
     RDB$KEYWORD_RESERVED            <true>
+    RDB$KEYWORD_NAME                UTC_TIMESTAMP
+    RDB$KEYWORD_RESERVED            <false>
     RDB$KEYWORD_NAME                UUID_TO_CHAR
     RDB$KEYWORD_RESERVED            <false>
     RDB$KEYWORD_NAME                VALUE
@@ -977,6 +1119,8 @@ expected_stdout = """
     RDB$KEYWORD_RESERVED            <true>
     RDB$KEYWORD_NAME                VAR_SAMP
     RDB$KEYWORD_RESERVED            <true>
+    RDB$KEYWORD_NAME                VERIFYSERVER
+    RDB$KEYWORD_RESERVED            <false>
     RDB$KEYWORD_NAME                VIEW
     RDB$KEYWORD_RESERVED            <true>
     RDB$KEYWORD_NAME                WAIT
@@ -993,11 +1137,15 @@ expected_stdout = """
     RDB$KEYWORD_RESERVED            <true>
     RDB$KEYWORD_NAME                WINDOW
     RDB$KEYWORD_RESERVED            <true>
+    RDB$KEYWORD_NAME                WIN_SSPI
+    RDB$KEYWORD_RESERVED            <false>
     RDB$KEYWORD_NAME                WITH
     RDB$KEYWORD_RESERVED            <true>
     RDB$KEYWORD_NAME                WITHOUT
     RDB$KEYWORD_RESERVED            <true>
     RDB$KEYWORD_NAME                WORK
+    RDB$KEYWORD_RESERVED            <false>
+    RDB$KEYWORD_NAME                WRAPPER
     RDB$KEYWORD_RESERVED            <false>
     RDB$KEYWORD_NAME                WRITE
     RDB$KEYWORD_RESERVED            <false>
@@ -1007,7 +1155,8 @@ expected_stdout = """
     RDB$KEYWORD_RESERVED            <false>
     RDB$KEYWORD_NAME                ZONE
     RDB$KEYWORD_RESERVED            <false>
-    Records affected: 492
+    
+    Records affected: 566
 """
 
 @pytest.mark.version('>=5.0')
