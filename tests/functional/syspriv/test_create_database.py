@@ -36,7 +36,7 @@ expected_stdout_isql = """
     DB_NAME  TMP4TEST.TMP
     ATT_USER TMP_SYSPRIV_USER
     ATT_PROT TCP
-    ATT_AUTH Srp
+    ATT_AUTH SRP_SEC
 """
 
 @pytest.mark.version('>=4.0')

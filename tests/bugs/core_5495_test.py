@@ -43,7 +43,7 @@ act = isql_act('db', test_script, substitutions=[('TCPv.*', 'TCP'),
 expected_stdout = """
      MON$USER                        TMP$C5495
      MON$REMOTE_PROTOCOL             TCP
-     MON$AUTH_METHOD                 Legacy_Auth
+     MON$AUTH_METHOD                 LEGACY_SEC
 """
 
 @pytest.mark.version('>=4.0')

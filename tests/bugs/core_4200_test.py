@@ -54,10 +54,10 @@ def test_1(act: Action, user_srp: User, user_leg: User, capsys):
 
 expected_stdout_2 = """
 WHO_AM_I                        TMP$C4200_LEG
-AUTH_METHOD                     Leg
+AUTH_METHOD                     LEG
 
 WHO_AM_I                        TMP$C4200_SRP
-AUTH_METHOD                     Srp
+AUTH_METHOD                     SRP
 """
 
 @pytest.mark.version('>=4.0')
