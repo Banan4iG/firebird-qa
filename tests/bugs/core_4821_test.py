@@ -94,7 +94,6 @@ def get_filename_by_alias(act: Action, alias_from_dbconf):
 
     with open(act.home_dir/'databases.conf', 'r') as f:
         for line in f:
-            print(line)
             if p_required_alias_ptn.search(line):
                 # If databases.conf contains line like this:
                 #     tmp_6147_alias = $(dir_sampleDb)/qa/tmp_core_6147.fdb

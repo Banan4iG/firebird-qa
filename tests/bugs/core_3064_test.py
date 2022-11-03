@@ -44,6 +44,8 @@ test_script = """
 
 act = isql_act('db', test_script, substitutions=[('offset .*', 'offset')])
 
+#version: 3.0
+
 expected_stderr = """
 Statement failed, SQLSTATE = 42S02
 Dynamic SQL Error
@@ -55,9 +57,16 @@ invalid request BLR at offset 50
 -BLR syntax error: expected TABLE at offset 51, encountered 132
 """
 
-@pytest.mark.version('>=3')
+@pytest.mark.version('>=3,<5.0')
 def test_1(act: Action):
     act.expected_stderr = expected_stderr
     act.execute()
     assert act.clean_stderr == act.clean_expected_stderr
 
+#version: 5.0
+
+@pytest.mark.version('>=5.0')
+def test_1(act: Action):
+    act.expected_stderr = expected_stderr
+    act.execute()
+    assert act.clean_stderr == ''

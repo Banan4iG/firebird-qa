@@ -376,11 +376,6 @@ def test_1(act: Action, addi_script: Path, main_script: Path, tmp_db: Path):
 
         rollback;
 
-        connect '%(dsn)s' user %(user_name)s password '%(user_password)s'; --------------------------- [ 3 ]
-
-        select 'main_script: after_reconnect' as msg, v.* from v_check v;
-        rollback;
-
         connect '{act.db.dsn}' user {act.db.user} password '{act.db.password}'; --------------------------- [ 3 ]
 
         select 'main_script: after_reconnect' as msg, v.* from v_check v;
