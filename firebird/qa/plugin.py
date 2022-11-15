@@ -345,7 +345,7 @@ def pytest_configure(config):
         srv_version = srv.info.get_info(SrvInfoCode.SERVER_VERSION)
         _vars_['is_rdb'] = any(srv_version.find(check) > -1 for check in ['RedDatabase', 'Red Database'])
     # tools
-    for tool in ['isql', 'gbak', 'nbackup', 'gstat', 'gfix', 'gsec', 'fbsvcmgr']:
+    for tool in ['isql', 'gbak', 'nbackup', 'gstat', 'gfix', 'gsec', 'rdbrepldiff', 'fbsvcmgr']:
         set_tool(tool)
     # Load test_config.ini
     QA_GLOBALS.read(_vars_['files'] / 'test_config.ini')
@@ -2097,6 +2097,69 @@ class Action:
                 out_file.write_text(self.stdout, encoding=io_enc)
             if self.stderr:
                 err_file.write_text(self.stderr, encoding=io_enc)
+    def rdbrepldiff(self, *, switches: Optional[List[str]]=None, charset: Optional[str]=None,
+                    io_enc: Optional[str]=None, credentials: bool=True, combine_output: bool=False) -> None:
+        """Run `rdbrepldiff` utility.
+
+        Arguments:
+           switches: List with command-line switches (passed to `subprocess.run`).
+           io_enc: Python encoding to be used to decode text output instead encoding that
+              corresponds to used character set.
+           credentials: When `True` adds switches to connect as primary test database user.
+           combine_output: Combine stdout/stderr into stdout.
+
+        By default, RDBREPLDIFF is executed on primary test database, and output is captured into
+        `stdout` and `stderr`, and exit code is stored to `return_code`.
+
+        If pytest `--save-output` command-line option is used, the content of stdout/stderr
+        is also stored into test protocol files with `.out`/`.err` suffix.
+
+        Example::
+
+           act.rdbrepldiff(switches=['-simple', act.db.db_path, temp_db.db_path])
+           act.rdbrepldiff(switches=['-simple', '-user', test_user.name, '-pasword', test_user.password,
+                              act.db.db_path, temp_db.db_path], credentials=False)
+
+        .. important::
+
+           If `return_code` is not zero, and script execution failure is not expected (either
+           via defined `expected_stderr` value or using `combine_output` = True), it raises and
+           `ExecutionError` with "rdbrepldiff execution failed" message, and adds content of stdout
+           and stderr into test run report.
+        """
+        __tracebackhide__ = True
+        out_file: Path = self.outfile.with_suffix('.out')
+        err_file: Path = self.outfile.with_suffix('.err')
+        if out_file.is_file():
+            out_file.unlink()
+        if err_file.is_file():
+            err_file.unlink()
+        #
+        charset = charset.upper() if charset else self.db.charset
+        if io_enc is None:
+            io_enc = CHARSET_MAP[charset]
+        params = [_vars_['rdbrepldiff']]
+        if credentials:
+            params.extend(['-user', self.db.user, '-password', self.db.password])
+        if switches is not None:
+            params.extend(switches)
+        if combine_output:
+            result: CompletedProcess = run(params, encoding=io_enc, stdout=PIPE, stderr=STDOUT)
+        else:
+            result: CompletedProcess = run(params, encoding=io_enc, capture_output=True)
+        if result.returncode and not (bool(self.expected_stderr) or combine_output):
+            self._node.add_report_section('call', 'rdbrepldiff stdout', result.stdout)
+            self._node.add_report_section('call', 'rdbrepldiff stderr', result.stderr)
+            raise ExecutionError("rdbrepldiff execution failed")
+        self.return_code: int = result.returncode
+        self.stdout: str = result.stdout
+        self.stderr: str = result.stderr
+        # Store output
+        if _vars_['save-output']:
+            if self.stdout:
+                out_file.write_text(self.stdout, encoding=io_enc)
+            if self.stderr:
+                err_file.write_text(self.stderr, encoding=io_enc)
     def svcmgr(self, *, switches: Optional[List[str]]=None, charset: Optional[str]=None,
                io_enc: Optional[str]=None, connect_mngr: bool=True) -> None:
         """Run `fbsvcmgr` utility.
@@ -2225,7 +2288,7 @@ class Action:
 
            It's necessary to call this method between executions of external tools through
            `.isql()`, `.execute()`, `.extract_meta()`, `.gstat()`, `.gfix()`, `.gsec()`,
-           `.gbak()`, `.nbackup` or `.svcmgr()`.
+           `.gbak()`, `.nbackup`, `.rdbrepldiff` or `.svcmgr()`.
         """
         self.return_code: int = 0
         self._clean_stdout = None
