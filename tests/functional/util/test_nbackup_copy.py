@@ -47,7 +47,7 @@ def test_1(act: Action, backup_db: Database, capsys):
             act.print_data_list(cur)
 
     # Check backup
-    pattern = re.compile(r'^I/O error during ("CreateFile (open)"|"open") operation for file ".*backup.fdb.delta".*Error while trying to open file.*No such file or directory', re.S)
+    pattern = re.compile(r'^I/O error during ("CreateFile \(open\)"|"open") operation for file ".*backup.fdb.delta".*Error while trying to open file.*No such file or directory', re.S|re.I)
     with pytest.raises(DatabaseError, match=pattern):
         backup_db.connect()
     # Unlock backup
