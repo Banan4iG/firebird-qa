@@ -112,9 +112,9 @@ WHO_AM_I                        TMP$C2004_BAR
 
 expected_stderr = """
 Statement failed, SQLSTATE = 28000
-Your user name and password are not defined. Ask your database administrator to set up a Firebird login.
+Your user name and password are not defined. Ask your database administrator to set up a Red Database login.
 Statement failed, SQLSTATE = 28000
-Your user name and password are not defined. Ask your database administrator to set up a Firebird login.
+Your user name and password are not defined. Ask your database administrator to set up a Red Database login.
 After line 19 in file tmp_check_2004.sql
 """
 

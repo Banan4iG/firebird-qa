@@ -26,7 +26,7 @@ db = db_factory()
 act = python_act('db')
 
 expected_stderr = """
-    gbak: ERROR:Your user name and password are not defined. Ask your database administrator to set up a Firebird login.
+    gbak: ERROR:Your user name and password are not defined. Ask your database administrator to set up a Red Database login.
     gbak:Exiting before completion due to errors
 """
 

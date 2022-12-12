@@ -92,7 +92,7 @@ expected_stdout = """
 
 expected_stderr = """
     Statement failed, SQLSTATE = 28000
-    Your user name and password are not defined. Ask your database administrator to set up a Firebird login.
+    Your user name and password are not defined. Ask your database administrator to set up a Red Database login.
 """
 
 @pytest.mark.version('>=4.0')

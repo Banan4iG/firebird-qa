@@ -19,7 +19,7 @@ act = python_act('db', substitutions=[('Failure: Database error', '')])
 expected_stderr = """
   [
    PROBLEM ON "attach database".
-   Your user name and password are not defined. Ask your database administrator to set up a Firebird login.
+   Your user name and password are not defined. Ask your database administrator to set up a Red Database login.
    SQLCODE:-902
   ]
 """
