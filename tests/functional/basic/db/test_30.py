@@ -4,10 +4,17 @@
 ID:          new-database-30
 TITLE:       New DB - RDB$TYPES content
 DESCRIPTION: Check the correct content of RDB$TYPES in new database.
+FBTEST:      functional.basic.db.30
 NOTES:
 [07.02.2022] pcisar
-  Test fails on v4 (and likely on v5) because expected_stdout does not match real stdout.
-FBTEST:      functional.basic.db.30
+    Test fails on v4 (and likely on v5) because expected_stdout does not match real stdout.
+[17.01.2023] pzotov
+    DISABLED after discussion with dimitr, letters 17-sep-2022 11:23.
+    Reasons:
+        * There is no much sense to keep such tests because they fails extremely often during new major FB developing.
+        * There is no chanse to get successful outcome for the whole test suite is some of system table became invalid,
+          i.e. lot of other tests will be failed in such case.
+    Single test for check DDL (type of columns, their order and total number) will be implemented for all RDB-tables.
 """
 
 import pytest
@@ -1564,6 +1571,7 @@ expected_stdout_1 = """
 """
 
 @pytest.mark.version('>=3.0,<4.0')
+@pytest.mark.skip("DISABLED: see notes")
 def test_1(act: Action):
     act.expected_stdout = expected_stdout_1
     act.execute()
@@ -3050,7 +3058,8 @@ RDB$DESCRIPTION                 <null>
 RDB$SYSTEM_FLAG                 1
 """
 
-@pytest.mark.version('>=4.0,<5.0')
+#@pytest.mark.version('>=4.0,<5.0')
+@pytest.mark.skip("DISABLED: see notes")
 def test_2(act: Action):
     act.expected_stdout = expected_stdout_2
     act.execute()
@@ -4895,8 +4904,25 @@ test_script = """
 
 act = isql_act('db', test_script)
 
-###@pytest.mark.skip("FIXME: see notes")
+test_script = """
+    set list on;
+
+    -- Query for check whether fields list of table was changed:
+    select rf.rdb$field_name
+    from rdb$relation_fields rf
+    where rf.rdb$relation_name = upper('rdb$relations')
+    order by rf.rdb$field_name;
+
+    set count on;
+    set blob all;
+    select * from rdb$types order by rdb$field_name, rdb$type_name;
+    select iif(count(distinct rdb$field_name || rdb$type_name) = count(*), 1, 0) as "Are ordered columns unique ?" from rdb$types;
+"""
+
+act = isql_act('db', test_script)
+
 @pytest.mark.version('>=5.0')
+@pytest.mark.skip("DISABLED: see notes")
 def test_3(act: Action):
     act.expected_stdout = expected_stdout_3
     act.execute()
