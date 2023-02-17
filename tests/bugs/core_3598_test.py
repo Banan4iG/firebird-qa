@@ -115,7 +115,7 @@ def test_1(act: Action, capsys):
         act.isql(switches=[], input=test_script)
     # Output log of trace session, with filtering only interested info:
     # Performance header text (all excessive spaces will be removed before comparison - see below):
-    perf_header='Table                             Natural     Index    Update    Insert    Delete   Backout     Purge   Expunge'
+    perf_header='Table                             Natural     Index    Update    Insert    Delete   Backout'
     checked_events= {') COMMIT_TRANSACTION': 'commit',
                      ') ROLLBACK_TRANSACTION': 'rollback',
                      ') EXECUTE_STATEMENT': 'execute_statement',

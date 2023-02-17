@@ -21,6 +21,7 @@ FBTEST:      bugs.core_2650
 
 import pytest
 from firebird.qa import *
+from string import Template
 
 db = db_factory()
 
@@ -223,7 +224,7 @@ act = isql_act('db', test_script)
 
 #version: 4.0
 
-expected_stdout = """
+expected_stdout_template = """
     Select Expression
         -> Sort (record length: 1036, key length: 8)
             -> Table "TEST" as "A01" Full Scan
@@ -248,23 +249,23 @@ expected_stdout = """
             -> Sort (record length: 28, key length: 8)
                 -> Table "TEST" Full Scan
 
-    Select Expression
+    $select_sub
         -> Filter
             -> Sort (record length: 1036, key length: 8)
                 -> Filter
                     -> Table "TEST" as "X04" Full Scan
     Select Expression
-        -> Filter
+        -> $filter_sub
             -> Table "TEST" as "A04" Full Scan
 
-    Select Expression
+    $select_sub
         -> Filter
             -> Refetch
                 -> Sort (record length: 28, key length: 8)
                     -> Filter
                         -> Table "TEST" as "X05" Full Scan
     Select Expression
-        -> Filter
+        -> $filter_sub
             -> Table "TEST" as "A05" Full Scan
 
     Select Expression
@@ -276,7 +277,7 @@ expected_stdout = """
             -> Filter
                 -> Table "TEST" as "X06" Full Scan
     Select Expression
-        -> Filter
+        -> $filter_sub
             -> Table "TEST" as "A06" Full Scan
 
     Select Expression
@@ -290,113 +291,113 @@ expected_stdout = """
                 -> Filter
                     -> Table "TEST" as "X07" Full Scan
     Select Expression
-        -> Filter
+        -> $filter_sub
             -> Table "TEST" as "A07" Full Scan
 
-    Select Expression
+    $select_sub
         -> Filter
             -> Sort (record length: 1036, key length: 8)
                 -> Filter
                     -> Table "TEST" as "X08" Full Scan
     Select Expression
-        -> Filter
+        -> $filter_sub
             -> Table "TEST" as "A08" Full Scan
 
-    Select Expression
+    $select_sub
         -> Filter
             -> Refetch
                 -> Sort (record length: 28, key length: 8)
                     -> Filter
                         -> Table "TEST" as "X09" Full Scan
     Select Expression
-        -> Filter
+        -> $filter_sub
             -> Table "TEST" as "A09" Full Scan
 
-    Select Expression
+    $select_sub
         -> Filter
             -> Sort (record length: 1036, key length: 8)
                 -> Filter
                     -> Table "TEST" as "X10" Full Scan
     Select Expression
-        -> Filter
+        -> $filter_sub
             -> Table "TEST" as "A10" Full Scan
 
-    Select Expression
+    $select_sub
         -> Filter
             -> Refetch
                 -> Sort (record length: 28, key length: 8)
                     -> Filter
                         -> Table "TEST" as "X11" Full Scan
     Select Expression
-        -> Filter
+        -> $filter_sub
             -> Table "TEST" as "A11" Full Scan
 
-    Select Expression
+    $select_sub
         -> Refetch
             -> Sort (record length: 28, key length: 8)
                 -> Filter
                     -> Table "TEST" as "X12" Full Scan
     Select Expression
-        -> Filter
+        -> $filter_sub
             -> Table "TEST" as "A12" Full Scan
 
-    Select Expression
+    $select_sub
         -> Sort (record length: 28, key length: 8)
             -> Filter
                 -> Table "TEST" as "X13" Full Scan
     Select Expression
-        -> Filter
+        -> $filter_sub
             -> Table "TEST" as "A13" Full Scan
 
-    Select Expression
+    $select_sub
         -> Refetch
             -> Sort (record length: 36, key length: 12)
                 -> Filter
                     -> Table "TEST" as "X14" Full Scan
     Select Expression
-        -> Filter
+        -> $filter_sub
             -> Table "TEST" as "A14" Full Scan
 
-    Select Expression
+    $select_sub
         -> Sort (record length: 36, key length: 16)
             -> Filter
                 -> Table "TEST" as "X15" Full Scan
     Select Expression
-        -> Filter
+        -> $filter_sub
             -> Table "TEST" as "A15" Full Scan
 
-    Select Expression
+    $select_sub
         -> Refetch
             -> Sort (record length: 36, key length: 16)
                 -> Filter
                     -> Table "TEST" as "X16" Full Scan
     Select Expression
-        -> Filter
+        -> $filter_sub
             -> Table "TEST" as "A16" Full Scan
 
-    Select Expression
+    $select_sub
         -> Refetch
             -> Sort (record length: 28, key length: 8)
                 -> Filter
                     -> Table "TEST" as "X17" Full Scan
     Select Expression
-        -> Filter
+        -> $filter_sub
             -> Table "TEST" as "A17" Full Scan
 
-    Select Expression
+    $select_sub
         -> Sort (record length: 28, key length: 8)
             -> Filter
                 -> Table "TEST" as "X18" Full Scan
     Select Expression
-        -> Filter
+        -> $filter_sub
             -> Table "TEST" as "A18" Full Scan
 
-    Select Expression
+    $select_sub2
         -> Refetch
             -> Sort (record length: 28, key length: 8)
                 -> Filter
                     -> Table "TEST" as "R X" Full Scan
-    Select Expression
+    $select_sub2
         -> Refetch
             -> Sort (record length: 28, key length: 8)
                 -> Filter
@@ -413,7 +414,7 @@ expected_stdout = """
             -> First N Records
                 -> Union
                     -> Table "TEST" as "V01 TEST" Full Scan
-                    -> Table "RDB$DATABASE" as "V01 RDB$DATABASE" Full Scan
+                    -> Table "RDB$$DATABASE" as "V01 RDB$$DATABASE" Full Scan
 
     Select Expression
         -> Refetch
@@ -453,247 +454,18 @@ expected_stdout = """
 
 """
 
-@pytest.mark.version('>=4.0,<5.0')
-def test_1(act: Action):
-    act.expected_stdout = expected_stdout
-    act.execute()
-    assert act.clean_stdout == act.clean_expected_stdout
-
-#version: 5.0
-
-expected_stdout_2 = """
-    Select Expression
-        -> Sort (record length: 1036, key length: 8)
-            -> Table "TEST" as "A01" Full Scan
-
-    Select Expression
-        -> Refetch
-            -> Sort (record length: 28, key length: 8)
-                -> Table "TEST" as "A02" Full Scan
-
-    Select Expression
-        -> First N Records
-            -> Refetch
-                -> Sort (record length: 28, key length: 8)
-                    -> Table "TEST" as "A03" Full Scan
-
-    Select Expression
-        -> Sort (record length: 1036, key length: 8)
-            -> Table "TEST" Full Scan
-
-    Select Expression
-        -> Refetch
-            -> Sort (record length: 28, key length: 8)
-                -> Table "TEST" Full Scan
-
-    Select Expression
-        -> Filter
-            -> Sort (record length: 1036, key length: 8)
-                -> Filter
-                    -> Table "TEST" as "X04" Full Scan
-    Select Expression
-        -> Filter (preliminary)
-            -> Table "TEST" as "A04" Full Scan
-
-    Select Expression
-        -> Filter
-            -> Refetch
-                -> Sort (record length: 28, key length: 8)
-                    -> Filter
-                        -> Table "TEST" as "X05" Full Scan
-    Select Expression
-        -> Filter (preliminary)
-            -> Table "TEST" as "A05" Full Scan
-
-    Select Expression
-        -> Sort (record length: 1036, key length: 8)
-            -> Filter
-                -> Table "TEST" as "X06" Full Scan
-    Select Expression
-        -> Sort (record length: 1036, key length: 8)
-            -> Filter
-                -> Table "TEST" as "X06" Full Scan
-    Select Expression
-        -> Filter (preliminary)
-            -> Table "TEST" as "A06" Full Scan
-
-    Select Expression
-        -> Refetch
-            -> Sort (record length: 28, key length: 8)
-                -> Filter
-                    -> Table "TEST" as "X07" Full Scan
-    Select Expression
-        -> Refetch
-            -> Sort (record length: 28, key length: 8)
-                -> Filter
-                    -> Table "TEST" as "X07" Full Scan
-    Select Expression
-        -> Filter (preliminary)
-            -> Table "TEST" as "A07" Full Scan
-
-    Select Expression
-        -> Filter
-            -> Sort (record length: 1036, key length: 8)
-                -> Filter
-                    -> Table "TEST" as "X08" Full Scan
-    Select Expression
-        -> Filter (preliminary)
-            -> Table "TEST" as "A08" Full Scan
-
-    Select Expression
-        -> Filter
-            -> Refetch
-                -> Sort (record length: 28, key length: 8)
-                    -> Filter
-                        -> Table "TEST" as "X09" Full Scan
-    Select Expression
-        -> Filter (preliminary)
-            -> Table "TEST" as "A09" Full Scan
-
-    Select Expression
-        -> Filter
-            -> Sort (record length: 1036, key length: 8)
-                -> Filter
-                    -> Table "TEST" as "X10" Full Scan
-    Select Expression
-        -> Filter (preliminary)
-            -> Table "TEST" as "A10" Full Scan
-
-    Select Expression
-        -> Filter
-            -> Refetch
-                -> Sort (record length: 28, key length: 8)
-                    -> Filter
-                        -> Table "TEST" as "X11" Full Scan
-    Select Expression
-        -> Filter (preliminary)
-            -> Table "TEST" as "A11" Full Scan
-
-    Select Expression
-        -> Refetch
-            -> Sort (record length: 28, key length: 8)
-                -> Filter
-                    -> Table "TEST" as "X12" Full Scan
-    Select Expression
-        -> Filter (preliminary)
-            -> Table "TEST" as "A12" Full Scan
-
-    Select Expression
-        -> Sort (record length: 28, key length: 8)
-            -> Filter
-                -> Table "TEST" as "X13" Full Scan
-    Select Expression
-        -> Filter (preliminary)
-            -> Table "TEST" as "A13" Full Scan
-
-    Select Expression
-        -> Refetch
-            -> Sort (record length: 36, key length: 12)
-                -> Filter
-                    -> Table "TEST" as "X14" Full Scan
-    Select Expression
-        -> Filter (preliminary)
-            -> Table "TEST" as "A14" Full Scan
-
-    Select Expression
-        -> Sort (record length: 36, key length: 16)
-            -> Filter
-                -> Table "TEST" as "X15" Full Scan
-    Select Expression
-        -> Filter (preliminary)
-            -> Table "TEST" as "A15" Full Scan
-
-    Select Expression
-        -> Refetch
-            -> Sort (record length: 36, key length: 16)
-                -> Filter
-                    -> Table "TEST" as "X16" Full Scan
-    Select Expression
-        -> Filter (preliminary)
-            -> Table "TEST" as "A16" Full Scan
-
-    Select Expression
-        -> Refetch
-            -> Sort (record length: 28, key length: 8)
-                -> Filter
-                    -> Table "TEST" as "X17" Full Scan
-    Select Expression
-        -> Filter (preliminary)
-            -> Table "TEST" as "A17" Full Scan
-
-    Select Expression
-        -> Sort (record length: 28, key length: 8)
-            -> Filter
-                -> Table "TEST" as "X18" Full Scan
-    Select Expression
-        -> Filter (preliminary)
-            -> Table "TEST" as "A18" Full Scan
-
-    Select Expression
-        -> Refetch
-            -> Sort (record length: 28, key length: 8)
-                -> Filter
-                    -> Table "TEST" as "R X" Full Scan
-    Select Expression
-        -> Refetch
-            -> Sort (record length: 28, key length: 8)
-                -> Filter
-                    -> Table "TEST" as "R X" Full Scan
-    Select Expression
-        -> Recursion
-            -> Filter
-                -> Table "TEST" as "R A19" Full Scan
-            -> Filter
-                -> Table "TEST" as "R I" Full Scan
-
-    Select Expression
-        -> Sort (record length: 1052, key length: 8)
-            -> First N Records
-                -> Union
-                    -> Table "TEST" as "V01 TEST" Full Scan
-                    -> Table "RDB$DATABASE" as "V01 RDB$DATABASE" Full Scan
-
-    Select Expression
-        -> Refetch
-            -> Sort (record length: 28, key length: 8)
-                -> Table "TEST" as "A21" Full Scan
-
-    Select Expression
-        -> Sort (record length: 1036, key length: 8)
-            -> Table "TEST" as "A22" Full Scan
-
-    Select Expression
-        -> Refetch
-            -> Sort (record length: 44, key length: 24)
-                -> Table "TEST_NS_01" as "A23" Full Scan
-
-    Select Expression
-        -> Sort (record length: 1052, key length: 24)
-            -> Table "TEST_NS_02" as "A24" Full Scan
-
-    Select Expression
-        -> Refetch
-            -> Sort (record length: 36, key length: 12)
-                -> Table "TEST_NS_03" Full Scan
-
-    Select Expression
-        -> Sort (record length: 1036, key length: 12)
-            -> Table "TEST_NS_04" Full Scan
-
-    Select Expression
-        -> Refetch
-            -> Sort (record length: 36, key length: 12)
-                -> Table "TEST_NS_05" Full Scan
-
-    Select Expression
-        -> Sort (record length: 1036, key length: 12)
-            -> Table "TEST_NS_06" Full Scan
-
-"""
+expected_stdout = Template(expected_stdout_template)
 
 @pytest.mark.version('>=4.0')
 def test_1(act: Action):
-    act.expected_stdout = expected_stdout_2
+    if act.is_version('>4.0'):
+        select_sub="Sub-query (invariant)"
+        select_sub2="Sub-query"
+        filter_sub="Filter (preliminary)"
+    else:
+        select_sub="Select Expression"
+        select_sub2="Select Expression"
+        filter_sub="Filter"
+    act.expected_stdout = expected_stdout.substitute(select_sub=select_sub, select_sub2=select_sub2, filter_sub=filter_sub)
     act.execute()
     assert act.clean_stdout == act.clean_expected_stdout
-

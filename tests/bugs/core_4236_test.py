@@ -101,7 +101,7 @@ def isql_job(act: Action, b: Barrier, lock: Lock, result_list: List[str]):
 @pytest.mark.version('>=3.0')
 def test_1(act: Action, capsys):
      PLANNED_DML_ATTACHMENTS = 20
-     WAIT_FOR_ALL_CONNECTIONS_START_JOB = 10
+     WAIT_FOR_ALL_CONNECTIONS_START_JOB = 15
      lock = Lock()
      threads = []
      result_list = []

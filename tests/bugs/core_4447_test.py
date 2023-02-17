@@ -11,6 +11,7 @@ FBTEST:      bugs.core_4447
 
 import pytest
 from firebird.qa import *
+from string import Template
 
 init_script = """
   recreate table ts(id int, x int, y int, z int, constraint ts_pk_id primary key (id) );
@@ -43,16 +44,19 @@ test_script = """
   set planonly;
 """
 
-act = isql_act('db', test_script)
+act = isql_act('db', test_script, substitutions=[('-- line(:)? \d+, col(umn)?(:)? \d+', '-- line, column')])
 
-expected_stdout = """
+expected_stdout_template = """
+  $plan_sub
   PLAN (T INDEX (TT_PK_XY))
+  $plan_sub
   PLAN (C TS NATURAL)
 """
-
+expected_stdout = Template(expected_stdout_template)
 @pytest.mark.version('>=3.0')
 def test_1(act: Action):
-    act.expected_stdout = expected_stdout
+    plan_sub = '-- line, column' if act.is_version('>4.0') else ''
+    act.expected_stdout = expected_stdout.substitute(plan_sub=plan_sub)
     act.execute()
     assert act.clean_stdout == act.clean_expected_stdout
 

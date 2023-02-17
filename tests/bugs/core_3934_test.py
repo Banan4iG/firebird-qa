@@ -15,6 +15,7 @@ FBTEST:      bugs.core_3934
 import pytest
 import re
 from firebird.qa import *
+import time
 
 db = db_factory()
 
@@ -45,5 +46,6 @@ def test_1(act: Action):
     assert sweep_present(act.trace_log)
     # Case 2 - sweep not logged
     act.trace_log.clear()
+    time.sleep(1)
     check_sweep(act, False)
     assert not sweep_present(act.trace_log)

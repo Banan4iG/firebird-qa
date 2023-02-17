@@ -36,12 +36,12 @@ from difflib import unified_diff
 import pytest
 from firebird.qa import *
 
-db = db_factory()
+db = db_factory(filename='core_4319.fdb')
 
 act = python_act('db')
 
 trace_conf = """
-    database
+    database=%[\\\\\\\\/]core_4319.fdb
     {
         enabled = true
         log_connections = true

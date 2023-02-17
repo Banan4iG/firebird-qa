@@ -11,6 +11,7 @@ FBTEST:      bugs.core_4318
 
 import pytest
 from firebird.qa import *
+from string import Template
 
 init_script = """
     recreate table t2 (
@@ -93,8 +94,8 @@ test_script = """
 
 act = isql_act('db', test_script)
 
-expected_stdout = """
-    Select Expression
+expected_stdout_template = """
+    Select Expression$plan_sub
         -> Singularity Check
             -> Filter
                 -> Aggregate
@@ -102,10 +103,12 @@ expected_stdout = """
                         -> Table "T2" as "T T2" Access By ID
                             -> Index "FK_T2_REF_T1" Range Scan (full match)
 """
+expected_stdout = Template(expected_stdout_template)
 
 @pytest.mark.version('>=3.0')
 def test_1(act: Action):
-    act.expected_stdout = expected_stdout
+    plan_sub = " (line 8, column 7)" if act.is_version('>4.0') else ''
+    act.expected_stdout = expected_stdout.substitute(plan_sub=plan_sub)
     act.execute()
     assert act.clean_stdout == act.clean_expected_stdout
 

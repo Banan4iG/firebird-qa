@@ -11,6 +11,7 @@ FBTEST:      bugs.core_2303
 
 import pytest
 from firebird.qa import *
+from string import Template
 
 db = db_factory()
 
@@ -30,21 +31,27 @@ test_script = """
 
 act = isql_act('db', test_script, substitutions=[('MON_EXPLAINED_BLOB_ID .*', '')])
 
-expected_stdout = """
+expected_stdout_template = """
     SIGN                            1
 
-    Select Expression
+    $plan_sub
         -> Singularity Check
             -> Aggregate
-                -> Table "RDB$RELATIONS" as "R" Full Scan
+                -> Table "RDB$$RELATIONS" as "R" Full Scan
     Select Expression
         -> Filter
-            -> Table "MON$STATEMENTS" as "S" Full Scan
+            -> Table "MON$$STATEMENTS" as "S" Full Scan
 """
+
+expected_stdout = Template(expected_stdout_template)
 
 @pytest.mark.version('>=3.0')
 def test_1(act: Action):
-    act.expected_stdout = expected_stdout
+    if act.is_version('>3.0'):
+        plan_sub="Sub-query"
+    else:
+        plan_sub="Select Expression"
+    act.expected_stdout = expected_stdout.substitute(plan_sub=plan_sub)
     act.execute()
     assert act.clean_stdout == act.clean_expected_stdout
 

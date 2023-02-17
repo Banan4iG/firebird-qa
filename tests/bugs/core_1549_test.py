@@ -11,6 +11,7 @@ FBTEST:      bugs.core_1549
 
 import pytest
 from firebird.qa import *
+from string import Template
 
 db = db_factory()
 
@@ -65,15 +66,15 @@ test_script = """
 
 act = isql_act('db', test_script)
 
-expected_stdout = """
+expected_stdout_template = """
     EXISTS with ref. to 1st stream:
-
-    Select Expression
+    
+    $plan_sub
         -> Filter
             -> Table "T" as "X" Access By ID
                 -> Bitmap
                     -> Index "T_ID" Range Scan (full match)
-    Select Expression
+    $plan_sub
         -> Filter
             -> Table "T" as "Z" Access By ID
                 -> Bitmap
@@ -90,12 +91,12 @@ expected_stdout = """
 
     Two sep. DT and EXISTS inside:
 
-    Select Expression
+    $plan_sub
         -> Filter
             -> Table "T" as "B X" Access By ID
                 -> Bitmap
                     -> Index "T_ID" Range Scan (full match)
-    Select Expression
+    $plan_sub
         -> Filter
             -> Table "T" as "A X" Access By ID
                 -> Bitmap
@@ -110,9 +111,15 @@ expected_stdout = """
                         -> Index "T_ID" Range Scan (lower bound: 1/1)
 """
 
+expected_stdout = Template(expected_stdout_template)
+
 @pytest.mark.version('>=3.0')
 def test_1(act: Action):
-    act.expected_stdout = expected_stdout
+    if act.is_version('>3.0'):
+        plan_sub="Sub-query"
+    else:
+        plan_sub="Select Expression"
+    act.expected_stdout = expected_stdout.substitute(plan_sub=plan_sub)
     act.execute()
     assert act.clean_stdout == act.clean_expected_stdout
 

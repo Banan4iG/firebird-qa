@@ -69,4 +69,5 @@ def test_1(act: Action):
     # Check
     act.trace_to_stdout()
     for cmd in ddl_lst:
-        assert act.stdout.find(cmd) > 0
+        for line in cmd:
+            assert act.stdout.find(line) > 0
