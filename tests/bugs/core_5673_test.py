@@ -33,6 +33,9 @@ FBTEST:      bugs.core_5673
 NOTES:
     [06.06.2022] pzotov
     Checked on 4.0.1.2692, 3.0.8.33535 - both on Linux and Windows.
+
+    [20.02.2023] Zuev
+    Disable the test until RdbCrypt is added.
 """
 
 import time
@@ -57,6 +60,7 @@ act = python_act('db')
 
 custom_tpb = TPB(isolation=Isolation.READ_COMMITTED_RECORD_VERSION, lock_timeout=0)
 
+@pytest.mark.skip("DISABLED: see notes")
 @pytest.mark.version('>=3.0.3')
 @pytest.mark.encryption
 def test_1(act: Action, capsys):

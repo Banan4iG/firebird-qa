@@ -16,6 +16,9 @@ NOTES:
     [31.07.2022] pzotov
     Test reads settings that are COMMON for all encryption-related tests and stored in act.files_dir/test_config.ini.
     QA-plugin prepares this by defining dictionary with name QA_GLOBALS which reads settings via ConfigParser mechanism.
+
+    [20.02.2023] Zuev
+    Disable the test until RdbCrypt is added.
 """
 
 import pytest
@@ -51,6 +54,7 @@ fb4x_checked_stdout = f"""
     -Crypt key {ENCRYPTION_BADKEY} not set
 """
 
+@pytest.mark.skip("DISABLED: see notes")
 @pytest.mark.encryption
 @pytest.mark.version('>=3.0.4')
 def test_1(act: Action, capsys):

@@ -32,6 +32,9 @@ NOTES:
      See also CORE-6084 and its fix: https://github.com/FirebirdSQL/firebird/commit/23dc0c6297825b2e9006f4d5a2c488702091033d
 
      Checked on 4.0.1.2692, 3.0.8.33535.
+
+    [20.02.2023] Zuev
+    Disable the test until RdbCrypt is added.
 """
 
 import binascii
@@ -108,6 +111,7 @@ expected_stdout = """
     GEN_DECADE   NOT FOUND.
 """
 
+@pytest.mark.skip("DISABLED: see notes")
 @pytest.mark.encryption
 @pytest.mark.version('>=3.0.5')
 def test_1(act: Action, capsys):

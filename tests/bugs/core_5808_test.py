@@ -24,6 +24,9 @@ NOTES:
     [12.06.2022] pzotov
     Checked on 4.0.1.2692 - both on Linux and Windows.
     NB: duration on Linux ~40 s; on Windows ~22 s.
+
+    [20.02.2023] Zuev
+    Disable the test until RdbCrypt is added.
 """
 
 import re
@@ -71,6 +74,7 @@ db = db_factory(init = init_script)
 
 act = python_act('db')
 
+@pytest.mark.skip("DISABLED: see notes")
 @pytest.mark.encryption
 @pytest.mark.version('>=4.0')
 def test_1(act: Action, capsys):

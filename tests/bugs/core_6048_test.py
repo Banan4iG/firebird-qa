@@ -26,6 +26,9 @@ NOTES:
     Number of records that will be added into table must be sufficient big to force encryption thread work at least 3 seconds,
     but - at the same time - it must not be too large because we have time limit <MAX_ENCRYPT_DECRYPT_MS> which must not be exeeded.
     Careful tuning required on each tesing box for this test.
+
+    [20.02.2023] Zuev
+    Disable the test until RdbCrypt is added.
 """
 
 import os
@@ -71,6 +74,7 @@ expected_stdout = """
     Last measured values of mon$crypt_page and mon$crypt_state: EXPECTED
 """
 
+@pytest.mark.skip("DISABLED: see notes")
 @pytest.mark.encryption
 @pytest.mark.version('>=5.0')
 def test_1(act: Action, capsys):

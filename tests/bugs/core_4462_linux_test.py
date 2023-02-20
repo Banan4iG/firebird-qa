@@ -36,6 +36,9 @@ NOTES:
        (NB: restored database must also be encrypted, but currently this is not checked by test)
 
     Checked on 5.0.0.691, 4.0.1.2692, 3.0.8.33535.
+    
+    [17.02.2023] Zuev
+    Disable the test until RdbCrypt is added.
 """
 import os
 import locale
@@ -97,6 +100,7 @@ def print_validation(line: str) -> None:
         print(f'VALIDATION LOG: {line.upper()}')
 #------------------------------------------------------------------
 
+@pytest.mark.skip("DISABLED: see notes")
 @pytest.mark.version('>=3.0.5')
 @pytest.mark.platform('Linux')
 def test_1(act: Action, act_rest_fdb: Action, tmp_zipped_nbk_list: List[Path], tmp_blob_txt: Path, tmp_blob_bin: Path, tmp_rest_fdb: Path, tmp_rest_log: Path, capsys):

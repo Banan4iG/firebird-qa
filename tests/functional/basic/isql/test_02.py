@@ -15,7 +15,6 @@ db = db_factory()
 act = isql_act('db', 'show system;')
 
 # version: 3.0
-
 expected_stdout_1 = """
 Tables:
        MON$ATTACHMENTS                        MON$CALL_STACK
@@ -122,14 +121,7 @@ Collations:
        WIN_PTBR
 """
 
-@pytest.mark.version('>=3.0,<4.0')
-def test_1(act: Action):
-    act.expected_stdout = expected_stdout_1
-    act.execute()
-    assert act.clean_stdout == act.clean_expected_stdout
-
 # version: 4.0
-
 expected_stdout_2 = """
     Tables:
     MON$ATTACHMENTS
@@ -342,14 +334,7 @@ expected_stdout_2 = """
     RDB$ADMIN
 """
 
-@pytest.mark.version('>=4.0,<5.0')
-def test_2(act: Action):
-    act.expected_stdout = expected_stdout_2
-    act.execute()
-    assert act.clean_stdout == act.clean_expected_stdout
-
 # version: 5.0
-
 expected_stdout_3 = """
     Tables:
     MON$ATTACHMENTS
@@ -570,18 +555,23 @@ expected_stdout_3 = """
     Generator RDB$CONSTRAINT_NAME, current value: 0, initial value: 0, increment: 0
     Generator RDB$EXCEPTIONS, current value: 0, initial value: 0, increment: 0
     Generator RDB$FIELD_NAME, current value: 0, initial value: 0, increment: 0
-    Generator RDB$FUNCTIONS, current value: 2, initial value: 0, increment: 0
+    Generator RDB$FUNCTIONS, current value: 7, initial value: 0, increment: 0
     Generator RDB$GENERATOR_NAME, current value: 0, initial value: 0, increment: 0
     Generator RDB$INDEX_NAME, current value: 0, initial value: 0, increment: 0
-    Generator RDB$PROCEDURES, current value: 8, initial value: 0, increment: 0
-    Generator RDB$SECURITY_CLASS, current value: 477, initial value: 0, increment: 0
+    Generator RDB$PROCEDURES, current value: 10, initial value: 0, increment: 0
+    Generator RDB$SECURITY_CLASS, current value: 484, initial value: 0, increment: 0
     Generator RDB$TABLESPACES, current value: 0, initial value: 0, increment: 0
     Generator RDB$TRIGGER_NAME, current value: 0, initial value: 0, increment: 0
     Generator SQL$DEFAULT, current value: 60, initial value: 0, increment: 0
 """
 
-@pytest.mark.version('>=5.0')
-def test_3(act: Action):
-    act.expected_stdout = expected_stdout_3
+@pytest.mark.version('>=3.0')
+def test_1(act: Action):
+    if act.is_version('>=5.0'):
+        act.expected_stdout = expected_stdout_3
+    elif act.is_version('>=4.0'):
+        act.expected_stdout = expected_stdout_2
+    else:
+        act.expected_stdout = expected_stdout_1
     act.execute()
     assert act.clean_stdout == act.clean_expected_stdout
