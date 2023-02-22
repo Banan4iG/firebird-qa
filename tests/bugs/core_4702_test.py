@@ -74,7 +74,7 @@ init_script = """
     commit;
 """
 
-db = db_factory(init=init_script)
+db = db_factory(init=init_script, page_size=4096)
 
 test_script = """
     set planonly;
