@@ -47,7 +47,7 @@ def test_1(act: Action, tmp_fbk: Path, tmp_res: Database, capsys):
         assert act.clean_stdout == act.clean_expected_stdout
         act.reset()
         # -----------------------------------------------------
-        act.gbak(switches=['-b', str(act.db.db_path), str(tmp_fbk)], io_enc = locale.getpreferredencoding())
+        act.gbak(switches=['-B', 'O', str(act.db.db_path), str(tmp_fbk)], io_enc = locale.getpreferredencoding())
         act.gbak(switches=['-rep', str(tmp_fbk), tmp_res.db_path], io_enc = locale.getpreferredencoding())
         #act.gbak(switches=['-b', '-se', 'localhost:service_mgr', str(act.db.db_path), str(tmp_fbk)])
         #act.gbak(switches=['-rep', '-se', 'localhost:service_mgr', str(tmp_fbk), str(tmp_res)])
