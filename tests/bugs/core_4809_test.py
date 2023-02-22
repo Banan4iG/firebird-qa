@@ -13,6 +13,9 @@ NOTES:
     FB 5.0.0.455 and later: data sources with equal cardinality now present in the HASH plan in order they are specified in the query.
     Reversed order was used before this build. Because of this, two cases of expected stdout must be taken in account, see variables
     'fb3x_checked_stdout' and 'fb5x_checked_stdout'.
+
+    [22.02.2023 Zuev]
+    Correct expected output according to RDB 5.0.0-Beta1
 """
 
 import pytest
@@ -180,30 +183,30 @@ fb3x_checked_stdout = """
 """
 
 
-fb5x_checked_stdout = """
+rdb5x_checked_stdout = """
     PLAN HASH (R TK NATURAL, S TK NATURAL)
     PLAN HASH (R TK NATURAL, S TK NATURAL, T TK NATURAL)
     PLAN HASH (R TK NATURAL, S TK NATURAL, T TK NATURAL, U TK NATURAL)
     PLAN HASH (R TK NATURAL, S TK NATURAL)
-    PLAN HASH (HASH (R TK NATURAL, S TK NATURAL), T TK NATURAL)
-    PLAN HASH (HASH (HASH (R TK NATURAL, S TK NATURAL), T TK NATURAL), U TK NATURAL)
+    PLAN HASH (T TK NATURAL, HASH (R TK NATURAL, S TK NATURAL))
+    PLAN HASH (U TK NATURAL, HASH (T TK NATURAL, HASH (R TK NATURAL, S TK NATURAL)))
     PLAN HASH (R TK NATURAL, S TK NATURAL)
-    PLAN HASH (HASH (R TK NATURAL, S TK NATURAL), T TK NATURAL)
-    PLAN HASH (HASH (HASH (R TK NATURAL, S TK NATURAL), T TK NATURAL), U TK NATURAL)
+    PLAN HASH (T TK NATURAL, HASH (R TK NATURAL, S TK NATURAL))
+    PLAN HASH (U TK NATURAL, HASH (T TK NATURAL, HASH (R TK NATURAL, S TK NATURAL)))
     PLAN HASH (R TF NATURAL, S TF NATURAL)
     PLAN HASH (R TF NATURAL, S TF NATURAL, T TF NATURAL)
     PLAN HASH (R TF NATURAL, S TF NATURAL, T TF NATURAL, U TF NATURAL)
     PLAN HASH (R TF NATURAL, S TF NATURAL)
-    PLAN HASH (HASH (R TF NATURAL, S TF NATURAL), T TF NATURAL)
-    PLAN HASH (HASH (HASH (R TF NATURAL, S TF NATURAL), T TF NATURAL), U TF NATURAL)
+    PLAN HASH (T TF NATURAL, HASH (R TF NATURAL, S TF NATURAL))
+    PLAN HASH (U TF NATURAL, HASH (T TF NATURAL, HASH (R TF NATURAL, S TF NATURAL)))
     PLAN HASH (R TF NATURAL, S TF NATURAL)
-    PLAN HASH (HASH (R TF NATURAL, S TF NATURAL), T TF NATURAL)
-    PLAN HASH (HASH (HASH (R TF NATURAL, S TF NATURAL), T TF NATURAL), U TF NATURAL)
+    PLAN HASH (T TF NATURAL, HASH (R TF NATURAL, S TF NATURAL))
+    PLAN HASH (U TF NATURAL, HASH (T TF NATURAL, HASH (R TF NATURAL, S TF NATURAL)))
 """
 
 @pytest.mark.version('>=3.0')
 def test_1(act: Action):
-    act.expected_stdout = fb3x_checked_stdout if act.is_version('<5') else fb5x_checked_stdout
+    act.expected_stdout = fb3x_checked_stdout if act.is_version('<5') else rdb5x_checked_stdout
     act.execute()
     assert act.clean_stdout == act.clean_expected_stdout
 
