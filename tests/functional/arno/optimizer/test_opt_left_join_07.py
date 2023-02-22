@@ -12,7 +12,7 @@ FBTEST:      functional.arno.optimizer.opt_left_join_07
 import pytest
 from firebird.qa import *
 
-init_script = """CREATE TABLE Colors (
+init_script = """    CREATE TABLE Colors (
   ColorID INTEGER NOT NULL,
   ColorName VARCHAR(20)
 );
@@ -49,8 +49,10 @@ COMMIT;
 db = db_factory(init=init_script)
 
 test_script = """SET PLAN ON;
+set explain on;
 /* 4 joined tables with 1 LEFT JOIN */
 SELECT
+  first 10 -- see letter from dimitr, 09-oct-2022 18:38 
   f.ColorID,
   c1.ColorID,
   c2.ColorID,
@@ -59,18 +61,58 @@ FROM
   Flowers f
   JOIN Colors c1 ON (c1.ColorID = f.ColorID)
   LEFT JOIN Colors c2 ON (c2.ColorID = c1.ColorID)
-JOIN Colors c3 ON (c3.ColorID = c1.ColorID);"""
+  JOIN Colors c3 ON (c3.ColorID = c1.ColorID);"""
+
+'''
+NOTE. Plan up to FB 5.0.0.763:
+Select Expression
+    -> First N Records
+        -> Nested Loop Join (inner)
+            -> Nested Loop Join (outer)
+                -> Nested Loop Join (inner)
+                    -> Table "FLOWERS" as "F" Full Scan
+                    -> Filter
+                        -> Table "COLORS" as "C1" Access By ID
+                            -> Bitmap
+                                -> Index "PK_COLORS" Unique Scan
+                -> Filter
+                    -> Table "COLORS" as "C2" Access By ID
+                        -> Bitmap
+                            -> Index "PK_COLORS" Unique Scan
+            -> Filter
+                -> Table "COLORS" as "C3" Access By ID
+                    -> Bitmap
+                        -> Index "PK_COLORS" Unique Scan
+'''
 
 act = isql_act('db', test_script)
 
-expected_stdout = """PLAN JOIN (JOIN (JOIN (F NATURAL, C1 INDEX (PK_COLORS)), C2 INDEX (PK_COLORS)), C3 INDEX (PK_COLORS))
+expected_stdout = """
+Select Expression
+    -> First N Records
+        -> Nested Loop Join (inner)
+            -> Nested Loop Join (outer)
+                -> Filter
+                    -> Hash Join (inner)
+                        -> Table "FLOWERS" as "F" Full Scan
+                        -> Record Buffer (record length: 25)
+                            -> Table "COLORS" as "C1" Full Scan
+                -> Filter
+                    -> Table "COLORS" as "C2" Access By ID
+                        -> Bitmap
+                            -> Index "PK_COLORS" Unique Scan
+            -> Filter
+                -> Table "COLORS" as "C3" Access By ID
+                    -> Bitmap
+                        -> Index "PK_COLORS" Unique Scan
 
      COLORID      COLORID      COLORID      COLORID
 ============ ============ ============ ============
 
            1            1            1            1
            2            2            2            2
-0            0            0            0"""
+0            0            0            0
+"""
 
 @pytest.mark.version('>=3')
 def test_1(act: Action):

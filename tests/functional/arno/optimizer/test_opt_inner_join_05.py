@@ -312,7 +312,7 @@ r.RelationName DESC;"""
 
 act = isql_act('db', test_script)
 
-expected_stdout = """PLAN SORT (JOIN (C INDEX (I_COUNTRYNAME), R INDEX (FK_RELATIONS_COUNTRIES)))
+expected_stdout = """PLAN SORT (HASH (R NATURAL, C INDEX (I_COUNTRYNAME)))
 
 RELATIONNAME                        COUNTRYNAME
 =================================== ==================================================
