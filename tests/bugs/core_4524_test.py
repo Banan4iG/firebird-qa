@@ -29,6 +29,9 @@ NOTES:
     QA-plugin prepares this by defining dictionary with name QA_GLOBALS which reads settings via ConfigParser mechanism.
 
     Checked on Linux and Windows: 3.0.8.33535 (SS/CS), 4.0.1.2692 (SS/CS)
+
+    [22.02.2023] Zuev
+    Disable the test until RdbCrypt is added.
 """
 import binascii
 import re
@@ -108,6 +111,7 @@ def check_page_for_readable_values(dbname, gen_page_number, pg_size, check_seque
 
 #----------------------------------------------------------------------------------------------
 
+@pytest.mark.skip("DISABLED: see notes")
 @pytest.mark.version('>=4.0')
 def test_1(act_src: Action, act_res: Action, tmp_fbk:Path, capsys):
 

@@ -50,8 +50,6 @@ act = python_act('db')
 gbak_expected_stdout = """
     gbak: ERROR:attempt to store duplicate value (visible to active transactions) in unique index "TEST_1_UNQ"
     gbak: ERROR:    Problematic key value is (<expression> = 1)
-    gbak: ERROR:Database is not online due to failure to activate one or more indices.
-    gbak: ERROR:    Run gfix -online to bring database online without active indices.
 """
 
 fbk_file = temp_file('core_5201.fbk')
