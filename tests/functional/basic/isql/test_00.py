@@ -19,7 +19,7 @@ test_script = """
 
 act = isql_act('db', test_script)
 
-expected_stdout = """
+fb3x_checked_stdout = """
     Frontend commands:
     BLOBDUMP <blobid> <file>   -- dump BLOB to a file
     BLOBVIEW <blobid>          -- view BLOB in text editor
@@ -62,15 +62,7 @@ expected_stdout = """
     All commands may be abbreviated to letters in CAPitals
 """
 
-@pytest.mark.version('>=3.0,<5.0')
-def test_1(act: Action):
-    act.expected_stdout = expected_stdout
-    act.execute()
-    assert act.clean_stdout == act.clean_expected_stdout
-
-#version: 5.0
-
-expected_stdout_2 = """
+fb5x_checked_stdout = """
     Frontend commands:
     BLOBDUMP <blobid> <file>   -- dump BLOB to a file
     BLOBVIEW <blobid>          -- view BLOB in text editor
@@ -116,8 +108,8 @@ expected_stdout_2 = """
     All commands may be abbreviated to letters in CAPitals
 """
 
-@pytest.mark.version('>=5.0')
-def test_2(act: Action):
-    act.expected_stdout = expected_stdout_2
+@pytest.mark.version('>=3.0,<5.0')
+def test_1(act: Action):
+    act.expected_stdout = fb3x_checked_stdout if act.is_version('<5') else fb5x_checked_stdout
     act.execute()
     assert act.clean_stdout == act.clean_expected_stdout
