@@ -29,6 +29,9 @@ NOTES:
        ::: NB :::
        FB 5.x seems to be escaped this problem much earlier than FB 4.x. Build 5.0.0.240 (01-oct-2021) altready NOT hangs.
        Checked on 5.0.0.961 SS, 4.0.3.2903 SS - all fine.
+
+    [2.03.2023] Zuev
+    Disable the test until RdbCrypt is added.
 """
 
 import datetime as py_dt
@@ -55,6 +58,7 @@ act_tmp = python_act('tmp_fdb', substitutions=[('-object .* is in use', '-object
 expected_stdout = """
 """
 
+@pytest.mark.skip("DISABLED: see notes")
 @pytest.mark.encryption
 @pytest.mark.version('>=4.0.2')
 def test_1(act: Action, act_tmp: Action, tmp_sql: Path, tmp_log: Path, capsys):
