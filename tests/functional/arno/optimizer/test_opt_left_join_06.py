@@ -68,7 +68,7 @@ WHERE
 
 act = isql_act('db', test_script)
 
-expected_stdout = """PLAN JOIN (JOIN (F1 NATURAL, F2 INDEX (FK_FLOWERS_COLORS)), C INDEX (PK_COLORS))
+expected_stdout = """PLAN JOIN (F1 INDEX (FK_FLOWERS_COLORS), C INDEX (PK_COLORS), F2 INDEX (FK_FLOWERS_COLORS))
 
 FLOWERNAME                     FLOWERNAME                     COLORNAME
 ============================== ============================== ====================

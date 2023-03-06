@@ -11,6 +11,9 @@ NOTES:
   Functions div, frac, dow, sdow, getExactTimestampUTC and isLeapYear got safe replacement
   in UDR library "udf_compat", see it in folder: ../plugins/udr/
   UDF function 'sright' has direct built-in analog 'right', there is no UDR function for it.
+
+[6.03.2023] Zuev
+  Disable the test for RDB3 because it requires UDF removed from installers.             
 JIRA:        CORE-858
 FBTEST:      bugs.core_0858
 """
@@ -61,6 +64,7 @@ expected_stdout = """
     SRIGHT_RESULT                   ty
 """
 
+@pytest.mark.skip("DISABLED: see notes")
 @pytest.mark.version('>=3.0,<4.0')
 def test_1(act: Action):
     act.expected_stdout = expected_stdout

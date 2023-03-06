@@ -31,8 +31,8 @@ fb3x_checked_stdout = """
     OUTput                     -- return output to stdout
     SET      <option>          -- (Use HELP SET for complete list)
     SHELL    <command>         -- execute Operating System command in sub-shell
-    SHOW     <object> [<name>] -- display system information
-    <object> = CHECK, COLLATION, DATABASE, DOMAIN, EXCEPTION, FILTER, FUNCTION,
+    SHOW     <object> [<name>|<pattern>] -- display system information
+    <object> = ALL, CHECK, COLLATION, DATABASE, DOMAIN, EXCEPTION, FILTER, FUNCTION,
     GENERATOR, GRANT, INDEX, PACKAGE, PROCEDURE, ROLE, SQL DIALECT,
     SYSTEM, TABLE, TRIGGER, VERSION, USERS, VIEW
     EXIT                       -- exit and commit changes

@@ -70,6 +70,7 @@ expected_stdout = """
 
 trace = ['time_threshold = 0',
          'log_statement_start = true',
+	     'log_statement_finish = false',
          ]
 
 @pytest.mark.version('>=3')

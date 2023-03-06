@@ -31,6 +31,7 @@ trace = ['time_threshold = 0',
          'print_plan = true',
          'explain_plan = true',
          'log_statement_prepare = true',
+         'log_statement_finish = false',
          'include_filter=%(from|join)[[:whitespace:]]test%',
          ]
 

@@ -115,7 +115,7 @@ expected_stdout = Template(expected_stdout_template)
 
 @pytest.mark.version('>=3.0')
 def test_1(act: Action):
-    if act.is_version('>3.0'):
+    if act.is_version('>=5.0'):
         plan_sub="Sub-query"
     else:
         plan_sub="Select Expression"

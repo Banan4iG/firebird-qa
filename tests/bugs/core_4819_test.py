@@ -212,24 +212,34 @@ expected_stdout = """
 # version: 3.0
 
 expected_stderr_1 = """
+    Statement failed, SQLSTATE = 2F000
+    Error while parsing trigger TEST_AUD1's BLR
+    -attempted update of read-only column
+    -X
+    
+    Statement failed, SQLSTATE = 2F000
+    Error while parsing trigger TEST_AUD2's BLR
+    -attempted update of read-only column
+    -X
+    
+    Statement failed, SQLSTATE = 2F000
+    Error while parsing trigger TEST_AUD2's BLR
+    -attempted update of read-only column
+    -X
+    
+    Statement failed, SQLSTATE = 2F000
+    Error while parsing trigger TEST_AUD2's BLR
+    -attempted update of read-only column
+    -X
+    
+    Statement failed, SQLSTATE = 2F000
+    Error while parsing trigger TEST_AUD2's BLR
+    -attempted update of read-only column
+    -X
+    
     Statement failed, SQLSTATE = 42000
     attempted update of read-only column
-
-    Statement failed, SQLSTATE = 42000
-    attempted update of read-only column
-
-    Statement failed, SQLSTATE = 42000
-    attempted update of read-only column
-
-    Statement failed, SQLSTATE = 42000
-    attempted update of read-only column
-
-    Statement failed, SQLSTATE = 42000
-    attempted update of read-only column
-
-    Statement failed, SQLSTATE = 42000
-    attempted update of read-only column
-
+    
     Statement failed, SQLSTATE = 42000
     attempted update of read-only column
 """

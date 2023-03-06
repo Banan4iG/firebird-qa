@@ -6,10 +6,13 @@ ISSUE:       361
 TITLE:       Error "no current record for fetch operation" on view select
 DESCRIPTION:
 NOTES:
-[24.01.2019] Added separate code for running on FB 4.0+.
+    [24.01.2019] Added separate code for running on FB 4.0+.
              UDF usage is deprecated in FB 4+, see: ".../doc/README.incompatibilities.3to4.txt".
              Functions div, frac, dow, sdow, getExactTimestampUTC and isLeapYear got safe
              replacement in UDR library "udf_compat", see it in folder: ../plugins/udr/
+
+    [6.03.2023] Zuev
+    Disable the test for RDB3 because it requires UDF removed from installers.             
 JIRA:        CORE-37
 FBTEST:      bugs.core_0037
 """
@@ -90,6 +93,7 @@ expected_stdout = """
     Records affected: 0
 """
 
+@pytest.mark.skip("DISABLED: see notes")
 @pytest.mark.version('>=3,<4.0')
 def test_1(act_1: Action):
     act_1.expected_stdout = expected_stdout

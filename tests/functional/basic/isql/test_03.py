@@ -33,35 +33,37 @@ substitutions = \
 
 act = isql_act('db', test_script, substitutions = substitutions)
 
+expected_stderr = "There are no user-defined functions in this database"
 
 # version: 3.0
 
 expected_stdout_1 = """
-       MON$ATTACHMENTS                        MON$CALL_STACK
-       MON$CONTEXT_VARIABLES                  MON$DATABASE
-       MON$IO_STATS                           MON$MEMORY_USAGE
-       MON$RECORD_STATS                       MON$STATEMENTS
-       MON$TABLE_STATS                        MON$TRANSACTIONS
-       RDB$AUTH_MAPPING                       RDB$BACKUP_HISTORY
-       RDB$CHARACTER_SETS                     RDB$CHECK_CONSTRAINTS
-       RDB$COLLATIONS                         RDB$DATABASE
-       RDB$DB_CREATORS                        RDB$DEPENDENCIES
-       RDB$EXCEPTIONS                         RDB$FIELDS
-       RDB$FIELD_DIMENSIONS                   RDB$FILES
-       RDB$FILTERS                            RDB$FORMATS
-       RDB$FUNCTIONS                          RDB$FUNCTION_ARGUMENTS
-       RDB$GENERATORS                         RDB$INDEX_SEGMENTS
-       RDB$INDICES                            RDB$LOG_FILES
-       RDB$PACKAGES                           RDB$PAGES
-       RDB$PROCEDURES                         RDB$PROCEDURE_PARAMETERS
-       RDB$REF_CONSTRAINTS                    RDB$RELATIONS
-       RDB$RELATION_CONSTRAINTS               RDB$RELATION_FIELDS
-       RDB$ROLES                              RDB$SECURITY_CLASSES
-       RDB$TRANSACTIONS                       RDB$TRIGGERS
-       RDB$TRIGGER_MESSAGES                   RDB$TYPES
-       RDB$USER_PRIVILEGES                    RDB$VIEW_RELATIONS
-       SEC$DB_CREATORS                        SEC$GLOBAL_AUTH_MAPPING
-       SEC$USERS                              SEC$USER_ATTRIBUTES
+	MON$ATTACHMENTS                        MON$CALL_STACK
+    MON$CONTEXT_VARIABLES                  MON$DATABASE
+	MON$IO_STATS                           MON$MEMORY_USAGE
+	MON$RECORD_STATS                       MON$REPLICATION
+	MON$STATEMENTS                         MON$TABLE_STATS
+	MON$TRANSACTIONS                       RDB$AUTH_MAPPING
+	RDB$BACKUP_HISTORY                     RDB$CHARACTER_SETS
+	RDB$CHECK_CONSTRAINTS                  RDB$COLLATIONS
+	RDB$DATABASE                           RDB$DB_CREATORS
+	RDB$DEPENDENCIES                       RDB$EXCEPTIONS
+	RDB$FIELDS                             RDB$FIELD_DIMENSIONS
+	RDB$FILES                              RDB$FILTERS
+	RDB$FORMATS                            RDB$FUNCTIONS
+	RDB$FUNCTION_ARGUMENTS                 RDB$GENERATORS
+	RDB$INDEX_SEGMENTS                     RDB$INDICES
+	RDB$LOG_FILES                          RDB$PACKAGES
+	RDB$PAGES                              RDB$PROCEDURES
+	RDB$PROCEDURE_PARAMETERS               RDB$REF_CONSTRAINTS
+	RDB$RELATIONS                          RDB$RELATION_CONSTRAINTS
+	RDB$RELATION_FIELDS                    RDB$ROLES
+	RDB$SECURITY_CLASSES                   RDB$TRANSACTIONS
+	RDB$TRIGGERS                           RDB$TRIGGER_MESSAGES
+	RDB$TYPES                              RDB$USER_PRIVILEGES
+	RDB$VIEW_RELATIONS                     SEC$DB_CREATORS
+	SEC$GLOBAL_AUTH_MAPPING                SEC$USERS
+	SEC$USER_ATTRIBUTES
 
 ASCII, CHARACTER SET ASCII, PAD SPACE, SYSTEM
 BIG_5, CHARACTER SET BIG_5, PAD SPACE, SYSTEM
@@ -198,6 +200,7 @@ UNICODE_FSS, CHARACTER SET UNICODE_FSS, PAD SPACE, SYSTEM
 UTF8, CHARACTER SET UTF8, PAD SPACE, SYSTEM
 WIN1250, CHARACTER SET WIN1250, PAD SPACE, SYSTEM
 WIN1251, CHARACTER SET WIN1251, PAD SPACE, SYSTEM
+WIN1251_CI_AI, CHARACTER SET WIN1251, PAD SPACE, CASE INSENSITIVE, ACCENT INSENSITIVE, SYSTEM
 WIN1251_UA, CHARACTER SET WIN1251, PAD SPACE, SYSTEM
 WIN1252, CHARACTER SET WIN1252, PAD SPACE, SYSTEM
 WIN1253, CHARACTER SET WIN1253, PAD SPACE, SYSTEM
@@ -217,8 +220,10 @@ WIN_PTBR, CHARACTER SET WIN1252, PAD SPACE, CASE INSENSITIVE, ACCENT INSENSITIVE
 @pytest.mark.version('>=3.0,<4.0')
 def test_1(act: Action):
     act.expected_stdout = expected_stdout_1
+    act.expected_stderr = expected_stderr
     act.execute()
     assert act.clean_stdout == act.clean_expected_stdout
+    assert act.clean_stderr == act.clean_expected_stderr    
 
 # version: 4.0
 
@@ -432,8 +437,10 @@ expected_stdout_2 = """
 @pytest.mark.version('>=4.0,<5.0')
 def test_2(act: Action):
     act.expected_stdout = expected_stdout_2
+    act.expected_stderr = expected_stderr
     act.execute()
     assert act.clean_stdout == act.clean_expected_stdout
+    assert act.clean_stderr == act.clean_expected_stderr   
 
 # version: 5.0
 
@@ -650,8 +657,6 @@ expected_stdout_3 = """
     WIN_CZ_CI_AI, CHARACTER SET WIN1250, PAD SPACE, CASE INSENSITIVE, ACCENT INSENSITIVE, SYSTEM
     WIN_PTBR, CHARACTER SET WIN1252, PAD SPACE, CASE INSENSITIVE, ACCENT INSENSITIVE, SYSTEM
 """
-
-expected_stderr = "There are no user-defined functions in this database"
 
 @pytest.mark.version('>=5.0')
 def test_3(act: Action):

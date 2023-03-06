@@ -9,6 +9,9 @@ NOTES:
 [24.01.2019]
   Disabled this test to be run on FB 4.0
   UDF usage is deprecated in FB 4+, see: ".../doc/README.incompatibilities.3to4.txt".
+
+[6.03.2023] Zuev
+  Disable the test for RDB3 because it requires UDF removed from installers.
 JIRA:        CORE-2582
 FBTEST:      bugs.core_2582
 """
@@ -61,6 +64,7 @@ expected_stderr = """
     -UDF: XDIV
 """
 
+@pytest.mark.skip("DISABLED: see notes")
 @pytest.mark.version('>=3.0,<4.0')
 def test_1(act: Action):
     act.expected_stderr = expected_stderr

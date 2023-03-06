@@ -34,10 +34,14 @@ test_script_1 = """
 act_1 = isql_act('db', test_script_1)
 
 expected_stderr_1 = """
-    Statement failed, SQLSTATE = 42000
-    attempted update of read-only column
-    Statement failed, SQLSTATE = 42000
-    attempted update of read-only column
+    Statement failed, SQLSTATE = 2F000
+    Error while parsing trigger T_AI's BLR
+    -attempted update of read-only column
+    -V
+    Statement failed, SQLSTATE = 2F000
+    Error while parsing trigger T_AI's BLR
+    -attempted update of read-only column
+    -V
 """
 
 @pytest.mark.version('>=3,<4.0')

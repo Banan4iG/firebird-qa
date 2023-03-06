@@ -5,6 +5,8 @@ ID:          issue-2115
 ISSUE:       2115
 TITLE:       'There are <n> dependencies' error message shows the wrong count of dependent objects.
 DESCRIPTION:
+    [6.03.2023] Zuev
+    Disable the test for RDB3 because it requires UDF removed from installers.
 JIRA:        CORE-1689
 FBTEST:      bugs.core_1689
 """
@@ -44,6 +46,7 @@ expected_stderr_1 = """
     -there are 4 dependencies
 """
 
+@pytest.mark.skip("DISABLED: see notes")
 @pytest.mark.version('>=3.0,<4.0')
 def test_1(act_1: Action):
     act_1.expected_stderr = expected_stderr_1

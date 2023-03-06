@@ -74,6 +74,7 @@ expected_stdout = """
     Got exception: <class 'firebird.driver.types.DatabaseError'>
     Execute statement error at isc_dsql_prepare :
     335544359 : attempted update of read-only column PERSONS.COMP
+    335544382 : COMP
     Statement : insert into "PERSONS" ("ID", "NAME", "ADDRESS", "INFO", "COMP") values (?, ?, ?, ?, ?)
     Data source : Firebird::C:\\FBTESTING\\qa\\fbt-repo\\tmp\\tmp_5972_repl.fdb
     -At block line: 9, col: 5

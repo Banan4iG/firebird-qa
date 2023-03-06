@@ -70,7 +70,7 @@ test_script = """
 act = isql_act('db', test_script)
 
 expected_stdout = """
-    PLAN JOIN (F NATURAL, C INDEX (I_COLORS_NAME))
+    PLAN JOIN (C INDEX (I_COLORS_NAME), F INDEX (FK_FLOWERS_COLORS))
 """
 
 @pytest.mark.version('>=3')

@@ -15,6 +15,9 @@ DESCRIPTION:
   UDF usage is deprecated in FB 4+, see: ".../doc/README.incompatibilities.3to4.txt".
   Functions div, frac, dow, sdow, getExactTimestampUTC and isLeapYear got safe replacement
   in UDR library "udf_compat", see it in folder: ../plugins/udr/
+  
+  [6.03.2023] Zuev
+  Disable the test for RDB3 because it requires UDF removed from installers.
 JIRA:        CORE-3963
 FBTEST:      bugs.core_3963
 """
@@ -98,6 +101,7 @@ expected_stderr_1 = """
     -Function STRLEN already exists
 """
 
+@pytest.mark.skip("DISABLED: see notes")
 @pytest.mark.version('>=3.0,<4.0')
 def test_1(act_1: Action):
     act_1.expected_stdout = expected_stdout_1

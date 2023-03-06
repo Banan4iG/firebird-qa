@@ -67,6 +67,7 @@ expected_stdout = """
 
 trace = ['log_initfini = false',
          'log_transactions = true',
+         'log_statement_finish = false',
          'time_threshold = 0'
          ]
 

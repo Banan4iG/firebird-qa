@@ -9,6 +9,7 @@ FBTEST:      functional.arno.optimizer.opt_inner_join_05
 
 import pytest
 from firebird.qa import *
+from string import Template
 
 init_script = """CREATE TABLE Countries (
   CountryID INTEGER NOT NULL,
@@ -312,7 +313,10 @@ r.RelationName DESC;"""
 
 act = isql_act('db', test_script)
 
-expected_stdout = """PLAN SORT (HASH (R NATURAL, C INDEX (I_COUNTRYNAME)))
+plan_3_0 = "PLAN SORT (JOIN (C INDEX (I_COUNTRYNAME), R INDEX (FK_RELATIONS_COUNTRIES)))"
+plan_5_0 = "PLAN SORT (HASH (R NATURAL, C INDEX (I_COUNTRYNAME)))"
+
+stdout_template_text = f"""$plan
 
 RELATIONNAME                        COUNTRYNAME
 =================================== ==================================================
@@ -321,8 +325,11 @@ University Leiden                   NETHERLANDS
 University Delft                    NETHERLANDS
 University Amsterdam                NETHERLANDS"""
 
+expected_stdout = Template(stdout_template_text)
+
 @pytest.mark.version('>=3')
 def test_1(act: Action):
-    act.expected_stdout = expected_stdout
+    expected_plan = plan_3_0 if act.is_version('<5.0') else plan_5_0
+    act.expected_stdout = expected_stdout.substitute(plan=expected_plan)
     act.execute()
     assert act.clean_stdout == act.clean_expected_stdout

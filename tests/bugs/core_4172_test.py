@@ -65,8 +65,9 @@ expected_stdout_1 = """
 """
 
 expected_stderr_1 = """
-    Statement failed, SQLSTATE = 39000
-    invalid request BLR at offset
+    Statement failed, SQLSTATE = 2F000
+    Error while parsing procedure SP_TEST's BLR
+    -invalid request BLR at offset
     -function DUMMY_EXT is not defined
     -module name or entrypoint could not be found
 """

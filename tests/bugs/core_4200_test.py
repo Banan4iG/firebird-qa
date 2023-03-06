@@ -22,10 +22,10 @@ act = python_act('db')
 
 expected_stdout_1 = """
 WHO_AM_I                        TMP$C4200_LEG
-AUTH_METHOD                     Leg
+AUTH_METHOD                     LEG
 
 WHO_AM_I                        TMP$C4200_SRP
-AUTH_METHOD                     Srp
+AUTH_METHOD                     SRP
 """
 
 @pytest.mark.version('>=3.0,<4')

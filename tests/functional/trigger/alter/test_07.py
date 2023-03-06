@@ -48,8 +48,10 @@ END
 """
 
 expected_stderr_1 = """
-    Statement failed, SQLSTATE = 42000
-    attempted update of read-only column
+    Statement failed, SQLSTATE = 2F000
+    Error while parsing trigger TG's BLR
+    -attempted update of read-only column
+    -ID
 """
 
 @pytest.mark.version('>=3.0,<4.0.0')

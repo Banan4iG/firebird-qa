@@ -175,6 +175,7 @@ def test_1(act: Action, capsys):
         'log_errors = true',
         'log_procedure_finish = true',
         'log_function_finish = true',
+        'log_statement_finish = false',
     ]
 
 

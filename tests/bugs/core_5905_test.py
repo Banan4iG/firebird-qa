@@ -17,6 +17,9 @@ DESCRIPTION:
 
   Confirmed inconsistence output on: 3.0.4.32972, 4.0.0.875 and 4.0.0.1172
   (4.x - output phrase "UDF THE_FRAC" instead of "Function THE_FRAC" on attempt to drop function).
+
+  [6.03.2023] Zuev
+  Disable the test for RDB3 because it requires UDF removed from installers. 
 JIRA:        CORE-5905
 FBTEST:      bugs.core_5905
 """
@@ -105,6 +108,7 @@ expected_stderr_1 = """
     -there are 1 dependencies
 """
 
+@pytest.mark.skip("DISABLED: see notes")
 @pytest.mark.version('>=3.0.4,<4.0')
 def test_1(act_1: Action):
     act_1.expected_stdout = expected_stdout_1
