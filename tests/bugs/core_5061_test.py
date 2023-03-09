@@ -38,11 +38,7 @@ fb4x_test_sql = """
 
     ,r2 as (
       select first 1 row_number() over() i 
-      select first 1 row_number() over() i 
       from r1 ra
-      full join r1 rb on rb.i=ra.i 
-      group by ra.i 
-      having count(*)>0 
       full join r1 rb on rb.i=ra.i 
       group by ra.i 
       having count(*)>0 
@@ -55,11 +51,7 @@ fb4x_test_sql = """
     --select count(*) from r2
     ,r3 as (
       select first 1 row_number() over() i 
-      select first 1 row_number() over() i 
       from r2 ra
-      full join r2 rb on rb.i=ra.i 
-      group by ra.i 
-      having count(*)>0 
       full join r2 rb on rb.i=ra.i 
       group by ra.i 
       having count(*)>0 
@@ -72,11 +64,7 @@ fb4x_test_sql = """
     --select count(*) from r3
     ,r4 as (
       select first 1 row_number() over() i 
-      select first 1 row_number() over() i 
       from r3 ra
-      full join r3 rb on rb.i=ra.i 
-      group by ra.i 
-      having count(*)>0 
       full join r3 rb on rb.i=ra.i 
       group by ra.i 
       having count(*)>0 
@@ -86,13 +74,7 @@ fb4x_test_sql = """
       select rx.i+1 from r4 rx
       where rx.i+1 <= 2
     )
-    /*
     ,rn as (
-      select row_number() over() i 
-      from rdb$database r full join rdb$database r2 on r2.rdb$relation_id=r.rdb$relation_id 
-      group by r.rdb$relation_id 
-      having count(*)>0 
-      order by r.rdb$relation_id 
       select row_number() over() i 
       from rdb$database r full join rdb$database r2 on r2.rdb$relation_id=r.rdb$relation_id 
       group by r.rdb$relation_id 
@@ -100,14 +82,12 @@ fb4x_test_sql = """
       order by r.rdb$relation_id 
       rows 1 to 1
     )
-
-    select  
+    select 
         char_length(mon$explained_plan)
-       ,( select count(*) from (select i from r4) )
+       ,(select count(*) from r4)
+       ,(select count(*) from rn)
+       --,(select count(*) from rn)
     from mon$statements
-
-    union all select 1,row_number()over() from rdb$database where exists(select 1, row_number()over() from rdb$database group by 1 having True rows 1)
-    union all select 1,row_number()over() from rdb$database where exists(select 1, row_number()over() from rdb$database group by 1 having True rows 1)
     ;
 """
 
@@ -171,6 +151,7 @@ fb5x_test_sql = """
       order by r.rdb$relation_id 
       rows 1 to 1
     )
+    -- */
     select 
         char_length(mon$explained_plan)
        ,( select count(*) from (select i from r4) )
@@ -181,7 +162,7 @@ fb5x_test_sql = """
     ;
 """
 
-act = isql_act('db', test_script)
+act = python_act('db')
 
 @pytest.mark.version('>=3.0')
 def test_1(act: Action):

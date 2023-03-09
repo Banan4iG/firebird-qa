@@ -111,7 +111,7 @@ test_script = """
     select natural_reads, indexed_reads from v_agg_stat_tabs where table_name = upper('T');
 """
 
-act = isql_act('db', test_script, substitutions=[('-- line(:)? \d+, col(umn)?(:)? \d+', '')], substitutions = [('(--\\s+)?line \\d+, col(umn)? \\d+', '')])
+act = isql_act('db', test_script, substitutions = [('(--\\s+)?line \\d+, col(umn)? \\d+', '')])
 # -- line 2, column 7
 
 expected_stdout = """
@@ -139,4 +139,3 @@ def test_1(act: Action):
     act.expected_stdout = expected_stdout
     act.execute()
     assert act.clean_stdout == act.clean_expected_stdout
-

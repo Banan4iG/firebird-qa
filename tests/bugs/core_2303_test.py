@@ -11,7 +11,6 @@ FBTEST:      bugs.core_2303
 
 import pytest
 from firebird.qa import *
-from string import Template
 
 db = db_factory()
 act = python_act('db')
@@ -22,8 +21,6 @@ expected_stdout = f"""
     Select Expression
         -> Table "RDB$DATABASE" Full Scan
 """
-
-expected_stdout = Template(expected_stdout_template)
 
 @pytest.mark.version('>=3.0')
 def test_1(act: Action, capsys):
