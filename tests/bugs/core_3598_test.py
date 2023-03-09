@@ -81,6 +81,8 @@ test_script = """
 trace = ['log_transactions = true',
          'print_perf = true',
          'log_initfini = false',
+         'log_statement_finish = false',
+         'time_threshold = 0',
          ]
 
 # @pytest.mark.skipif(platform.system() == 'Windows', reason='FIXME: see notes')
