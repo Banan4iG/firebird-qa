@@ -66,15 +66,15 @@ test_script = """
 
 act = isql_act('db', test_script)
 
-expected_stdout_template = """
+expected_stdout = """
     EXISTS with ref. to 1st stream:
-    
-    $plan_sub
+
+    Select Expression
         -> Filter
             -> Table "T" as "X" Access By ID
                 -> Bitmap
                     -> Index "T_ID" Range Scan (full match)
-    $plan_sub
+    Select Expression
         -> Filter
             -> Table "T" as "Z" Access By ID
                 -> Bitmap
@@ -89,14 +89,14 @@ expected_stdout_template = """
                         -> Index "T_ID" Range Scan (lower bound: 1/1)
 
 
-    Two sep. DT and EXISTS inside:
+        Two sep. DT and EXISTS inside:
 
-    $plan_sub
+    Select Expression
         -> Filter
             -> Table "T" as "B X" Access By ID
                 -> Bitmap
                     -> Index "T_ID" Range Scan (full match)
-    $plan_sub
+    Select Expression
         -> Filter
             -> Table "T" as "A X" Access By ID
                 -> Bitmap
@@ -113,13 +113,54 @@ expected_stdout_template = """
 
 expected_stdout = Template(expected_stdout_template)
 
+fb5x_expected_out = """
+    EXISTS with ref. to 1st stream: 
+
+    Sub-query
+        -> Filter
+            -> Table "T" as "X" Access By ID
+                -> Bitmap
+                    -> Index "T_ID" Range Scan (full match)
+    Sub-query
+        -> Filter
+            -> Table "T" as "Z" Access By ID
+                -> Bitmap
+                    -> Index "T_ID" Range Scan (full match)
+    Select Expression
+        -> Nested Loop Join (inner)
+            -> Filter
+                -> Table "T" as "A" Full Scan
+            -> Filter
+                -> Table "T" as "B" Access By ID
+                    -> Bitmap
+                        -> Index "T_ID" Range Scan (lower bound: 1/1)
+
+    Two sep. DT and EXISTS inside:  
+
+
+
+    Sub-query
+        -> Filter
+            -> Table "T" as "B X" Access By ID
+                -> Bitmap
+                    -> Index "T_ID" Range Scan (full match)
+    Sub-query
+        -> Filter
+            -> Table "T" as "A X" Access By ID
+                -> Bitmap
+                    -> Index "T_ID" Range Scan (full match)
+    Select Expression
+        -> Nested Loop Join (inner)
+            -> Filter
+                -> Table "T" as "A T1" Full Scan
+            -> Filter
+                -> Table "T" as "B T2" Access By ID
+                    -> Bitmap
+                        -> Index "T_ID" Range Scan (lower bound: 1/1)
+"""
 @pytest.mark.version('>=3.0')
 def test_1(act: Action):
-    if act.is_version('>=5.0'):
-        plan_sub="Sub-query"
-    else:
-        plan_sub="Select Expression"
-    act.expected_stdout = expected_stdout.substitute(plan_sub=plan_sub)
+    act.expected_stdout = expected_stdout
     act.execute()
     assert act.clean_stdout == act.clean_expected_stdout
 

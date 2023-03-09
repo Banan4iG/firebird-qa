@@ -61,17 +61,13 @@ test_script = """
     set planonly;
 
     set term ^;
-    execute block
-    returns (
-      s integer
-    )
-    as
-    declare variable v integer = 1;
+    execute block returns (s integer) as
+        declare v integer = 1;
     begin
       with t as (
-        select t1_id as t1_id, sum(id) as s
-        from t2
-        group by 1
+          select t1_id as t1_id, sum(id) as s -- FB 5.x: "Select Expression (line NNN, column MMM)"
+          from t2
+          group by 1
       )
       select s
       from t
@@ -92,10 +88,10 @@ test_script = """
     -- (i.e. there was NO "Filter" between "Aggregate" and "Table "T T2" Access By ID")
 """
 
-act = isql_act('db', test_script)
+act = isql_act('db', test_script, substitutions = [('line \\d+, col(umn)? \\d+', 'line, col')])
 
-expected_stdout_template = """
-    Select Expression$plan_sub
+fb3x_expected_out = """
+    Select Expression
         -> Singularity Check
             -> Filter
                 -> Aggregate
@@ -103,12 +99,21 @@ expected_stdout_template = """
                         -> Table "T2" as "T T2" Access By ID
                             -> Index "FK_T2_REF_T1" Range Scan (full match)
 """
-expected_stdout = Template(expected_stdout_template)
+
+fb5x_expected_out = """
+    Select Expression (line 8, column 7)
+        -> Singularity Check
+            -> Filter
+                -> Aggregate
+                    -> Filter
+                        -> Table "T2" as "T T2" Access By ID
+                            -> Index "FK_T2_REF_T1" Range Scan (full match)
+"""
 
 @pytest.mark.version('>=3.0')
 def test_1(act: Action):
-    plan_sub = " (line 8, column 7)" if act.is_version('>4.0') else ''
-    act.expected_stdout = expected_stdout.substitute(plan_sub=plan_sub)
+    act.expected_stdout = fb3x_expected_out if act.is_version('<5') else fb5x_expected_out
     act.execute()
+    #assert act.stdout == act.clean_expected_stdout
     assert act.clean_stdout == act.clean_expected_stdout
 
