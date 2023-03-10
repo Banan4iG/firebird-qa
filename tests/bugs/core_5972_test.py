@@ -49,6 +49,7 @@ import pytest
 import platform
 from firebird.qa import *
 from firebird.driver import DatabaseError
+from string import Template
 
 substitutions = [('[ \t]+', ' '), ('.* At block line.*', 'At block'),
                  ('read-only column.*', 'read-only column'),
@@ -70,20 +71,23 @@ db_repl = db_factory(init=init_script, filename='core_5972_repl.fdb')
 
 act = python_act('db', substitutions=substitutions)
 
-expected_stdout = """
+expected_stdout_template = """
     Got exception: <class 'firebird.driver.types.DatabaseError'>
     Execute statement error at isc_dsql_prepare :
     335544359 : attempted update of read-only column PERSONS.COMP
-    335544382 : COMP
+    $version_diff
     Statement : insert into "PERSONS" ("ID", "NAME", "ADDRESS", "INFO", "COMP") values (?, ?, ?, ?, ?)
     Data source : Firebird::C:\\FBTESTING\\qa\\fbt-repo\\tmp\\tmp_5972_repl.fdb
     -At block line: 9, col: 5
     -At trigger 'PERSONS_REPLICATE'
 """
 
+expected_stdout = Template(expected_stdout_template)
+
 ##@pytest.mark.skipif(platform.system() == 'Windows', reason='FIXME: see notes')
 @pytest.mark.version('>=3.0.6')
 def test_1(act: Action, db_repl: Database, capsys):
+    version_diff = '335544382 : COMP' if act.is_version('<5') else ''
     ddl_for_replication = f"""
         create table replicate_config (
             name varchar(31) not null,
@@ -120,6 +124,6 @@ def test_1(act: Action, db_repl: Database, capsys):
         act.isql(switches=['-q'], input='ALTER EXTERNAL CONNECTIONS POOL CLEAR ALL;')
     #
     act.reset()
-    act.expected_stdout = expected_stdout
+    act.expected_stdout = expected_stdout.substitute(version_diff=version_diff)
     act.stdout = capsys.readouterr().out
     assert act.clean_stdout == act.clean_expected_stdout
