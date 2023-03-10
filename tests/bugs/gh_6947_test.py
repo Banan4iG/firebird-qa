@@ -24,6 +24,9 @@ NOTES:
     [20.06.2022] pzotov
     Settings for encryption are taken from act.files_dir/'test_config.ini' file.
     Checked on 5.0.0.509 - both Windows and Linux.
+
+    [10.03.2023] Zuev
+    Disable the test until RdbCrypt is added.
 """
 
 import datetime as py_dt
@@ -67,6 +70,7 @@ act = python_act('db', substitutions=[('[ \t]+', ' ')])
 
 expected_stdout = f"Expected: query to mon$database returned not less then {MIN_DISTINCT_ENCRYPTED_PAGES} encrypted pages."
 
+@pytest.mark.skip("DISABLED: see notes")
 @pytest.mark.encryption
 @pytest.mark.version('>=5.0')
 def test_1(act: Action, capsys):
