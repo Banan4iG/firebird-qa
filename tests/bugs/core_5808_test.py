@@ -28,7 +28,7 @@ NOTES:
     [20.02.2023] Zuev
     Disable the test until RdbCrypt is added.
 """
-
+import os
 import re
 import time
 import datetime as py_dt
@@ -40,6 +40,23 @@ import pytest
 from firebird.qa import *
 from firebird.driver import DatabaseError
 from firebird.driver import SrvRestoreFlag, SrvRepairFlag
+
+###########################
+###   S E T T I N G S   ###
+###########################
+
+# QA_GLOBALS -- dict, is defined in qa/plugin.py, obtain settings
+# from act.files_dir/'test_config.ini':
+enc_settings = QA_GLOBALS['encryption']
+
+# ACHTUNG: this must be carefully tuned on every new host:
+#
+MAX_WAITING_ENCR_FINISH = int(enc_settings['MAX_WAIT_FOR_ENCR_FINISH_WIN' if os.name == 'nt' else 'MAX_WAIT_FOR_ENCR_FINISH_NIX'])
+assert MAX_WAITING_ENCR_FINISH > 0
+
+ENCRYPTION_PLUGIN = enc_settings['encryption_plugin'] # fbSampleDbCrypt
+ENCRYPTION_KEY = enc_settings['encryption_key'] # Red
+
 
 N_ROWS = 15
 init_script = f"""
@@ -79,14 +96,6 @@ act = python_act('db')
 @pytest.mark.version('>=4.0')
 def test_1(act: Action, capsys):
 
-    # QA_GLOBALS -- dict, is defined in qa/plugin.py, obtain settings
-    # from act.files_dir/'test_config.ini':
-    enc_settings = QA_GLOBALS['encryption']
-
-    MAX_ENCRYPT_DECRYPT_MS = int(enc_settings['max_encrypt_decrypt_ms']) # 5000
-    ENCRYPTION_PLUGIN = enc_settings['encryption_plugin'] # fbSampleDbCrypt
-    ENCRYPTION_KEY = enc_settings['encryption_key'] # Red
-   
     encryption_started = False
     encryption_finished = False
     with act.db.connect() as con:
@@ -107,8 +116,8 @@ def test_1(act: Action, capsys):
         while encryption_started:
             t2=py_dt.datetime.now()
             d1=t2-t1
-            if d1.seconds*1000 + d1.microseconds//1000 > MAX_ENCRYPT_DECRYPT_MS:
-                print(f'TIMEOUT EXPIRATION: encryption took {d1.seconds*1000 + d1.microseconds//1000} ms which exceeds limit = {MAX_ENCRYPT_DECRYPT_MS} ms.')
+            if d1.seconds*1000 + d1.microseconds//1000 > MAX_WAITING_ENCR_FINISH:
+                print(f'TIMEOUT EXPIRATION: encryption took {d1.seconds*1000 + d1.microseconds//1000} ms which exceeds limit = {MAX_WAITING_ENCR_FINISH} ms.')
                 break
 
             # Possible output:

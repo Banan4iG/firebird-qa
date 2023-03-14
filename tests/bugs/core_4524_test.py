@@ -33,6 +33,7 @@ NOTES:
     [22.02.2023] Zuev
     Disable the test until RdbCrypt is added.
 """
+import os
 import binascii
 import re
 import locale
@@ -55,7 +56,11 @@ act_res = python_act('db_encrypt_restore')
 # from act_src.files_dir/'test_config.ini':
 enc_settings = QA_GLOBALS['encryption']
 
-MAX_ENCRYPT_DECRYPT_MS = int(enc_settings['max_encrypt_decrypt_ms']) # 5000
+# ACHTUNG: this must be carefully tuned on every new host:
+#
+MAX_WAITING_ENCR_FINISH = int(enc_settings['MAX_WAIT_FOR_ENCR_FINISH_WIN' if os.name == 'nt' else 'MAX_WAIT_FOR_ENCR_FINISH_NIX'])
+assert MAX_WAITING_ENCR_FINISH > 0
+
 ENCRYPTION_PLUGIN = enc_settings['encryption_plugin'] # fbSampleDbCrypt
 ENCRYPTION_HOLDER = enc_settings['encryption_holder'] # fbSampleKeyHolder
 ENCRYPTION_KEY = enc_settings['encryption_key'] # Red
@@ -195,8 +200,8 @@ def test_1(act_src: Action, act_res: Action, tmp_fbk:Path, capsys):
         while True:
             t2=py_dt.datetime.now()
             d1=t2-t1
-            if d1.seconds*1000 + d1.microseconds//1000 > MAX_ENCRYPT_DECRYPT_MS:
-                con.execute_immediate(f"select 'TIMEOUT EXPIRATION: encryption took {d1.seconds*1000 + d1.microseconds//1000} ms which exceeds limit = {MAX_ENCRYPT_DECRYPT_MS} ms.' as msg from rdb$database")
+            if d1.seconds*1000 + d1.microseconds//1000 > MAX_WAITING_ENCR_FINISH:
+                con.execute_immediate(f"select 'TIMEOUT EXPIRATION: encryption took {d1.seconds*1000 + d1.microseconds//1000} ms which exceeds limit = {MAX_WAITING_ENCR_FINISH} ms.' as msg from rdb$database")
                 break
 
             # Possible output:
@@ -210,7 +215,7 @@ def test_1(act_src: Action, act_res: Action, tmp_fbk:Path, capsys):
                     break
             act_src.reset()
 
-        if d1.seconds*1000 + d1.microseconds//1000 <= MAX_ENCRYPT_DECRYPT_MS:
+        if d1.seconds*1000 + d1.microseconds//1000 <= MAX_WAITING_ENCR_FINISH:
             act_src.reset()
             act_src.gstat(switches=['-e'])
 
@@ -238,7 +243,7 @@ def test_1(act_src: Action, act_res: Action, tmp_fbk:Path, capsys):
             act_src.reset()
 
         else:
-            print(f'TIMEOUT EXPIRATION: encryption took {d1.seconds*1000 + d1.microseconds//1000} ms which exceeds limit = {MAX_ENCRYPT_DECRYPT_MS} ms.')
+            print(f'TIMEOUT EXPIRATION: encryption took {d1.seconds*1000 + d1.microseconds//1000} ms which exceeds limit = {MAX_WAITING_ENCR_FINISH} ms.')
 
         ######################################################
 
