@@ -10,7 +10,7 @@ DESCRIPTION:
     Use repeated substring '0123456789'. This way we guarantee that adjacent characters will not be repeated.
     Commit a transaction and close connection.
     Run sweep by gfix.
-    Insert several uncompressible records into test table.
+    Start a transaction with NO AUTO UNDO and insert several uncompressible records into test table.
     Rollback a transaction and close connection.
     Run sweep by gfix again.
     Select count of records in the test table and see that there are more that one record.
@@ -81,7 +81,6 @@ def test_1(act: Action):
 
     with act.db.connect() as con3:
         with con3.cursor() as cur3:
-            cur3.execute("select * from t1_big")
             cur3.execute("select count(*) from t1_big")
             result = cur3.fetchone()[0]
 
