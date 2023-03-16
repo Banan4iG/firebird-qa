@@ -69,7 +69,7 @@ import os
 import pytest
 import re
 import socket
-import getpass
+import win32api
 from pathlib import Path
 from firebird.qa import *
 import time
@@ -123,7 +123,7 @@ patterns_win =  [re.compile('alter session reset', re.IGNORECASE),
 def run_script(act: Action, tmp_file: Path):
     #__tracebackhide__ = True
     THIS_COMPUTER_NAME = socket.gethostname()
-    CURRENT_WIN_ADMIN = getpass.getuser()
+    CURRENT_WIN_ADMIN = win32api.GetUserName()
     script = f"""
     set bail on;
     set list on;
