@@ -18,6 +18,8 @@ from firebird.qa import *
 
 if os.name == 'nt':
     import win32api
+else:
+    import getpass
 
 db = db_factory()
 
@@ -31,5 +33,6 @@ def test_1(act: Action):
         r = c.fetchone()
         if r[0].upper() != socket.gethostname().upper():
             pytest.fail(f'FAILED check remote_host: got "{r[0]}" instead of "{socket.gethostname()}"')
-        if r[1].upper() != win32api.GetUserName().upper():
+        user_name = win32api.GetUserName() if os.name == 'nt' else getpass.getuser()
+        if r[1].upper() != user_name.upper():
             pytest.fail(f'FAILED check remote_os_user: got "{r[1]}" instead of "{win32api.GetUserName()}"')
