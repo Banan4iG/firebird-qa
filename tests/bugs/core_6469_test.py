@@ -69,10 +69,12 @@ import os
 import pytest
 import re
 import socket
-import win32api
 from pathlib import Path
 from firebird.qa import *
 import time
+
+if os.name == 'nt':
+    import win32api
 
 try:
     del os.environ["ISC_USER"]

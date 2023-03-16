@@ -11,10 +11,13 @@ JIRA:        CORE-3779
 FBTEST:      bugs.core_3779
 """
 
+import os
 import pytest
 import socket
-import win32api
 from firebird.qa import *
+
+if os.name == 'nt':
+    import win32api
 
 db = db_factory()
 

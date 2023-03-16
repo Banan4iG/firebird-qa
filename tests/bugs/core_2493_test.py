@@ -64,12 +64,14 @@ import subprocess
 import pytest
 import locale
 import time
-import win32api
 from pathlib import Path
 from firebird.qa import *
 from firebird.driver import ShutdownMode,ShutdownMethod
 from firebird.driver.types import DatabaseError
 from difflib import unified_diff
+
+if os.name == 'nt':
+    import win32api
 
 #--------------------------------------------
 
