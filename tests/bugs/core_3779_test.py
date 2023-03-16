@@ -13,7 +13,7 @@ FBTEST:      bugs.core_3779
 
 import pytest
 import socket
-import getpass
+import win32api
 from firebird.qa import *
 
 db = db_factory()
@@ -28,5 +28,5 @@ def test_1(act: Action):
         r = c.fetchone()
         if r[0].upper() != socket.gethostname().upper():
             pytest.fail(f'FAILED check remote_host: got "{r[0]}" instead of "{socket.gethostname()}"')
-        if r[1].upper() != getpass.getuser().upper():
-            pytest.fail(f'FAILED check remote_os_user: got "{r[1]}" instead of "{getpass.getuser()}"')
+        if r[1].upper() != win32api.GetUserName().upper():
+            pytest.fail(f'FAILED check remote_os_user: got "{r[1]}" instead of "{win32api.GetUserName()}"')
