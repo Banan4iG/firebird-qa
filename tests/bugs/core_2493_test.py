@@ -64,7 +64,7 @@ import subprocess
 import pytest
 import locale
 import time
-import getpass
+import win32api
 from pathlib import Path
 from firebird.qa import *
 from firebird.driver import ShutdownMode,ShutdownMethod
@@ -134,7 +134,7 @@ expected_stdout_log_diff = """
     Check IP using methods from 'socket' package: PASSED.
     Check IP for equality to 'CLIENT_ADDRESS' value: PASSED.
     Check port value: PASSED, positive integer.
-    Check OS user using 'getpass' package: PASSED
+    Check OS user using 'win32api.GetUserName' package: PASSED
 """
 
 @pytest.mark.version('>=3')
@@ -211,9 +211,9 @@ def test_1(act: Action, tmp_paused_sql: Path, tmp_paused_log: Path, capsys):
         else:
             print('Invalid port=|'+inet_msg_words[n-3]+'|')
 
-        if inet_msg_words[n-1].upper().split('.')[0] == getpass.getuser().upper():
+        if inet_msg_words[n-1].upper().split('.')[0] == win32api.GetUserName().upper():
             # 2.5.9: got 'ZOTOV.-1.-1' ==> must be just one word: 'ZOTOV'
-            print("Check OS user using 'getpass' package: PASSED")
+            print("Check OS user using 'win32api.GetUserName' package: PASSED")
         else:
             print('Invalid OS user=|'+inet_msg_words[n-1]+'|')
 
