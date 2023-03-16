@@ -57,6 +57,8 @@ expected_stdout = """
     RDB$KEYWORD_RESERVED            <true>
     RDB$KEYWORD_NAME                ANY
     RDB$KEYWORD_RESERVED            <true>
+    RDB$KEYWORD_NAME                APPEND
+    RDB$KEYWORD_RESERVED            <true>
     RDB$KEYWORD_NAME                ARRAY
     RDB$KEYWORD_RESERVED            <false>
     RDB$KEYWORD_NAME                AS
@@ -1160,7 +1162,7 @@ expected_stdout = """
     RDB$KEYWORD_NAME                ZONE
     RDB$KEYWORD_RESERVED            <false>
     
-    Records affected: 568
+    Records affected: 569
 """
 
 @pytest.mark.version('>=5.0')
