@@ -59,7 +59,7 @@ test_script = """
     delete from mon$attachments where mon$attachment_id != current_connection;
     commit;
 """
-substitutions=[('[-]{0,1}At block line: [\\d]+, col: [\\d]+', ''), ('Data source : Firebird::localhost:[\d\w\\/:\.\-_]*test.fdb','Data source : Firebird::localhost:temp_directory/test.fdb')]
+substitutions=[('[-]{0,1}At block line: [\\d]+, col: [\\d]+', ''), ('Data source : Firebird::localhost:[\d\w\\/:\.\-_\$]*test.fdb','Data source : Firebird::localhost:temp_directory/test.fdb')]
 act = isql_act('db', test_script, substitutions=substitutions)
 
 expected_stderr = """
