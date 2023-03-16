@@ -118,157 +118,157 @@ act = python_act('db', substitutions = [(r'RDB\$\S+\s+\d+(\s+\d+)*', 'RDB')])
 
 expected_stdout_trace = """
 SET TRANSACTION
-0 records fetched
+0 records fetched without sorting
 
 create sequence g_common /* DDL_BEG */ /* DDL_END */
-0 records fetched
-Table                              Natural     Index    Update    Insert    Delete   Backout     Purge   Expunge
+0 records fetched without sorting
+Table                              Natural     Index    Update    Insert    Delete
 RDB
 
 create collation name_coll for utf8 from unicode case insensitive /* DDL_BEG */ /* DDL_END */
-0 records fetched
-Table                              Natural     Index    Update    Insert    Delete   Backout     Purge   Expunge
+0 records fetched without sorting
+Table                              Natural     Index    Update    Insert    Delete
 RDB
 
 create exception ex_invalid_value 'Invalid value detected' /* DDL_BEG */ /* DDL_END */
-0 records fetched
-Table                              Natural     Index    Update    Insert    Delete   Backout     Purge   Expunge
+0 records fetched without sorting
+Table                              Natural     Index    Update    Insert    Delete
 RDB
 
 create domain dm_idb as bigint /* DDL_BEG */ /* DDL_END */
-0 records fetched
-Table                              Natural     Index    Update    Insert    Delete   Backout     Purge   Expunge
+0 records fetched without sorting
+Table                              Natural     Index    Update    Insert    Delete
 RDB
 
 create table test(id dm_idb not null, x dm_idb) /* DDL_BEG */ /* DDL_END */
-0 records fetched
-Table                              Natural     Index    Update    Insert    Delete   Backout     Purge   Expunge
+0 records fetched without sorting
+Table                              Natural     Index    Update    Insert    Delete
 RDB
 
 alter table test add constraint test_pk primary key(id) /* DDL_BEG */ /* DDL_END */
-0 records fetched
-Table                              Natural     Index    Update    Insert    Delete   Backout     Purge   Expunge
+0 records fetched without sorting
+Table                              Natural     Index    Update    Insert    Delete   Backout     Purge   Expunge      Lock      Wait  Conflict  BVersion  Fragment   Refetch
 RDB
 
 create index test_x on test(x) /* DDL_BEG */ /* DDL_END */
-0 records fetched
-Table                              Natural     Index    Update    Insert    Delete   Backout     Purge   Expunge
+0 records fetched without sorting
+Table                              Natural     Index    Update    Insert    Delete
 RDB
 
 alter index test_x inactive /* DDL_BEG */ /* DDL_END */
-0 records fetched
-Table                              Natural     Index    Update    Insert    Delete   Backout     Purge   Expunge
+0 records fetched without sorting
+Table                              Natural     Index    Update    Insert    Delete
 RDB
 
 alter index test_x active /* DDL_BEG */ /* DDL_END */
-0 records fetched
-Table                              Natural     Index    Update    Insert    Delete   Backout     Purge   Expunge
+0 records fetched without sorting
+Table                              Natural     Index    Update    Insert    Delete   Backout     Purge   Expunge      Lock      Wait  Conflict  BVersion  Fragment   Refetch
 RDB
 
 create view v_test as select * from test /* DDL_BEG */ /* DDL_END */
-0 records fetched
-Table                              Natural     Index    Update    Insert    Delete   Backout     Purge   Expunge
+0 records fetched without sorting
+Table                              Natural     Index    Update    Insert    Delete   Backout     Purge   Expunge      Lock      Wait  Conflict  BVersion  Fragment   Refetch
 RDB
 
 create trigger trg_test_bi before insert on test /* DDL_BEG */ as
 end /* DDL_END */
-0 records fetched
-Table                              Natural     Index    Update    Insert    Delete   Backout     Purge   Expunge
+0 records fetched without sorting
+Table                              Natural     Index    Update    Insert    Delete
 RDB
 
 create procedure standalone_proc(a_id dm_idb, a_x dm_idb) /* DDL_BEG */ as
 end /* DDL_END */
-0 records fetched
-Table                              Natural     Index    Update    Insert    Delete   Backout     Purge   Expunge
+0 records fetched without sorting
+Table                              Natural     Index    Update    Insert    Delete
 RDB
 
 create function standalone_func returns int /* DDL_BEG */ as
 end /* DDL_END */
-0 records fetched
-Table                              Natural     Index    Update    Insert    Delete   Backout     Purge   Expunge
+0 records fetched without sorting
+Table                              Natural     Index    Update    Insert    Delete
 RDB
 
 create package pg_test /* DDL_BEG */ as
 end /* DDL_END */
-0 records fetched
-Table                              Natural     Index    Update    Insert    Delete   Backout     Purge   Expunge
+0 records fetched without sorting
+Table                              Natural     Index    Update    Insert    Delete
 RDB
 
 create package body pg_test /* DDL_BEG */ as
 end /* DDL_END */
-0 records fetched
-Table                              Natural     Index    Update    Insert    Delete   Backout     Purge   Expunge
+0 records fetched without sorting
+Table                              Natural     Index    Update    Insert    Delete
 RDB
 
 commit
-0 records fetched
+0 records fetched without sorting
 
 SET TRANSACTION
-0 records fetched
+0 records fetched without sorting
 
 drop package pg_test /* DDL_BEG */ /* DDL_END */
-0 records fetched
-Table                              Natural     Index    Update    Insert    Delete   Backout     Purge   Expunge
+0 records fetched without sorting
+Table                              Natural     Index    Update    Insert    Delete   Backout     Purge   Expunge      Lock      Wait  Conflict  BVersion  Fragment   Refetch
 RDB
 
 drop function standalone_func /* DDL_BEG */ /* DDL_END */
-0 records fetched
-Table                              Natural     Index    Update    Insert    Delete   Backout     Purge   Expunge
+0 records fetched without sorting
+Table                              Natural     Index    Update    Insert    Delete
 RDB
 
 drop procedure standalone_proc /* DDL_BEG */ /* DDL_END */
-0 records fetched
-Table                              Natural     Index    Update    Insert    Delete   Backout     Purge   Expunge
+0 records fetched without sorting
+Table                              Natural     Index    Update    Insert    Delete
 RDB
 
 drop trigger trg_test_bi /* DDL_BEG */ /* DDL_END */
-0 records fetched
-Table                              Natural     Index    Update    Insert    Delete   Backout     Purge   Expunge
+0 records fetched without sorting
+Table                              Natural     Index    Update    Insert    Delete   Backout     Purge   Expunge      Lock      Wait  Conflict  BVersion  Fragment   Refetch
 RDB
 
 drop view v_test /* DDL_BEG */ /* DDL_END */
-0 records fetched
-Table                              Natural     Index    Update    Insert    Delete   Backout     Purge   Expunge
+0 records fetched without sorting
+Table                              Natural     Index    Update    Insert    Delete   Backout     Purge   Expunge      Lock      Wait  Conflict  BVersion  Fragment   Refetch
 RDB
 
 drop index test_x /* DDL_BEG */ /* DDL_END */
-0 records fetched
-Table                              Natural     Index    Update    Insert    Delete   Backout     Purge   Expunge
+0 records fetched without sorting
+Table                              Natural     Index    Update    Insert    Delete   Backout     Purge   Expunge      Lock      Wait  Conflict  BVersion  Fragment   Refetch
 RDB
 
 commit
-0 records fetched
+0 records fetched without sorting
 
 SET TRANSACTION
-0 records fetched
+0 records fetched without sorting
 
 drop table test /* DDL_BEG */ /* DDL_END */
-0 records fetched
-Table                              Natural     Index    Update    Insert    Delete   Backout     Purge   Expunge
+0 records fetched without sorting
+Table                              Natural     Index    Update    Insert    Delete   Backout     Purge   Expunge      Lock      Wait  Conflict  BVersion  Fragment   Refetch
 RDB
 
 drop domain dm_idb /* DDL_BEG */ /* DDL_END */
-0 records fetched
-Table                              Natural     Index    Update    Insert    Delete   Backout     Purge   Expunge
+0 records fetched without sorting
+Table                              Natural     Index    Update    Insert    Delete
 RDB
 
 drop exception ex_invalid_value /* DDL_BEG */ /* DDL_END */
-0 records fetched
-Table                              Natural     Index    Update    Insert    Delete   Backout     Purge   Expunge
+0 records fetched without sorting
+Table                              Natural     Index    Update    Insert    Delete
 RDB
 
 drop collation name_coll /* DDL_BEG */ /* DDL_END */
-0 records fetched
-Table                              Natural     Index    Update    Insert    Delete   Backout     Purge   Expunge
+0 records fetched without sorting
+Table                              Natural     Index    Update    Insert    Delete
 RDB
 
 drop sequence g_common /* DDL_BEG */ /* DDL_END */
-0 records fetched
-Table                              Natural     Index    Update    Insert    Delete   Backout     Purge   Expunge
+0 records fetched without sorting
+Table                              Natural     Index    Update    Insert    Delete
 RDB
 
 commit
-0 records fetched
+0 records fetched without sorting
 """
 
 @pytest.mark.version('>=4.0.2')
@@ -280,6 +280,10 @@ def test_1(act: Action, capsys):
         'log_statement_finish = true',
         'print_perf = true',
         'max_sql_length = 32768',
+        'log_initfini = true',
+        'max_log_size = 0',
+        'max_arg_length = 80',
+	    'max_arg_count = 30'
     ]
 
     with act.trace(db_events = trace_cfg_items, encoding=locale.getpreferredencoding()):
@@ -291,7 +295,7 @@ def test_1(act: Action, capsys):
         ,'DDL_(BEG|END)'
         ,'0 records fetched'
         ,r'\s+\d+\s+ms(,)?'
-        ,r'Table\s+Natural\s+Index\s+Update\s+Insert\s+Delete\s+Backout\s+Purge\s+Expunge'
+        ,r'Table\s+Natural\s+Index\s+Update\s+Insert\s+Delete'
         ,r'^RDB\$\S+\s+\d+'
         ,'^commit$'
     )
