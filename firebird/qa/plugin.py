@@ -2725,11 +2725,11 @@ class ConfigManager:
 
     Arguments:
         tmp_path: Path to directory where backup will be stored.
-        old_config: Old config file which will be keeped in backup (e.g. firebird.conf)
+        old_config: Old config file which will be keeped in backup (e.g. databases.conf)
 
     .. important::
 
-        Do not create instances of this class directly! Use **only** fixtures created by `replace_config`.
+        Do not create instances of this class directly! Use **only** fixtures created by `store_config`.
     """
 
     def __init__(self, tmp_path, old_config):
@@ -2757,7 +2757,11 @@ def store_config(old_config: str):
     the `ConfigManager` instance.
 
     Arguments:
-        old_config: Old config file which will be keeped in backup (e.g. firebird.conf)
+        old_config: Old config file which will be keeped in backup (e.g. databases.conf)
+    
+    .. note::
+
+       Dont use this factory to backup and replace configs reread only after server restart (e.g. firebird.conf).
     """
 
     @pytest.fixture
