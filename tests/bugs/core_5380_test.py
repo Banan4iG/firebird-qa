@@ -84,6 +84,74 @@ expected_stderr = """
     At sub function 'GET_SUB_TOTAL_RECURSIVELY' line: 7, col: 13
     At sub function 'GET_SUB_TOTAL_RECURSIVELY' line: 7, col: 13
     At sub function 'GET_SUB_TOTAL_RECURSIVELY' line: 7, col: 13
+    At sub function 'GET_SUB_TOTAL_RECURSIVELY' line: 7, col: 13
+    At sub function 'GET_SUB_TOTAL_RECURSIVELY' line: 7, col: 13
+    At sub function 'GET_SUB_TOTAL_RECURSIVELY' line: 7, col: 13
+    At sub function 'GET_SUB_TOTAL_RECURSIVELY' line: 7, col: 13
+    At sub function 'GET_SUB_TOTAL_RECURSIVELY' line: 7, col: 13
+    At sub function 'GET_SUB_TOTAL_RECURSIVELY' line: 7, col: 13
+    At sub function 'GET_SUB_TOTAL_RECURSIVELY' line: 7, col: 13
+    At sub function 'GET_SUB_TOTAL_RECURSIVELY' line: 7, col: 13
+    At sub function 'GET_SUB_TOTAL_RECURSIVELY' line: 7, col: 13
+    At sub function 'GET_SUB_TOTAL_RECURSIVELY' line: 7, col: 13
+    At sub function 'GET_SUB_TOTAL_RECURSIVELY' line: 7, col: 13
+    At sub function 'GET_SUB_TOTAL_RECURSIVELY' line: 7, col: 13
+    At sub function 'GET_SUB_TOTAL_RECURSIVELY' line: 7, col: 13
+    At sub function 'GET_SUB_TOTAL_RECURSIVELY' line: 7, col: 13
+    At sub function 'GET_SUB_TOTAL_RECURSIVELY' line: 7, col: 13
+    At sub function 'GET_SUB_TOTAL_RECURSIVELY' line: 7, col: 13
+    At sub function 'GET_SUB_TOTAL_RECURSIVELY' line: 7, col: 13
+    At sub function 'GET_SUB_TOTAL_RECURSIVELY' line: 7, col: 13
+    At sub function 'GET_SUB_TOTAL_RECURSIVELY' line: 7, col: 13
+    At sub function 'GET_SUB_TOTAL_RECURSIVELY' line: 7, col: 13
+    At sub function 'GET_SUB_TOTAL_RECURSIVELY' line: 7, col: 13
+    At sub function 'GET_SUB_TOTAL_RECURSIVELY' line: 7, col: 13
+    At sub function 'GET_SUB_TOTAL_RECURSIVELY' line: 7, col: 13
+    At sub function 'GET_SUB_TOTAL_RECURSIVELY' line: 7, col: 13
+    At sub function 'GET_SUB_TOTAL_RECURSIVELY' line: 7, col: 13
+    At sub function 'GET_SUB_TOTAL_RECURSIVELY' line: 7, col: 13
+    At sub function 'GET_SUB_TOTAL_RECURSIVELY' line: 7, col: 13
+    At sub function 'GET_SUB_TOTAL_RECURSIVELY' line: 7, col: 13
+    At sub function 'GET_SUB_TOTAL_RECURSIVELY' line: 7, col: 13
+    At sub function 'GET_SUB_TOTAL_RECURSIVELY' line: 7, col: 13
+    At sub function 'GET_SUB_TOTAL_RECURSIVELY' line: 7, col: 13
+    At sub function 'GET_SUB_TOTAL_RECURSIVELY' line: 7, col: 13
+    At sub function 'GET_SUB_TOTAL_RECURSIVELY' line: 7, col: 13
+    At sub function 'GET_SUB_TOTAL_RECURSIVELY' line: 7, col: 13
+    At sub function 'GET_SUB_TOTAL_RECURSIVELY' line: 7, col: 13
+    At sub function 'GET_SUB_TOTAL_RECURSIVELY' line: 7, col: 13
+    At sub function 'GET_SUB_TOTAL_RECURSIVELY' line: 7, col: 13
+    At sub function 'GET_SUB_TOTAL_RECURSIVELY' line: 7, col: 13
+    At sub function 'GET_SUB_TOTAL_RECURSIVELY' line: 7, col: 13
+    At sub function 'GET_SUB_TOTAL_RECURSIVELY' line: 7, col: 13
+    At sub function 'GET_SUB_TOTAL_RECURSIVELY' line: 7, col: 13
+    At sub function 'GET_SUB_TOTAL_RECURSIVELY' line: 7, col: 13
+    At sub function 'GET_SUB_TOTAL_RECURSIVELY' line: 7, col: 13
+    At sub function 'GET_SUB_TOTAL_RECURSIVELY' line: 7, col: 13
+    At sub function 'GET_SUB_TOTAL_RECURSIVELY' line: 7, col: 13
+    At sub function 'GET_SUB_TOTAL_RECURSIVELY' line: 7, col: 13
+    At sub function 'GET_SUB_TOTAL_RECURSIVELY' line: 7, col: 13
+    At sub function 'GET_SUB_TOTAL_RECURSIVELY' line: 7, col: 13
+    At sub function 'GET_SUB_TOTAL_RECURSIVELY' line: 7, col: 13
+    At sub function 'GET_SUB_TOTAL_RECURSIVELY' line: 7, col: 13
+    At sub function 'GET_SUB_TOTAL_RECURSIVELY' line: 7, col: 13
+    At sub function 'GET_SUB_TOTAL_RECURSIVELY' line: 7, col: 13
+    At sub function 'GET_SUB_TOTAL_RECURSIVELY' line: 7, col: 13
+    At sub function 'GET_SUB_TOTAL_RECURSIVELY' line: 7, col: 13
+    At sub function 'GET_SUB_TOTAL_RECURSIVELY' line: 7, col: 13
+    At sub function 'GET_SUB_TOTAL_RECURSIVELY' line: 7, col: 13
+    At sub function 'GET_SUB_TOTAL_RECURSIVELY' line: 7, col: 13
+    At sub function 'GET_SUB_TOTAL_RECURSIVELY' line: 7, col: 13
+    At sub function 'GET_SUB_TOTAL_RECURSIVELY' line: 7, col: 13
+    At sub function 'GET_SUB_TOTAL_RECURSIVELY' line: 7, col: 13
+    At sub function 'GET_SUB_TOTAL_RECURSIVELY' line: 7, col: 13
+    At sub function 'GET_SUB_TOTAL_RECURSIVELY' line: 7, col: 13
+    At sub function 'GET_SUB_TOTAL_RECURSIVELY' line: 7, col: 13
+    At sub function 'GET_SUB_TOTAL_RECURSIVELY' line: 7, col: 13
+    At sub function 'GET_SUB_TOTAL_RECURSIVELY' line: 7, col: 13
+    At sub function 'GET_SUB_TOTAL_RECURSIVELY' line: 7, col: 13
+    At sub function 'GET_SUB_TOTAL_RECURSIVELY' line: 7, col: 13
+    At sub function 'GET_SUB_TOTAL_RECURSIVELY'
 """
 
 @pytest.mark.version('>=4.0')
