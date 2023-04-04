@@ -2720,3 +2720,50 @@ def temp_files(filenames: List[Union[str, Path]]):
 
     return temp_files_fixture
 
+class ConfigManager:
+    """Object to replace specified server configuration file.
+
+    Arguments:
+        tmp_path: Path to directory where backup will be stored.
+        old_config: Old config file which will be keeped in backup (e.g. firebird.conf)
+
+    .. important::
+
+        Do not create instances of this class directly! Use **only** fixtures created by `replace_config`.
+    """
+
+    def __init__(self, tmp_path, old_config):
+        self.__old_config = _vars_['home-dir'] / old_config
+        self.__bak_config = tmp_path / (old_config + '.bak')
+
+        if not self.__old_config.exists():
+            raise Exception(f"Old config {old_config} not exists")
+        if self.__bak_config.exists():
+            self.__bak_config.unlink()
+        shutil.copy(self.__old_config, self.__bak_config)
+
+    def replace(self, new_config):
+        """
+            new_config: Path to new config
+        """
+        shutil.copy(str(new_config), str(self.__old_config))
+
+    def restore(self):
+        shutil.copy(str(self.__bak_config), str(self.__old_config))
+        self.__bak_config.unlink()
+
+def store_config(old_config: str):
+    """Factory function that returns :doc:`fixture <pytest:explanation/fixtures>` providing
+    the `ConfigManager` instance.
+
+    Arguments:
+        old_config: Old config file which will be keeped in backup (e.g. firebird.conf)
+    """
+
+    @pytest.fixture
+    def replace_config_fixture(db_path) -> ConfigManager:
+        manager = ConfigManager(db_path, old_config)
+        yield manager
+        manager.restore()
+
+    return replace_config_fixture
