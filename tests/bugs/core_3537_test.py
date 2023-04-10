@@ -131,10 +131,13 @@ expected_stdout = """
     Check ratio_marks_to_row_count_for_GTT_PRESERVE_ROWS: OK
 """
 
-trace = ['log_transactions = true',
-           'print_perf = true',
-           'log_initfini = false',
-           ]
+trace = [
+        'time_threshold = 0',
+        'log_transactions = true',
+        'print_perf = true',
+		'log_statement_finish = false',
+        'log_initfini = false'
+        ]
 
 @pytest.mark.version('>=3')
 def test_1(act: Action, capsys):
