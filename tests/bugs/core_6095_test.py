@@ -53,9 +53,10 @@ db = db_factory(init=init_script)
 act = python_act('db')
 
 trace = ['log_initfini = false',
+         'time_threshold = 0',
          'log_transactions = true',
          'log_statement_finish = false',
-         ]
+        ]
 
 allowed_patterns = [
                       re.compile('\\s*\\(TRA_\\d+,\\s+INIT_\\d+', re.IGNORECASE)
