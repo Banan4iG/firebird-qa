@@ -138,7 +138,7 @@ test_script = """
     commit;
 
     connect '$(DSN)' user 'SYSDBA' password 'masterkey'; -- mandatory!
-
+    
     execute procedure sp_truncate_stat;
     commit;
 
@@ -226,9 +226,9 @@ test_script = """
     commit;
 
     SET LIST ON;
-    select *
+    select * 
     from (
-        select
+        select 
             'When input arg is NOT null' as what_we_check,
             rowset,
             iif( natural_reads <= nr_threshold
@@ -240,20 +240,20 @@ test_script = """
                  ', ir-cnt/3='|| coalesce(indexed_reads - total_rows/3.00, '<null>')
                ) as result
         from (
-            select
+            select 
                 v.rowset
                 ,v.natural_reads
                 ,v.indexed_reads
                 ,c.q as total_rows
                 ,iif( rdb$get_context('SYSTEM','ENGINE_VERSION') starting with '3.', 0, 2 ) as nr_threshold -- max detected NR=2 for 4.0 (SS, CS)
-                ,iif( rdb$get_context('SYSTEM','ENGINE_VERSION') starting with '3.', 45, 45 ) as ir_threshold -- max detected=44 for 4.0 (SS, CS)
-            from v_agg_stat v cross join tcnt c
-            where rowset <= 6
+                ,iif( rdb$get_context('SYSTEM','ENGINE_VERSION') starting with '3.', 1, 1 ) as ir_threshold -- max detected=44 for 4.0 (SS, CS)
+            from v_agg_stat_tabs v cross join tcnt c
+            where rowset <= 6 and v.table_name = 'TEST'
         )
 
         UNION ALL
-
-        select
+        
+        select 
             'When input arg is NULL' as what_we_check,
             rowset,
             iif( natural_reads = total_rows
@@ -264,9 +264,9 @@ test_script = """
                  ', IR='|| coalesce(indexed_reads, '<null>')
                ) as result
         from (
-            select v.rowset, v.natural_reads, v.indexed_reads, c.q as total_rows
-            from v_agg_stat v cross join tcnt c
-            where rowset > 6
+            select v.rowset, v.natural_reads, v.indexed_reads, c.q as total_rows 
+            from v_agg_stat_tabs v cross join tcnt c
+            where rowset > 6 and v.table_name = 'TEST'
         )
     )
     order by rowset;
