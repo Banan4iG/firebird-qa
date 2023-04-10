@@ -30,7 +30,7 @@ DESCRIPTION:
   KEY POINTS:
   * report of 'gstat -e' should contain line with text 'ENCRYPTED 3 (DB problem!)'
     (number '3' should present becase we damaged pages of THREE diff. types: DP, BTree and Blob).
-  * report of online validation should contain lines with info about three diff. page types which have problems.
+  * report of online validation should contain lines with three fetch page errors.
 JIRA:        CORE-5501
 FBTEST:      bugs.core_5501
 NOTES:
@@ -46,7 +46,7 @@ NOTES:
     [18.09.2022] pzotov
     Probably old-style bytesarreay was the reason of why pages were not considered by gstat as of unknown type.
     Decided to replace is with 'really random content, see 'os.urandom(<length>)'
-    This is the only change, and after it was done test works fine.
+    This is the only change, and after it was done test works fine.   
 
     Checked on 3.0.8.33535 (SS/CS), 4.0.1.2692 (SS/CS), 5.0.0.730 (SS/CS) - both Linux and Windows.
 """
@@ -95,7 +95,7 @@ expected_stdout = """
     Index pages: total 88, encrypted 0, non-crypted 88
     Blob pages: total 199, encrypted 0, non-crypted 199
     Other pages: total 115, ENCRYPTED 3 (DB problem!), non-crypted 112
-    Detected all THREE page types with problem => YES
+    Detect all THREE fetch page errors ? => YES
 """
 
 PAGE_TYPES = {0: "undef/free",
@@ -310,10 +310,10 @@ def test_1(act: Action, capsys):
     #time.sleep(2) # ?!
 
     # Validate DB - ensure that there are errors in pages
-    # RESULT: validation log should contain lines with problems about three diff. page types:
-    # expected data encountered unknown
-    # expected index B-tree encountered unknown
-    # expected blob encountered unknown
+    # RESULT: validation log should contain lines with three fetch page errors
+    # Fetch page 188 error
+    # Fetch page 188 error
+    # Fetch page 185 error
     with act.connect_server() as srv:
         srv.database.validate(database=act.db.db_path, lock_timeout=1)
         validation_log = srv.readlines()
@@ -325,17 +325,27 @@ def test_1(act: Action, capsys):
             print(line.strip())
 
     # Process validation log
-    data_page_problem = indx_page_problem = blob_page_problem = False
-    for line in validation_log:
-        if 'expected data' in line:
-            data_page_problem = True
-        elif 'expected index B-tree' in line:
-            indx_page_problem = True
-        elif 'expected blob' in line:
-            blob_page_problem = True
+    final_msg='Detect all THREE fetch page errors ? => '
+    first_fetch_problem = second_fetch_problem = third_fetch_problem = False
+    if act.is_version('>4.0'):
+        for line in validation_log:
+            if 'expected data' in line:
+                first_fetch_problem = True
+            elif 'expected index B-tree' in line:
+                second_fetch_problem = True
+            elif 'expected blob' in line:
+                third_fetch_problem = True
+    else:
+        for line in validation_log:
+            if 'Error: Fetch page' in line:
+                if not first_fetch_problem:
+                    first_fetch_problem = True
+                elif not second_fetch_problem:
+                    second_fetch_problem = True
+                else:
+                    third_fetch_problem = True
 
-    final_msg='Detected all THREE page types with problem => '
-    if data_page_problem and indx_page_problem and blob_page_problem:
+    if (first_fetch_problem and second_fetch_problem and third_fetch_problem):
         final_msg += 'YES'
         print(final_msg)
     else:
