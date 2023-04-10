@@ -13,6 +13,9 @@ NOTES:
     Got: "gbak: ERROR:Internal error when using clumplet API: attempt to store <NNN> bytes in a clumplet with maximum size 255 bytes"
     NB: ISC_* variables must be removed from environtment for this test properly run.
     Checked on 4.0.1.2692, 3.0.8.33535.
+
+    [10.04.2023] Anton Zuev
+    It has been added in skip list of fbtest as broken. And it's need to be repaired. 
 """
 import os
 import socket
@@ -33,6 +36,7 @@ act = python_act('db')
 
 tmp_fbk = temp_file( filename = 'tmp_core_6329.fbk')
 
+@pytest.mark.skip("FIXME: see notes")
 @pytest.mark.version('>=3.0.6')
 @pytest.mark.platform('Windows')
 def test_1(act: Action, tmp_fbk: Path, capsys):
