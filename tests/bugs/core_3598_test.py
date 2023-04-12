@@ -39,7 +39,10 @@ DESCRIPTION:
   Discussed with Alex et al, since 28-feb-2022 18:05 +0300.
   Alex explanation: 28-feb-2022 19:52 +0300
   subj: "Firebird new-QA: weird result for trivial test (outcome depends on presence of... running trace session!)"
-  
+
+[12.04.] Zuev Anton
+  RDB behaviour is different from FB in the part of PIPE mechanism on Windows. 
+  So the special expected output for RDB 3.0 on Windows was removed.
 
 JIRA:        CORE-3598
 FBTEST:      bugs.core_3598
@@ -88,18 +91,8 @@ trace = ['log_transactions = true',
 # @pytest.mark.skipif(platform.system() == 'Windows', reason='FIXME: see notes')
 @pytest.mark.version('>=3.0')
 def test_1(act: Action, capsys):
-    expected_stdout = ''
-    if platform.system() == 'Windows' and act.is_version('<4.0'):
-        # FB 3.0.x, WINDOWS ONLY: 'excessive' query (select current_user,current_role from rdb$database)
-        # with further ROLLBACK is performed by ISQL in authentification purpose when commands are passed
-        # via PIPE mechanism.
-        # We can NOT ignore this query here because trace session is started without our explicit control
-        # (in contrary to FBT suite), thus we have to add one more line to expected_stdout here:
-        expected_stdout = """
-            Statement statistics detected for ROLLBACK
-        """
 
-    expected_stdout += """
+    expected_stdout = """
         Statement statistics detected for COMMIT
         Statement statistics detected for COMMIT
         Statement statistics detected for ROLLBACK
