@@ -47,8 +47,8 @@ def test_1(act: Action, bkp_log: Path, res_log: Path, capsys):
     Path(p_work).mkdir(parents=True, exist_ok=False)
 
     shutil.copy2(act.db.db_path, str(p_work))
-    tmp_fdb = Path(p_work, Path(act.db.db_path).name)
-    tmp_fbk = Path(p_work, Path(act.db.db_path).stem + ". fbk")
+    tmp_fdb = Path(p_work, Path(act.db.db_path).name).resolve()
+    tmp_fbk = Path(p_work, Path(act.db.db_path).stem + ". fbk").resolve()
 
     error_pattern = re.compile(r'gbak:\s*ERROR(:)?', re.IGNORECASE)
     successful_backup_pattern = re.compile(r'gbak:closing file, committing, and finishing. \d+ bytes written', re.IGNORECASE)
@@ -57,7 +57,7 @@ def test_1(act: Action, bkp_log: Path, res_log: Path, capsys):
     #-------------------------------------------------------
     # Backup using FB services API:
     #
-    act.svcmgr(switches=[ 'action_backup', 'dbname', str(tmp_fdb), 'bkp_file', str(tmp_fbk), 'verbint', '999999'])
+    act.svcmgr(switches=[ 'action_backup', 'dbname', tmp_fdb, 'bkp_file', tmp_fbk, 'verbint', '999999'])
     svc_log = act.stdout
     svc_err = act.stderr
 
@@ -77,7 +77,7 @@ def test_1(act: Action, bkp_log: Path, res_log: Path, capsys):
     #-------------------------------------------------------
     # Restore using FB services API:
     #
-    act.svcmgr(switches=[ 'action_restore', 'bkp_file', str(tmp_fbk), 'dbname', str(tmp_fdb),  'verbint', '999999', 'res_replace'])
+    act.svcmgr(switches=[ 'action_restore', 'bkp_file', tmp_fbk, 'dbname', tmp_fdb,  'verbint', '999999', 'res_replace'])
     svc_log = act.stdout
     svc_err = act.stderr
 
@@ -97,7 +97,7 @@ def test_1(act: Action, bkp_log: Path, res_log: Path, capsys):
     #-------------------------------------------------------
     # Backup via 'gbak -se' (this failed on 4.0.0.2173):
     #
-    act.gbak(switches=['-b', '-se', 'localhost:service_mgr', '-verbint', '99999', '-y', str(bkp_log), str(tmp_fdb), str(tmp_fbk)])
+    act.gbak(switches=['-b', 'o', '-se', 'localhost:service_mgr', '-verbint', '99999', '-y', str(bkp_log), tmp_fdb, tmp_fbk])
     with open(bkp_log, 'r') as f:
         for line in f:
             if error_pattern.search(line):
@@ -114,7 +114,7 @@ def test_1(act: Action, bkp_log: Path, res_log: Path, capsys):
     #-------------------------------------------------------
     # Restore via 'gbak -se':
     #
-    act.gbak(switches=['-rep', '-se', 'localhost:service_mgr', '-verbint', '99999', '-y', str(res_log), str(tmp_fbk), str(tmp_fdb) ])
+    act.gbak(switches=['-rep', '-se', 'localhost:service_mgr', '-verbint', '99999', '-y', str(res_log), tmp_fbk, tmp_fdb ])
     with open(res_log, 'r') as f:
         for line in f:
             if error_pattern.search(line):
