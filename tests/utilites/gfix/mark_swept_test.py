@@ -18,18 +18,21 @@ from pathlib import Path
 
 TREADS = 4
 PAGE_SIZE = 4096
-FIELD_WIDTH = 5500
+SMALL_FIELD_WIDTH = 1500
+LARGE_FIELD_WIDTH = 5500
 DP_QNT = 8000
-RECS_PER_DP = floor(PAGE_SIZE/(FIELD_WIDTH - PAGE_SIZE))
-REC_QNT = RECS_PER_DP*DP_QNT
+SMALL_RECS_PER_DP = floor(PAGE_SIZE/SMALL_FIELD_WIDTH)
+LARGE_RECS_PER_DP = floor(PAGE_SIZE/(LARGE_FIELD_WIDTH - PAGE_SIZE))
+SMALL_REC_QNT = SMALL_RECS_PER_DP*DP_QNT
+LARGE_REC_QNT = LARGE_RECS_PER_DP*DP_QNT
 
 
 db = db_factory(page_size=PAGE_SIZE)
 
 act = python_act('db')
 
-def get_stat(data):
-    pattern = re.compile(r'Primary pages: (\d+), secondary pages: \d+, swept pages: (\d+)')
+def get_stat(data, table):
+    pattern = re.compile(f'{table}.*?Primary pages: (\\d+), secondary pages: \\d+, swept pages: (\\d+)', flags=re.S)
     result = pattern.search(data)
     if result:
         return result.group(1), result.group(2)
@@ -41,23 +44,41 @@ def test_1(act: Action):
     
     substring='0123456789'
     length = len(substring)
-    test_string=substring*(FIELD_WIDTH//length)+substring[:FIELD_WIDTH%length]
+    small_test_string=substring*(SMALL_FIELD_WIDTH//length)+substring[:SMALL_FIELD_WIDTH%length]
+    large_test_string=substring*(LARGE_FIELD_WIDTH//length)+substring[:LARGE_FIELD_WIDTH%length]
 
     create_script = f"""
-        create table test(str varchar({FIELD_WIDTH}));
+        create table small_test(str varchar({SMALL_FIELD_WIDTH}));
+        commit;
+
+        create table large_test(str varchar({LARGE_FIELD_WIDTH}));
         commit;
         
+        -- Small records
         set term ^;
         execute block as
             declare variable i integer;
         begin
-            i = {REC_QNT};
+            i = {SMALL_REC_QNT};
             while (i > 0) do
             begin
-                insert into test values ('{test_string}');
+                insert into small_test values ('{small_test_string}');
                 i = i - 1;
             end
         end^
+
+        -- Large records
+        execute block as
+            declare variable i integer;
+        begin
+            i = {LARGE_REC_QNT};
+            while (i > 0) do
+            begin
+                insert into large_test values ('{large_test_string}');
+                i = i - 1;
+            end
+        end^
+
         set term ;^
         commit;
     """
@@ -66,7 +87,9 @@ def test_1(act: Action):
     act.reset()
 
     act.gstat(switches=[])
-    (primary, swept) = get_stat(act.stdout)
+    (primary, swept) = get_stat(act.stdout, 'SMALL_TEST')
+    assert primary != swept
+    (primary, swept) = get_stat(act.stdout, 'LARGE_TEST')
     assert primary != swept
     act.reset()
 
@@ -74,7 +97,9 @@ def test_1(act: Action):
     act.reset()
 
     act.gstat(switches=[])
-    (primary, swept) = get_stat(act.stdout)
+    (primary, swept) = get_stat(act.stdout, 'SMALL_TEST')
+    assert primary == swept
+    (primary, swept) = get_stat(act.stdout, 'LARGE_TEST')
     assert primary == swept
     act.reset()   
 
