@@ -642,7 +642,10 @@ RDB$CONFIG_DEFAULT $(root)/jvm.args
 RDB$CONFIG_ID 123
 RDB$CONFIG_NAME LdapLibrary
 RDB$CONFIG_DEFAULT libldap
-Records affected: 124
+RDB$CONFIG_ID 124
+RDB$CONFIG_NAME ConnectionSuspendTimeout
+RDB$CONFIG_DEFAULT 0
+Records affected: 125
 """ % locals()
 
 @pytest.mark.version('>=4.0')
