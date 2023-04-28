@@ -42,7 +42,7 @@ END
 
 expected_stderr = """
 unsuccessful metadata update
--CREATE FUNCTION BLR_FUNC failed
+-ALTER FUNCTION BLR_FUNC failed
 -Error while parsing function BLR_FUNC's BLR
 """
 
