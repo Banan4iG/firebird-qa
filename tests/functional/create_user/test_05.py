@@ -10,10 +10,11 @@ FBTEST:      functional.create_user.create_user_05
 import pytest
 from firebird.qa import *
 from pathlib import Path
+from string import Template
 
 db = db_factory()
 
-expected_stderr = """
+expected_stderr = Template("""
 Statement failed, SQLSTATE = HY000
 record not found for user: USER_SRP
 
@@ -21,8 +22,8 @@ Statement failed, SQLSTATE = HY000
 record not found for user: USER_LEGACY
 
 Statement failed, SQLSTATE = HY000
-modify record error
-"""
+$mult_error
+""")
 
 act = python_act('db')
 
@@ -34,10 +35,17 @@ dbname = 'DB_create_user_05'
 @pytest.mark.version('>=3.0')
 def test_1(act: Action, conf: ConfigManager, new_config: Path):
     
+    if act.is_version('>=4.0'):
+        multifactor = 'GostPassword'
+        act.expected_stderr = expected_stderr.substitute(mult_error="record not found for user: USER_MULTIFACTOR")
+    else: 
+        multifactor = 'Multifactor'
+        act.expected_stderr = expected_stderr.substitute(mult_error="modify record error")
+
     databases_conf=f"""
         {dbname} = {act.db.db_path} {{
-            UserManager = Srp, Legacy_UserManager, Multifactor_Manager
-            AuthServer = Srp, Legacy_Auth, Multifactor
+            UserManager = Srp, Legacy_UserManager, {multifactor}_Manager
+            AuthServer = Srp, Legacy_Auth, {multifactor}
             WireCrypt = Disabled
         }}
     """
@@ -45,12 +53,10 @@ def test_1(act: Action, conf: ConfigManager, new_config: Path):
     new_config.write_text(databases_conf)
     conf.replace(new_config)
 
-    act.expected_stderr = expected_stderr
-
-    alter_user = """
+    alter_user = f"""
         ALTER USER user_srp PASSWORD 'test' FIRSTNAME 'afname' MIDDLENAME 'amname' LASTNAME 'alname' USING PLUGIN Srp;
         ALTER USER user_legacy PASSWORD 'test' FIRSTNAME 'afname' MIDDLENAME 'amname' LASTNAME 'alname' USING PLUGIN Legacy_UserManager;
-        ALTER USER user_multifactor PASSWORD 'test' FIRSTNAME 'afname' MIDDLENAME 'amname' LASTNAME 'alname' USING PLUGIN Multifactor_Manager;
+        ALTER USER user_multifactor PASSWORD 'test' FIRSTNAME 'afname' MIDDLENAME 'amname' LASTNAME 'alname' USING PLUGIN {multifactor}_Manager;
     """
     act.isql(switches=['-q'], input=alter_user)
 

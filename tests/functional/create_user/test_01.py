@@ -10,6 +10,7 @@ FBTEST:      functional.create_user.create_user_01
 import pytest
 from firebird.qa import *
 from pathlib import Path
+from string import Template
 
 db = db_factory()
 
@@ -40,10 +41,12 @@ dbname = 'DB_create_user_01'
 @pytest.mark.version('>=3.0')
 def test_1(act: Action, conf: ConfigManager, new_config: Path):
     
+    multifactor = 'GostPassword' if act.is_version('>=4.0') else 'Multifactor'
+
     databases_conf=f"""
         {dbname} = {act.db.db_path} {{
-            UserManager = Srp, Legacy_UserManager, Multifactor_Manager
-            AuthServer = Srp, Legacy_Auth, Multifactor
+            UserManager = Srp, Legacy_UserManager, {multifactor}_Manager
+            AuthServer = Srp, Legacy_Auth, {multifactor}
             WireCrypt = Disabled
         }}
     """
@@ -53,10 +56,10 @@ def test_1(act: Action, conf: ConfigManager, new_config: Path):
     
     act.expected_stdout = expected_stdout
 
-    create_user = """
+    create_user = f"""
         CREATE USER user_srp PASSWORD 'test' FIRSTNAME 'fname' MIDDLENAME 'mname' LASTNAME 'lname' USING PLUGIN Srp;
         CREATE USER user_legacy PASSWORD 'test' FIRSTNAME 'fname' MIDDLENAME 'mname' LASTNAME 'lname' USING PLUGIN Legacy_UserManager;
-        CREATE USER user_multifactor PASSWORD 'test' FIRSTNAME 'fname' MIDDLENAME 'mname' LASTNAME 'lname' USING PLUGIN Multifactor_Manager;
+        CREATE USER user_multifactor PASSWORD 'test' FIRSTNAME 'fname' MIDDLENAME 'mname' LASTNAME 'lname' USING PLUGIN {multifactor}_Manager;
         commit;
     """
     act.isql(switches=['-q'], input=create_user)
@@ -72,9 +75,9 @@ def test_1(act: Action, conf: ConfigManager, new_config: Path):
 
     assert act.clean_stdout == act.clean_expected_stdout
     
-    drop_user = """
+    drop_user = f"""
         DROP USER user_srp USING PLUGIN Srp;
         DROP USER user_legacy USING PLUGIN Legacy_UserManager;
-        DROP USER user_multifactor USING PLUGIN Multifactor_Manager;
+        DROP USER user_multifactor USING PLUGIN {multifactor}_Manager;
     """
-    act.isql(switches=['-q'], input=drop_user)   
+    act.isql(switches=['-q'], input=drop_user)
