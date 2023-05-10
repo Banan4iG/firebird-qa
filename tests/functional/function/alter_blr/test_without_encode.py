@@ -41,14 +41,14 @@ END
 """
 
 expected_stderr = """
-unsuccessful metadata update
--ALTER FUNCTION BLR_FUNC failed
--Error while parsing function BLR_FUNC's BLR
+Error while parsing function BLR_FUNC's BLR
+-corrupt system table
+-unsupported BLR version (expected between 4 and 5, encountered 199)
 """
 
 act = python_act('db')
 
-@pytest.mark.skip('FIXME: system table corrupt after alter function')
+#@pytest.mark.skip('FIXME: system table corrupt after alter function')
 @pytest.mark.version('>=4.0')
 def test_1(act: Action, capsys):
     with act.db.connect() as con:
@@ -59,6 +59,9 @@ def test_1(act: Action, capsys):
                     blr = str(row[0])[2:-2]     # Trim b-prefix
                     cur.execute(f"alter function BLR_FUNC RETURNS integer as '{blr}'")
                     con.commit()
+    
+    with act.db.connect() as con:
+        with con.cursor() as cur:
             cur.execute("SELECT rdb$function_name,rdb$function_source from rdb$functions where rdb$function_name = 'BLR_FUNC'")
             for range in cur.fetchall():
                 print(f"RDB$FUNCTION_NAME: {range[0]}")
