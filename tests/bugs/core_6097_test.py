@@ -18,10 +18,12 @@ NOTES:
 """
 import os
 import socket
-import win32api
 import pytest
 from firebird.qa import *
 import time
+
+if os.name == 'nt':
+    import win32api
 
 for v in ('ISC_USER','ISC_PASSWORD'):
     try:
