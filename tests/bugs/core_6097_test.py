@@ -18,7 +18,7 @@ NOTES:
 """
 import os
 import socket
-import getpass
+import win32api
 import pytest
 from firebird.qa import *
 import time
@@ -37,7 +37,7 @@ act = python_act('db', substitutions=[('[\t ]+', ' ')])
 def test_1(act: Action, capsys):
     
     THIS_COMPUTER_NAME = socket.gethostname()
-    CURRENT_WIN_USER = getpass.getuser()
+    CURRENT_WIN_USER = win32api.GetUserName()
     NON_ASCII_NAME = '"Ковалевский_Олег"' if act.is_version('<4') else '"Ковалевский_Олег_НектоПупкин_Вася"'
 
     map_sql = f"""
