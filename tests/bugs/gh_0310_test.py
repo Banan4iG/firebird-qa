@@ -1168,7 +1168,7 @@ expected_stdout = """
     RDB$KEYWORD_RESERVED            <false>
 
 
-    Records affected: 494
+    Records affected: 571
 """
 
 @pytest.mark.version('>=5.0')
