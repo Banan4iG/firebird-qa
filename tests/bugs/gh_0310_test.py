@@ -799,6 +799,9 @@ expected_stdout = """
     RDB$KEYWORD_RESERVED            <true>
     RDB$KEYWORD_NAME                QUANTIZE
     RDB$KEYWORD_RESERVED            <false>
+
+    RDB$KEYWORD_NAME                QUARTER
+    RDB$KEYWORD_RESERVED            <false>
     RDB$KEYWORD_NAME                QUOTES
     RDB$KEYWORD_RESERVED            <false>
     RDB$KEYWORD_NAME                RAND
@@ -1163,8 +1166,9 @@ expected_stdout = """
     RDB$KEYWORD_RESERVED            <false>
     RDB$KEYWORD_NAME                ZONE
     RDB$KEYWORD_RESERVED            <false>
-    
-    Records affected: 570
+
+
+    Records affected: 494
 """
 
 @pytest.mark.version('>=5.0')

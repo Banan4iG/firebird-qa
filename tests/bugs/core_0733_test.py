@@ -49,7 +49,7 @@ NOTES:
     [03.03.2023] pzotov
         Fixed wrong usage of driver_config.register_database() instance, added check for properly selected protocol (only INET must be used).
         Added columns to GTT in order to see in the trace used values of compression_suitability and wire_compression.
-        Checked on Windows: 5.0.0.967 SS/CS, 4.0.3.2904 SS/CS, 3.0.11.33665 SS/CS
+        Checked on Windows: 5.0.0.967 SS/CS, 4.0.3.2904 SS/CS, 3.0.11.33665 SS/CS.
 
     CAUTION.
     DO NOT set DATA_WIDTH less than 1'500 and N_ROWS less then 10'000 
@@ -214,7 +214,7 @@ def test_1(act: Action, capsys):
     if cpu_txt_wcompr_ON_vs_OFF > MIN_CPU_RATIO_TXT_WCOMPR_ON_OFF:
         print(msg_result1 % (what_sent1, 'EXPECTED') )
     else:
-        print(msg_result1 % (what_sent1, 'UNEXPECTED, less than '+str(MIN_CPU_RATIO_TXT_WCOMPR_ON_OFF)) )
+        print(msg_result1 % (what_sent1, '/* perf_issue_tag */ UNEXPECTED less than '+str(MIN_CPU_RATIO_TXT_WCOMPR_ON_OFF)) )
         all_fine = 0
 
 
@@ -222,7 +222,7 @@ def test_1(act: Action, capsys):
     if cpu_bin_wcompr_ON_vs_OFF > MIN_CPU_RATIO_BIN_WCOMPR_ON_OFF:
         print(msg_result1 % (what_sent2, 'EXPECTED') )
     else:
-        print(msg_result1 % (what_sent2, 'UNEXPECTED, less than '+str(MIN_CPU_RATIO_BIN_WCOMPR_ON_OFF)) )
+        print(msg_result1 % (what_sent2, '/* perf_issue_tag */ UNEXPECTED, less than '+str(MIN_CPU_RATIO_BIN_WCOMPR_ON_OFF)) )
         all_fine = 0
 
 
@@ -230,7 +230,7 @@ def test_1(act: Action, capsys):
     if cpu_txt2bin_wcompr_OFF <= MAX_CPU_RATIO_TXT2BIN_WCOMPR_OFF:
         print(msg_result2 % ('EXPECTED') )
     else:
-        print(msg_result2 % ('UNEXPECTED, more than ' + str(MAX_CPU_RATIO_TXT2BIN_WCOMPR_OFF)) )
+        print(msg_result2 % ('/* perf_issue_tag */ UNEXPECTED, more than ' + str(MAX_CPU_RATIO_TXT2BIN_WCOMPR_OFF)) )
         all_fine = 0
 
     if not all_fine:

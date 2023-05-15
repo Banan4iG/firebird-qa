@@ -15,7 +15,7 @@ db = db_factory()
 act = isql_act('db', 'show system;', substitutions=[('current value:*','current value:'), ('COLL-VERSION=.*','COLL-VERSION=')])
 
 # version: 3.0
-expected_stdout_1 = """
+expected_out_3x = """
 Tables:
        MON$ATTACHMENTS                        MON$CALL_STACK
        MON$CONTEXT_VARIABLES                  MON$DATABASE
@@ -211,7 +211,7 @@ Generator SQL$DEFAULT, current value: 51, initial value: 0, increment: 0
 """
 
 # version: 4.0
-expected_stdout_2 = """
+expected_out_4x = """
     Tables:
     MON$ATTACHMENTS
     MON$CALL_STACK
@@ -424,7 +424,7 @@ expected_stdout_2 = """
 """
 
 # version: 5.0
-expected_stdout_3 = """
+expected_out_5x = """
     Tables:
     MON$ATTACHMENTS
     MON$CALL_STACK
@@ -648,7 +648,7 @@ expected_stdout_3 = """
     Generator RDB$GENERATOR_NAME, current value: 0, initial value: 0, increment: 0
     Generator RDB$INDEX_NAME, current value: 0, initial value: 0, increment: 0
     Generator RDB$PROCEDURES, current value: 10, initial value: 0, increment: 0
-    Generator RDB$SECURITY_CLASS, current value: 484, initial value: 0, increment: 0
+    Generator RDB$SECURITY_CLASS, current value: 485, initial value: 0, increment: 0
     Generator RDB$TABLESPACES, current value: 0, initial value: 0, increment: 0
     Generator RDB$TRIGGER_NAME, current value: 0, initial value: 0, increment: 0
     Generator SQL$DEFAULT, current value: 60, initial value: 0, increment: 0
@@ -657,10 +657,10 @@ expected_stdout_3 = """
 @pytest.mark.version('>=3.0')
 def test_1(act: Action):
     if act.is_version('>=5.0'):
-        act.expected_stdout = expected_stdout_3
+        act.expected_stdout = expected_out_5x
     elif act.is_version('>=4.0'):
-        act.expected_stdout = expected_stdout_2
+        act.expected_stdout = expected_out_4x
     else:
-        act.expected_stdout = expected_stdout_1
-    act.execute()
+        act.expected_stdout = expected_out_3x
+    act.execute(combine_output = True)
     assert act.clean_stdout == act.clean_expected_stdout
