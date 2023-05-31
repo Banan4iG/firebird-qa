@@ -101,7 +101,7 @@ def test_level_1(act: Action, gstat_helpers):
     level_1 = gstat_helpers.get_stat(act.stdout, 'LARGE', 'Level 1')
     assert level_1 == BLOB_QNT
     # Other levels
-    level_0 = gstat_helpers.get_stat(act.stdout, 'SMALL', 'Level 0')
+    level_0 = gstat_helpers.get_stat(act.stdout, 'LARGE', 'Level 0')
     assert level_0 == 0
-    level_2 = gstat_helpers.get_stat(act.stdout, 'SMALL', 'Level 2')
+    level_2 = gstat_helpers.get_stat(act.stdout, 'LARGE', 'Level 2')
     assert level_2 == 0
