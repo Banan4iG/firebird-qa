@@ -15,6 +15,15 @@ class Helpers:
         else:
             return
 
+    @staticmethod
+    def get_blob_stat(data: str) -> str:
+        pattern = re.compile(f'^Analyzing file blobs.*\\n((^.*\\n)*)^Gstat completion', flags=re.M)
+        result = pattern.search(data)
+        if result:
+            return result.group(1)
+        else:
+            return
+
 @pytest.fixture
 def gstat_helpers():
     return Helpers
