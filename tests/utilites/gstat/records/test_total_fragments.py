@@ -1,6 +1,6 @@
 #coding:utf-8
 """
-ID:          utilites.gstat.record.total_fragments
+ID:          utilites.gstat.records.total_fragments
 TITLE:       Check user tables total fragments statistics. 
 DESCRIPTION: 
 NOTES: Add enough records in test tables so that gstat can use several threads.

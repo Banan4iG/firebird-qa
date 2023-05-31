@@ -1,6 +1,6 @@
 #coding:utf-8
 """
-ID:          utilites.gstat.record.max_versions
+ID:          utilites.gstat.records.max_versions
 TITLE:       Check user tables max versions statistics. 
 DESCRIPTION: 
 NOTES: Add enough records in test tables so that gstat can use several threads.

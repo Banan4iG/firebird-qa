@@ -1,6 +1,6 @@
 #coding:utf-8
 """
-ID:          utilites.gstat.record.average_unpacked_length
+ID:          utilites.gstat.records.average_unpacked_length
 TITLE:       Check user tables average unpacked records length statistics. 
 DESCRIPTION: 
 NOTES: Add enough records in test tables so that gstat can use several threads.

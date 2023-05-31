@@ -1,6 +1,6 @@
 #coding:utf-8
 """
-ID:          utilites.gstat.record.total_records
+ID:          utilites.gstat.records.total_records
 TITLE:       Check user tables total records statistics. 
 DESCRIPTION: 
 NOTES: Add enough records in test tables so that gstat can use several threads.

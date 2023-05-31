@@ -1,6 +1,6 @@
 #coding:utf-8
 """
-ID:          utilites.gstat.record.max_fragments
+ID:          utilites.gstat.records.max_fragments
 TITLE:       Check user tables max fragments statistics. 
 DESCRIPTION: 
 NOTES: Add enough records in test tables so that gstat can use several threads.

@@ -1,6 +1,6 @@
 #coding:utf-8
 """
-ID:          utilites.gstat.record.total_formats
+ID:          utilites.gstat.records.total_formats
 TITLE:       Check user tables total formats statistics. 
 DESCRIPTION: 
 NOTES: Add enough records in test tables so that gstat can use several threads.

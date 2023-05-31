@@ -1,6 +1,6 @@
 #coding:utf-8
 """
-ID:          utilites.gstat.record.compression_ratio
+ID:          utilites.gstat.records.compression_ratio
 TITLE:       Check user tables compression ratio statistics. 
 DESCRIPTION: 
 NOTES: Add enough records in test tables so that gstat can use several threads.
@@ -90,6 +90,6 @@ def test_packed_records(act: Action, gstat_helpers):
     # So we get values 167 and 611.
     act.gstat(switches=['-r'])  
     ratio = gstat_helpers.get_stat(act.stdout, 'SMALL', TEST_METRIC)
-    assert ratio == 167
+    assert ratio == 167.11
     ratio = gstat_helpers.get_stat(act.stdout, 'LARGE', TEST_METRIC)
-    assert ratio == 611
+    assert ratio == 611.56

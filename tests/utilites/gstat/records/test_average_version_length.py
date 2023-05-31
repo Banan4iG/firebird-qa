@@ -1,6 +1,6 @@
 #coding:utf-8
 """
-ID:          utilites.gstat.record.average_version_length
+ID:          utilites.gstat.records.average_version_length
 TITLE:       Check user tables average version length statistics. 
 DESCRIPTION: 
 NOTES: Add enough records in test tables so that gstat can use several threads.

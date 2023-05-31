@@ -1,6 +1,6 @@
 #coding:utf-8
 """
-ID:          utilites.gstat.record.total_versions
+ID:          utilites.gstat.records.total_versions
 TITLE:       Check user tables total versions statistics. 
 DESCRIPTION: 
 NOTES: Add enough records in test tables so that gstat can use several threads.

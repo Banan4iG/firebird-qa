@@ -1,6 +1,6 @@
 #coding:utf-8
 """
-ID:          utilites.gstat.record.average_fragment_length
+ID:          utilites.gstat.records.average_fragment_length
 TITLE:       Check user tables average fragment length statistics. 
 DESCRIPTION: 
 NOTES: Add enough records in test tables so that gstat can use several threads.
