@@ -42,20 +42,18 @@ db = db_factory()
 
 act = python_act('db')
 
-trace_conf = """
 # ::: NOTE :::
 # First 'database' section here INTENTIONALLY was written WRONG!
-database = (%[\\\\/](security[[:digit:]]).fdb|(security.db))
-enabled = false
-{
-}
-
-database =
-{
-  enabled = true
-  log_connections = true
-}
-"""
+trace_conf = ['database = (%[\\\\/](security[[:digit:]]).fdb|(security.db))',
+         'enabled = false',
+         '{',
+         '}',
+         'database =',
+         '{',
+         'enabled = true',
+         'log_connections = true',
+         '}'
+         ]
 
 @pytest.mark.version('>=3.0.3')
 def test_1(act: Action):
