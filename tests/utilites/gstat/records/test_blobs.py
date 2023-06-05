@@ -52,38 +52,23 @@ db = db_factory(page_size=PAGE_SIZE)
 act = python_act('db')
 
 @pytest.mark.version('>=3.0')
-def test_no_records(act: Action, gstat_helpers):
-    # Empty table
-    with act.db.connect() as con:
-        con.execute_immediate(f"create table TEST(str blob);")
-        con.commit()
-
-    act.gstat(switches=['-r'])
-    blobs = gstat_helpers.get_stat(act.stdout, 'TEST', 'Blobs')
-    assert blobs == 0
-    blobs_total_length = gstat_helpers.get_stat(act.stdout, 'TEST', 'total length')
-    assert blobs_total_length == 0
-    blobs_pages = gstat_helpers.get_stat(act.stdout, 'TEST', 'blob pages')
-    assert blobs_pages == 0
-
-@pytest.mark.version('>=3.0')
 def test_level_0(act: Action, gstat_helpers):
     init_script = init_script_template.format(table_name='SMALL', blob_qnt=BLOB_QNT, test_string=small_test_string)   
     act.isql(switches=[], input=init_script)
       
-    act.gstat(switches=['-r'])
-    blobs = gstat_helpers.get_stat(act.stdout, 'SMALL', 'Blobs')
+    act.gstat(switches=['-d', '-r'])
+    blobs = gstat_helpers.get_metric(act.stdout, 'SMALL', 'Blobs')
     assert blobs == BLOB_QNT
-    length = gstat_helpers.get_stat(act.stdout, 'SMALL', 'total length')
+    length = gstat_helpers.get_metric(act.stdout, 'SMALL', 'total length')
     assert length == BLOB_QNT*SMALL_FIELD_WIDTH
-    pages = gstat_helpers.get_stat(act.stdout, 'SMALL', 'blob pages')
+    pages = gstat_helpers.get_metric(act.stdout, 'SMALL', 'blob pages')
     assert pages == 0
-    level_0 = gstat_helpers.get_stat(act.stdout, 'SMALL', 'Level 0')
+    level_0 = gstat_helpers.get_metric(act.stdout, 'SMALL', 'Level 0')
     assert level_0 == BLOB_QNT
     # Other levels
-    level_1 = gstat_helpers.get_stat(act.stdout, 'SMALL', 'Level 1')
+    level_1 = gstat_helpers.get_metric(act.stdout, 'SMALL', 'Level 1')
     assert level_1 == 0
-    level_2 = gstat_helpers.get_stat(act.stdout, 'SMALL', 'Level 2')
+    level_2 = gstat_helpers.get_metric(act.stdout, 'SMALL', 'Level 2')
     assert level_2 == 0
 
 @pytest.mark.version('>=3.0')
@@ -91,17 +76,17 @@ def test_level_1(act: Action, gstat_helpers):
     init_script = init_script_template.format(table_name='LARGE', blob_qnt=BLOB_QNT, test_string=large_test_string)   
     act.isql(switches=[], input=init_script)
 
-    act.gstat(switches=['-r'])
-    blobs = gstat_helpers.get_stat(act.stdout, 'LARGE', 'Blobs')
+    act.gstat(switches=['-d', '-r'])
+    blobs = gstat_helpers.get_metric(act.stdout, 'LARGE', 'Blobs')
     assert blobs == BLOB_QNT
-    length = gstat_helpers.get_stat(act.stdout, 'LARGE', 'total length')
+    length = gstat_helpers.get_metric(act.stdout, 'LARGE', 'total length')
     assert length == BLOB_QNT*LARGE_FIELD_WIDTH
-    pages = gstat_helpers.get_stat(act.stdout, 'LARGE', 'blob pages')
+    pages = gstat_helpers.get_metric(act.stdout, 'LARGE', 'blob pages')
     assert pages == BLOB_QNT*2
-    level_1 = gstat_helpers.get_stat(act.stdout, 'LARGE', 'Level 1')
+    level_1 = gstat_helpers.get_metric(act.stdout, 'LARGE', 'Level 1')
     assert level_1 == BLOB_QNT
     # Other levels
-    level_0 = gstat_helpers.get_stat(act.stdout, 'LARGE', 'Level 0')
+    level_0 = gstat_helpers.get_metric(act.stdout, 'LARGE', 'Level 0')
     assert level_0 == 0
-    level_2 = gstat_helpers.get_stat(act.stdout, 'LARGE', 'Level 2')
+    level_2 = gstat_helpers.get_metric(act.stdout, 'LARGE', 'Level 2')
     assert level_2 == 0

@@ -18,7 +18,7 @@ SMALL_FIELD_WIDTH = 1500
 LARGE_FIELD_WIDTH = 5500
 HUGE_FIELD_WIDTH = 10500
 
-DP_QNT = 8000
+DP_QNT = 8001
 SMALL_RECS_PER_DP = floor(PAGE_SIZE/SMALL_FIELD_WIDTH)
 LARGE_RECS_PER_DP = floor(PAGE_SIZE/(LARGE_FIELD_WIDTH - PAGE_SIZE))
 HUGE_RECS_PER_DP = floor(PAGE_SIZE/(HUGE_FIELD_WIDTH - 2*PAGE_SIZE))
@@ -37,7 +37,7 @@ large_test_string=substring*(LARGE_FIELD_WIDTH//length)+substring[:LARGE_FIELD_W
 huge_test_string=substring*(HUGE_FIELD_WIDTH//length)+substring[:HUGE_FIELD_WIDTH%length]
 
 
-init_script = """
+script_template = """
     create table {tb_name}(str char({field_width}));
     commit;
   
@@ -58,33 +58,25 @@ init_script = """
     commit;
 """
 
-small_init = init_script.format(tb_name="SMALL", field_width=SMALL_FIELD_WIDTH, rec_qnt=SMALL_REC_QNT, test_string=small_test_string)
-large_init = init_script.format(tb_name="LARGE", field_width=LARGE_FIELD_WIDTH, rec_qnt=LARGE_REC_QNT, test_string=large_test_string)
-huge_init = init_script.format(tb_name="HUGE", field_width=HUGE_FIELD_WIDTH, rec_qnt=HUGE_REC_QNT, test_string=huge_test_string)
+init_script = script_template.format(tb_name="SMALL", field_width=SMALL_FIELD_WIDTH, rec_qnt=SMALL_REC_QNT, test_string=small_test_string)
+init_script += script_template.format(tb_name="LARGE", field_width=LARGE_FIELD_WIDTH, rec_qnt=LARGE_REC_QNT, test_string=large_test_string)
+init_script += script_template.format(tb_name="HUGE", field_width=HUGE_FIELD_WIDTH, rec_qnt=HUGE_REC_QNT, test_string=huge_test_string)
 
-db_small = db_factory(page_size=PAGE_SIZE, init=small_init)
-db_large = db_factory(page_size=PAGE_SIZE, init=large_init)
-db_huge = db_factory(page_size=PAGE_SIZE, init=huge_init)
+db = db_factory(page_size=PAGE_SIZE, init=init_script)
+act = python_act('db')
 
-act = python_act('db_small')
-act2 = python_act('db_large')
-act3 = python_act('db_huge')
+expected_results = [
+    0, 
+    (PAGE_SIZE - PAGE_HEADER - LAST_RECORD_HEADER), 
+    ((PAGE_SIZE - PAGE_HEADER - RECORD_HEADER) + (PAGE_SIZE - PAGE_HEADER - LAST_RECORD_HEADER))/2
+]
 
-@pytest.mark.version('>=3.0')
-def test_small_records(act: Action, gstat_helpers):
-    act.gstat(switches=['-r'])
-    length = gstat_helpers.get_stat(act.stdout, 'SMALL', TEST_METRIC)
-    assert length == 0
 
 @pytest.mark.version('>=3.0')
-def test_large_records(act2: Action, gstat_helpers):
-    act2.gstat(switches=['-r'])
-    length = gstat_helpers.get_stat(act2.stdout, 'LARGE', TEST_METRIC)
-    assert length == (PAGE_SIZE - PAGE_HEADER - LAST_RECORD_HEADER)
-
-@pytest.mark.version('>=3.0')
-def test_huge_records(act3: Action, gstat_helpers):
-    act3.gstat(switches=['-r'])
-    length = gstat_helpers.get_stat(act3.stdout, 'HUGE', TEST_METRIC)
-    average_huge_length = ((PAGE_SIZE - PAGE_HEADER - RECORD_HEADER) + (PAGE_SIZE - PAGE_HEADER - LAST_RECORD_HEADER))/2
-    assert length == average_huge_length
+def test_1(act: Action, gstat_helpers):
+    act.gstat(switches=['-d', '-r'])
+    stats = []
+    stats.append(gstat_helpers.get_metric(act.stdout, 'SMALL', TEST_METRIC))
+    stats.append(gstat_helpers.get_metric(act.stdout, 'LARGE', TEST_METRIC))
+    stats.append(gstat_helpers.get_metric(act.stdout, 'HUGE', TEST_METRIC))
+    assert stats == expected_results

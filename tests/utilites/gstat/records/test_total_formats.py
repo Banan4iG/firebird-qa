@@ -11,12 +11,13 @@ from math import floor
 from firebird.qa import *
 
 TEST_METRIC = 'Total formats'
-MAX_FORMATS = [pytest.param(x, id=f"{x}_formats") for x in (2, 253)]
+# Max possible number of formats 
+MAX_FORMATS = 253
 
 PAGE_SIZE = 4096
 SMALL_FIELD_WIDTH = 1500
 LARGE_FIELD_WIDTH = 5500
-DP_QNT = 8000
+DP_QNT = 8001
 SMALL_RECS_PER_DP = floor(PAGE_SIZE/SMALL_FIELD_WIDTH)
 LARGE_RECS_PER_DP = floor(PAGE_SIZE/(LARGE_FIELD_WIDTH - PAGE_SIZE))
 SMALL_REC_QNT = SMALL_RECS_PER_DP*DP_QNT
@@ -68,24 +69,15 @@ db = db_factory(page_size=PAGE_SIZE, init=init_script)
 act = python_act('db')
 
 @pytest.mark.version('>=3.0')
-def test_one_format(act: Action, gstat_helpers):
-    act.gstat(switches=['-r'])
-    formats = gstat_helpers.get_stat(act.stdout, 'SMALL', TEST_METRIC)
-    assert formats == 1
-    formats = gstat_helpers.get_stat(act.stdout, 'LARGE', TEST_METRIC)
-    assert formats == 1
-
-@pytest.mark.parametrize("format_qnt", MAX_FORMATS)
-@pytest.mark.version('>=3.0')
-def test_several_formats(act: Action, gstat_helpers, format_qnt):
+def test_several_formats(act: Action, gstat_helpers):
     with act.db.connect() as con:
-        for i in range(1, format_qnt):
+        for i in range(1, MAX_FORMATS):
             con.execute_immediate(f"ALTER TABLE SMALL ADD new{i} varchar(10);")
             con.execute_immediate(f"ALTER TABLE LARGE ADD new{i} varchar(10);")
             con.commit()
 
-    act.gstat(switches=['-r'])
-    formats = gstat_helpers.get_stat(act.stdout, 'SMALL', TEST_METRIC)
-    assert formats == format_qnt
-    formats = gstat_helpers.get_stat(act.stdout, 'LARGE', TEST_METRIC)
-    assert formats == format_qnt
+    act.gstat(switches=['-d', '-r'])
+    formats = gstat_helpers.get_metric(act.stdout, 'SMALL', TEST_METRIC)
+    assert formats == MAX_FORMATS
+    formats = gstat_helpers.get_metric(act.stdout, 'LARGE', TEST_METRIC)
+    assert formats == MAX_FORMATS

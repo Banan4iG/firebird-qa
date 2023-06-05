@@ -27,7 +27,8 @@ init_script = """
 """
 
 db = db_factory(page_size=PAGE_SIZE, init = init_script)
-act = python_act('db', substitutions=[('TEST \\(.*','TEST')])
+# Dont check different page numbers to get RDB version compatibility
+act = python_act('db', substitutions=[('TEST \\(.*','TEST'), ('page: \\d+', 'page:')])
 
 expected_stdout = """
 T2 (129)

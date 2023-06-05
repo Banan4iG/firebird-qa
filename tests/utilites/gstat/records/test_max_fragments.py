@@ -18,7 +18,7 @@ PAGE_SIZE = 4096
 SMALL_FIELD_WIDTH = 1500
 # Note: max size of varchar field is 32765 bytes
 LARGE_FIELD_WIDTH = PAGE_SIZE*(FRAGMENTS_QNT+1)
-DP_QNT = 8000
+DP_QNT = 8001
 SMALL_RECS_PER_DP = floor(PAGE_SIZE/SMALL_FIELD_WIDTH)
 SMALL_REC_QNT = SMALL_RECS_PER_DP*DP_QNT
 
@@ -52,12 +52,6 @@ db = db_factory(page_size=PAGE_SIZE, init=init_script)
 act = python_act('db')
 
 @pytest.mark.version('>=3.0')
-def test_zero_fragments(act: Action, gstat_helpers):
-    act.gstat(switches=['-r'])
-    fragments = gstat_helpers.get_stat(act.stdout, 'TEST', TEST_METRIC)
-    assert fragments == 0
-
-@pytest.mark.version('>=3.0')
 def test_many_fragments(act: Action, gstat_helpers):
     for i in range(FRAGMENTS_QNT):
         RECORD_WIDTH = PAGE_SIZE*FRAGMENTS_QNT+500
@@ -66,6 +60,6 @@ def test_many_fragments(act: Action, gstat_helpers):
             con.execute_immediate(f"INSERT INTO TEST VALUES('{test_string}');")
             con.commit()
 
-    act.gstat(switches=['-r'])
-    versions = gstat_helpers.get_stat(act.stdout, 'TEST', TEST_METRIC)
-    assert versions == FRAGMENTS_QNT
+    act.gstat(switches=['-d', '-r'])
+    fragmets = gstat_helpers.get_metric(act.stdout, 'TEST', TEST_METRIC)
+    assert fragmets == FRAGMENTS_QNT

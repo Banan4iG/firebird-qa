@@ -17,6 +17,7 @@ act = python_act('db', substitutions=[
     ('Creation date.*', 'Creation date'),
     ('completion time.*', 'Creation date'),
     ('HW=.*OS', 'OS'),
+    ('Next attachment ID.*', 'Next attachment ID'),
     ('Database GUID:\\s+\\{.*}', 'Database GUID: {}')])
 
 expected_stdout = """
@@ -25,11 +26,11 @@ Gstat execution time Thu Jun  1 12:47:36 2023
 
 Database header page information:
 	Flags			0
-	Generation		6
+	Generation		{gen}
 	System Change Number	0
 	Page size		8192
 	Server			RedDatabase
-	ODS version		13.1
+	ODS version		{ods}
 	Oldest transaction	1
 	Oldest active		1
 	Oldest snapshot		1
@@ -54,7 +55,13 @@ Gstat completion time Thu Jun  1 12:47:36 2023
 @pytest.mark.version('>=3.0')
 def test_empty_db(act: Action, gstat_helpers):
     os_name = 'Windows' if os.name == 'nt' else 'Linux'
-    expected_result = expected_stdout.format(os=os_name)
+    if act.is_version('>=5.0'):
+        ods = '13.1'
+        gen = '6'
+    else:
+        ods = '12.3'
+        gen = '7'
+    expected_result = expected_stdout.format(gen=gen, ods=ods, os=os_name)
     act.expected_stdout = expected_result
     act.gstat(switches=['-h'])
     assert act.clean_stdout == act.clean_expected_stdout

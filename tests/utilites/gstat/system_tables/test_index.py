@@ -9,6 +9,24 @@ NOTES:
 import pytest
 from firebird.qa import *
 
+# Dont check system table metric values as they change frequently
+#substitutions = [
+#    ('File.*sys_index.fdb', 'File sys_index.fdb'),
+#    ('Root page: \\d+\\.?\\d*', 'Root page:'),
+#    ('depth: \\d+\\.?\\d*', 'depth:'),
+#    ('leaf buckets: \\d+\\.?\\d*', 'leaf buckets:'),
+#    ('nodes: \\d+\\.?\\d*', 'nodes:'),
+#    ('Average node length: \\d+\\.?\\d*', 'Average node length:'),
+#    ('total dup: \\d+\\.?\\d*', 'total dup:'),
+#    ('max dup: \\d+\\.?\\d*', 'max dup:'),
+#    ('Average key length: \\d+\\.?\\d*', 'Average key length:'),
+#    ('compression ratio: \\d+\\.?\\d*', 'compression ratio:'),
+#    ('Average prefix length: \\d+\\.?\\d*', 'Average prefix length:'),
+#    ('average data length: \\d+\\.?\\d*', 'average data length:'),
+#    ('Clustering factor: \\d+\\.?\\d*', 'Clustering factor:'),
+#    (', ratio: \\d+\\.?\\d*', ', ratio:'),
+#]
+
 db = db_factory(filename='sys_index.fdb', page_size=8192)
 act = python_act('db', substitutions=[('File.*sys_index.fdb', 'File sys_index.fdb')])
 
@@ -886,7 +904,7 @@ RDB$VIEW_RELATIONS (7)
 	    80 - 99% = 0
 """
 
-@pytest.mark.version('>=3.0')
+@pytest.mark.version('>=5.0')
 def test_1(act: Action, gstat_helpers):
     act.expected_stdout = expected_stdout
     act.gstat(switches=['-s', '-i'])

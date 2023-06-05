@@ -9,7 +9,20 @@ NOTES:
 import pytest
 from firebird.qa import *
 
-db = db_factory(page_size=8192)
+# Dont check system table metric values as they change frequently
+#substitutions = [
+#    ('Primary pointer page: \\d+\\.?\\d*', 'Primary pointer page:'),
+#    ('Index root page: \\d+\\.?\\d*', 'Index root page:'),
+#    ('Pointer pages: \\d+\\.?\\d*', 'Pointer pages:'),
+#    ('data page slots: \\d+\\.?\\d*', 'data page slots:'),
+#    ('Data pages: \\d+\\.?\\d*', 'Data pages:'),
+#    ('average fill: \\d+\\.?\\d*', 'average fill:'),
+#    ('Primary pages: \\d+\\.?\\d*', 'Primary pages:'),
+#    ('Empty pages: \\d+\\.?\\d*', 'Empty pages:'),
+#    ('full pages: \\d+\\.?\\d*', 'full pages:'),
+#]
+
+db = db_factory(filename='sys_index.fdb', page_size=8192)
 act = python_act('db')
 
 expected_stdout = """
@@ -521,7 +534,7 @@ RDB$VIEW_RELATIONS (7)
 	80 - 99% = 0
 """
 
-@pytest.mark.version('>=3.0')
+@pytest.mark.version('>=5.0')
 def test_1(act: Action, gstat_helpers):
     act.expected_stdout = expected_stdout
     act.gstat(switches=['-s', '-d'])

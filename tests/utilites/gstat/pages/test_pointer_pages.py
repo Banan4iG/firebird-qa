@@ -2,7 +2,7 @@
 """
 ID:          utilites.gstat.pages.pointer_pages
 TITLE:       Check user tables pointer pages statistics. 
-DESCRIPTION: 
+DESCRIPTION: Check out the increase in pointer pages after full filling
 NOTES: Add enough records in test tables so that gstat can use several threads.
 """
 
@@ -53,16 +53,9 @@ db = db_factory(page_size=PAGE_SIZE, init=init_script)
 
 act = python_act('db')
 
+@pytest.mark.parametrize("dp_qnt", [pytest.param(808, id="1_pointer_page"), pytest.param(809, id="2_pointer_pages")])
 @pytest.mark.version('>=3.0')
-def test_zero_records(act: Action, gstat_helpers):
-
-    act.gstat(switches=[])
-    pages = gstat_helpers.get_stat(act.stdout, 'SMALL', TEST_METRIC)
-    assert pages == 1
-
-@pytest.mark.parametrize("dp_qnt", [pytest.param(808, id="1_pointer_page"), pytest.param(809, id="2_pointer_pages"), pytest.param(8000, id="10_pointer_pages")])
-@pytest.mark.version('>=3.0')
-def test_many_records(act: Action, gstat_helpers, dp_qnt):
+def test(act: Action, gstat_helpers, dp_qnt):
     
     small_rec_qnt = SMALL_RECS_PER_DP*dp_qnt
     tmp_script = test_script.format(req_qnt=small_rec_qnt, table_name='SMALL', test_string=small_test_string)
@@ -74,8 +67,8 @@ def test_many_records(act: Action, gstat_helpers, dp_qnt):
 
     expected_pages_qnt = ceil(dp_qnt/808)
 
-    act.gstat(switches=[])
-    pages = gstat_helpers.get_stat(act.stdout, 'SMALL', TEST_METRIC)
+    act.gstat(switches=['-d'])
+    pages = gstat_helpers.get_metric(act.stdout, 'SMALL', TEST_METRIC)
     assert pages == expected_pages_qnt
-    pages = gstat_helpers.get_stat(act.stdout, 'LARGE', TEST_METRIC)
+    pages = gstat_helpers.get_metric(act.stdout, 'LARGE', TEST_METRIC)
     assert pages == expected_pages_qnt

@@ -1,7 +1,7 @@
 #coding:utf-8
 """
 ID:          utilites.gstat.index.max_duplicates
-TITLE:       Check max number of the index key duplicates. 
+TITLE:       Check metrics of index key duplicates. 
 DESCRIPTION: 
 NOTES:
 """
@@ -11,7 +11,7 @@ from firebird.qa import *
 from pathlib import Path
 import string
 
-METRIC = 'max dup'
+METRIC = ''
 
 PAGE_SIZE = 4096
 init_table = """
@@ -43,8 +43,10 @@ def test_no_duplicates(act: Action, gstat_helpers):
     act.reset()
 
     act.gstat(switches=['-i'])
-    duplicates = gstat_helpers.get_stat(act.stdout, 'TEST', METRIC)
-    assert duplicates == 0
+    max_dup = gstat_helpers.get_metric(act.stdout, 'TEST', 'max dup')
+    assert max_dup == 0
+    total_dup = gstat_helpers.get_metric(act.stdout, 'TEST', 'total dup')
+    assert total_dup == 0
 
 @pytest.mark.version('>=3.0')
 def test_one_duplicate(act: Action, gstat_helpers):   
@@ -52,8 +54,10 @@ def test_one_duplicate(act: Action, gstat_helpers):
     act.reset()
 
     act.gstat(switches=['-i'])
-    duplicates = gstat_helpers.get_stat(act.stdout, 'TEST', METRIC)
-    assert duplicates == 1
+    max_dup = gstat_helpers.get_metric(act.stdout, 'TEST', 'max dup')
+    assert max_dup == 1
+    total_dup = gstat_helpers.get_metric(act.stdout, 'TEST', 'total dup')
+    assert total_dup == 6760
 
 @pytest.mark.version('>=3.0')
 def test_several_duplicates(act: Action, gstat_helpers):   
@@ -74,5 +78,7 @@ def test_several_duplicates(act: Action, gstat_helpers):
     act.reset()
 
     act.gstat(switches=['-i'])
-    duplicates = gstat_helpers.get_stat(act.stdout, 'TEST', METRIC)
-    assert duplicates == 9
+    max_dup = gstat_helpers.get_metric(act.stdout, 'TEST', 'max dup')
+    assert max_dup == 9
+    total_dup = gstat_helpers.get_metric(act.stdout, 'TEST', 'total dup')
+    assert total_dup == sum(x for x in range(1,10))

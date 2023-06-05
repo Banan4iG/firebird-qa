@@ -13,7 +13,7 @@ import random
 
 PAGE_SIZE = 4096
 FIELD_WIDTH = 1500
-DP_QNT = 8000
+DP_QNT = 8001
 RECS_PER_DP = floor(PAGE_SIZE/FIELD_WIDTH)
 REC_QNT = RECS_PER_DP*DP_QNT
 
@@ -55,9 +55,9 @@ def test_sorted_data(act: Action, gstat_helpers):
     act.reset()
 
     act.gstat(switches=['-i'])
-    factor = gstat_helpers.get_stat(act.stdout, 'TEST', 'Clustering factor')
+    factor = gstat_helpers.get_metric(act.stdout, 'TEST', 'Clustering factor')
     assert factor == DP_QNT
-    ratio = gstat_helpers.get_stat(act.stdout, 'TEST', 'ratio')
+    ratio = gstat_helpers.get_metric(act.stdout, 'TEST', 'ratio')
     assert ratio == (1/RECS_PER_DP)
 
 @pytest.mark.version('>=3.0')
@@ -89,8 +89,7 @@ def test_unsorted_data(act: Action, gstat_helpers):
     act.reset()
 
     act.gstat(switches=['-i'])
-    print(act.stdout)
-    factor = gstat_helpers.get_stat(act.stdout, 'TEST', 'Clustering factor')
+    factor = gstat_helpers.get_metric(act.stdout, 'TEST', 'Clustering factor')
     assert factor == REC_QNT
-    ratio = gstat_helpers.get_stat(act.stdout, 'TEST', 'ratio')
+    ratio = gstat_helpers.get_metric(act.stdout, 'TEST', 'ratio')
     assert ratio == 1

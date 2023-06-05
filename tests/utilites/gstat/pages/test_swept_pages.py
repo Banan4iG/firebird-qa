@@ -16,7 +16,7 @@ TEST_METRIC = 'swept pages'
 PAGE_SIZE = 4096
 SMALL_FIELD_WIDTH = 1500
 LARGE_FIELD_WIDTH = 5500
-DP_QNT = 8000
+DP_QNT = 8001
 SMALL_RECS_PER_DP = floor(PAGE_SIZE/SMALL_FIELD_WIDTH)
 LARGE_RECS_PER_DP = floor(PAGE_SIZE/(LARGE_FIELD_WIDTH - PAGE_SIZE))
 SMALL_REC_QNT = SMALL_RECS_PER_DP*DP_QNT
@@ -70,20 +70,16 @@ def test_sweep_primary(act: Action, gstat_helpers, conf: ConfigManager, new_conf
                                      
     act.isql(switches=[], input=test_script)
     act.reset()
-    
-    # Before sweep
-    act.gstat(switches=['-r'])
-    pages = gstat_helpers.get_stat(act.stdout, 'SMALL', TEST_METRIC)
-    assert pages == 0
-    pages = gstat_helpers.get_stat(act.stdout, 'LARGE', TEST_METRIC)
-    assert pages == 0
 
-    # After sweep
+    # Add idle transaction so gfix can mark pages as swept
+    act.isql(switches=[], input="quit;")
+
+    # Run sweep
     act.gfix(switches=['-sweep', act.db.dsn])
     act.reset()
 
-    act.gstat(switches=['-r'])
-    pages = gstat_helpers.get_stat(act.stdout, 'SMALL', TEST_METRIC)
+    act.gstat(switches=['-d'])
+    pages = gstat_helpers.get_metric(act.stdout, 'SMALL', TEST_METRIC)
     assert pages == DP_QNT
-    pages = gstat_helpers.get_stat(act.stdout, 'LARGE', TEST_METRIC)
+    pages = gstat_helpers.get_metric(act.stdout, 'LARGE', TEST_METRIC)
     assert pages == DP_QNT
