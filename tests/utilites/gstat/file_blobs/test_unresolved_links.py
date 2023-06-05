@@ -101,7 +101,6 @@ def test_1(act: Action, gstat_helpers, conf: ConfigManager, new_config: Path, tm
 
     act.expected_stdout = expected_stdout
     act.gstat(switches=['-b', 'NEW.FILES', 'OLD.FILES'])
-    print(act.stdout)
-    stats = gstat_helpers.get_blob_stat(act.stdout)
+    stats = gstat_helpers.get_full_stat(act.stdout, 'Analyzing file blobs')
     act.stdout = stats
-    assert act.clean_expected_stdout == act.clean_stdout
+    assert act.clean_stdout == act.clean_expected_stdout

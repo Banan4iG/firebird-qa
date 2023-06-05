@@ -1,7 +1,7 @@
 #coding:utf-8
 """
-ID:          utilites.gstat.file_blobs.without_records
-TITLE:       Check file blobs statistics without records.
+ID:          utilites.gstat.file_blobs.empty_table
+TITLE:       Check file blobs statistics for empty table.
 DESCRIPTION: 
 NOTES:
 """
@@ -9,9 +9,6 @@ NOTES:
 import pytest
 from firebird.qa import *
 from pathlib import Path
-
-BLOB_SIZE = 100
-BLOB_QNT = 100
 
 init_script = """
     create table NEW(FILES varchar(200));
@@ -47,6 +44,6 @@ Total blob files' size: 0 bytes
 def test_1(act: Action, gstat_helpers):
     act.expected_stdout = expected_stdout
     act.gstat(switches=['-b', 'NEW.FILES', 'OLD.FILES'])
-    stats = gstat_helpers.get_blob_stat(act.stdout)
+    stats = gstat_helpers.get_full_stat(act.stdout, 'Analyzing file blobs')
     act.stdout = stats
-    assert act.clean_expected_stdout == act.clean_stdout
+    assert act.clean_stdout == act.clean_expected_stdout
