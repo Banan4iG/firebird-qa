@@ -1832,11 +1832,11 @@ class Action:
         if io_enc is None:
             io_enc = CHARSET_MAP[charset]
         params = [_vars_['gstat']]
+        if connect_db:
+            params.append(str(self.db.dsn))
         if credentials:
             params.extend(['-user', self.db.user, '-password', self.db.password])
         params.extend(switches)
-        if connect_db:
-            params.append(str(self.db.dsn))
         result: CompletedProcess = run(params, encoding=io_enc, capture_output=True)
         if result.returncode and not bool(self.expected_stderr):
             self._node.add_report_section('call', 'gstat stdout', result.stdout)
