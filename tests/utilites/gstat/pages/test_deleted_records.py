@@ -99,10 +99,12 @@ def test_1(act: Action, gstat_helpers, conf: ConfigManager, new_config: Path):
     act.gfix(switches=['-sweep', act.db.dsn])
     act.reset()
 
+    empty_after_delete = 0 if act.is_version('>=5.0') else 8
+
     act.gstat(switches=['-d'])
     stats=[]
     stats.append(gstat_helpers.get_metric(act.stdout, 'SMALL', 'Primary pages'))
     stats.append(gstat_helpers.get_metric(act.stdout, 'LARGE', 'Primary pages'))
     stats.append(gstat_helpers.get_metric(act.stdout, 'SMALL', 'Empty pages'))
     stats.append(gstat_helpers.get_metric(act.stdout, 'LARGE', 'Empty pages'))
-    assert stats == [0, 0, 0, 0]
+    assert stats == [0, 0, empty_after_delete, empty_after_delete]

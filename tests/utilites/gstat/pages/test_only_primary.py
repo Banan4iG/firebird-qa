@@ -88,7 +88,7 @@ SMALL (128)
     Primary pointer page: 228, Index root page: 229
     Pointer pages: {pp}, data page slots: {dp}
     Data pages: {dp}, average fill: 75%
-    Primary pages: {dp}, secondary pages: 0, swept pages: 0
+    Primary pages: {pr}, secondary pages: 0, swept pages: 0
     Empty pages: {ep}, full pages: {fp}
     Fill distribution:
 	 0 - 19% = {ep}

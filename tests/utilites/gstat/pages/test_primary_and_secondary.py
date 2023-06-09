@@ -130,6 +130,6 @@ def test_1(act: Action, gstat_helpers, conf: ConfigManager, new_config: Path):
     stats.append(gstat_helpers.get_metric(act.stdout, 'LARGE', 'Primary pages'))
     stats.append(gstat_helpers.get_metric(act.stdout, 'SMALL', 'secondary pages'))
     stats.append(gstat_helpers.get_metric(act.stdout, 'LARGE', 'secondary pages'))
-    stats.append(gstat_helpers.get_metric(act.stdout, 'SMALL', 'empty pages'))
-    stats.append(gstat_helpers.get_metric(act.stdout, 'LARGE', 'empty pages'))
+    stats.append(gstat_helpers.get_metric(act.stdout, 'SMALL', 'Empty pages'))
+    stats.append(gstat_helpers.get_metric(act.stdout, 'LARGE', 'Empty pages'))
     assert stats == [all_dp, all_dp, DP_QNT, DP_QNT, 0, 0, empty, empty]

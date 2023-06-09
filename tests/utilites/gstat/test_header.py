@@ -14,6 +14,7 @@ db = db_factory(filename='empty.fdb',page_size=8192)
 act = python_act('db', substitutions=[
     ('Database ".*empty.fdb"','Database "empty.fdb"'), 
     ('execution time.*', 'Gstat execution time'),
+    ('Generation\\s+.*', 'Generation'),
     ('Creation date.*', 'Creation date'),
     ('completion time.*', 'Creation date'),
     ('HW=.*OS', 'OS'),
@@ -26,7 +27,7 @@ Gstat execution time Thu Jun  1 12:47:36 2023
 
 Database header page information:
 	Flags			0
-	Generation		{gen}
+	Generation		6
 	System Change Number	0
 	Page size		8192
 	Server			RedDatabase
@@ -55,13 +56,8 @@ Gstat completion time Thu Jun  1 12:47:36 2023
 @pytest.mark.version('>=3.0')
 def test_empty_db(act: Action, gstat_helpers):
     os_name = 'Windows' if os.name == 'nt' else 'Linux'
-    if act.is_version('>=5.0'):
-        ods = '13.1'
-        gen = '6'
-    else:
-        ods = '12.3'
-        gen = '7'
-    expected_result = expected_stdout.format(gen=gen, ods=ods, os=os_name)
+    ods = '13.1' if act.is_version('>=5.0') else '12.3'
+    expected_result = expected_stdout.format(ods=ods, os=os_name)
     act.expected_stdout = expected_result
     act.gstat(switches=['-h'])
     assert act.clean_stdout == act.clean_expected_stdout
