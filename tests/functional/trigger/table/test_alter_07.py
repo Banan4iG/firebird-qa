@@ -43,12 +43,12 @@ act = isql_act('db', test_script, substitutions = substitutions)
 
 
 expected_stderr_fb3 = """    	
-    Statement failed, SQLSTATE = 42000
+    Statement failed, SQLSTATE = 2F000
     attempted update of read-only column
 """
 
 expected_stderr_fb4 = """
-    Statement failed, SQLSTATE = 42000
+    Statement failed, SQLSTATE = 2F000
     attempted update of read-only column TEST.ID
 """
 
@@ -60,5 +60,4 @@ def test_1(act: Action):
         act.expected_stderr = expected_stderr_fb3
     
     act.execute()
-    
     assert act.clean_stderr == act.clean_expected_stderr
