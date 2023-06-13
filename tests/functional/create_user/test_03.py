@@ -59,9 +59,9 @@ def test_1(act: Action, conf: ConfigManager, new_config: Path):
         CREATE USER user_multifactor PASSWORD 'test' FIRSTNAME 'fname' MIDDLENAME 'mname' LASTNAME 'lname' USING PLUGIN {multifactor}_Manager;
         commit;
     """
-    act.isql(switches=['-q'], input=create_user)
+    act.isql(switches=['-q'], input=create_user, combine_output=True)
+    assert act.clean_stdout == ""
 
-    act.reset()
     act.expected_stderr = expected_stderr
 
     act.isql(switches=['-q'], input=create_user)

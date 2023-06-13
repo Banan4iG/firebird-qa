@@ -62,8 +62,8 @@ def test_1(act: Action, conf: ConfigManager, new_config: Path):
         CREATE USER user_multifactor PASSWORD 'test' FIRSTNAME 'fname' MIDDLENAME 'mname' LASTNAME 'lname' USING PLUGIN {multifactor}_Manager;
         commit;
     """
-    act.isql(switches=['-q'], input=create_user)
-
+    act.isql(switches=['-q'], input=create_user, combine_output=True)
+    assert act.clean_stdout == ""
     # Check user in security db
     check_user = """
         set list on; 
@@ -71,7 +71,7 @@ def test_1(act: Action, conf: ConfigManager, new_config: Path):
         SELECT PLG$USER_NAME, PLG$FIRST_NAME, PLG$MIDDLE_NAME, PLG$LAST_NAME FROM PLG$USERS WHERE PLG$USER_NAME='USER_LEGACY';
         SELECT PLG$USER_NAME, PLG$FIRST, PLG$MIDDLE, PLG$LAST FROM PLG$MF WHERE PLG$USER_NAME='USER_MULTIFACTOR';
     """
-    act.isql(switches=['-q', act.vars['security-db']], input=check_user, connect_db=False)
+    act.isql(switches=['-q', act.vars['security-db']], input=check_user, connect_db=False, combine_output=True)
 
     assert act.clean_stdout == act.clean_expected_stdout
     
