@@ -427,6 +427,8 @@ expected_stdout = """
     RDB$KEYWORD_RESERVED            <true>
     RDB$KEYWORD_NAME                GRANTED
     RDB$KEYWORD_RESERVED            <false>
+    RDB$KEYWORD_NAME                GREATEST
+    RDB$KEYWORD_RESERVED            <true>
     RDB$KEYWORD_NAME                GROUP
     RDB$KEYWORD_RESERVED            <true>
     RDB$KEYWORD_NAME                GSS
@@ -548,6 +550,8 @@ expected_stdout = """
     RDB$KEYWORD_NAME                LEAD
     RDB$KEYWORD_RESERVED            <false>
     RDB$KEYWORD_NAME                LEADING
+    RDB$KEYWORD_RESERVED            <true>
+    RDB$KEYWORD_NAME                LEAST
     RDB$KEYWORD_RESERVED            <true>
     RDB$KEYWORD_NAME                LEAVE
     RDB$KEYWORD_RESERVED            <false>
@@ -1168,7 +1172,7 @@ expected_stdout = """
     RDB$KEYWORD_RESERVED            <false>
 
 
-    Records affected: 571
+    Records affected: 573
 """
 
 @pytest.mark.version('>=5.0')
