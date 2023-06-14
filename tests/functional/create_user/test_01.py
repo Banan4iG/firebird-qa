@@ -53,8 +53,6 @@ def test_1(act: Action, conf: ConfigManager, new_config: Path):
     
     new_config.write_text(databases_conf)
     conf.replace(new_config)
-    
-    act.expected_stdout = expected_stdout
 
     create_user = f"""
         CREATE USER user_srp PASSWORD 'test' FIRSTNAME 'fname' MIDDLENAME 'mname' LASTNAME 'lname' USING PLUGIN Srp;
@@ -64,6 +62,7 @@ def test_1(act: Action, conf: ConfigManager, new_config: Path):
     """
     act.isql(switches=['-q'], input=create_user, combine_output=True)
     assert act.clean_stdout == ""
+
     # Check user in security db
     check_user = """
         set list on; 
@@ -71,8 +70,9 @@ def test_1(act: Action, conf: ConfigManager, new_config: Path):
         SELECT PLG$USER_NAME, PLG$FIRST_NAME, PLG$MIDDLE_NAME, PLG$LAST_NAME FROM PLG$USERS WHERE PLG$USER_NAME='USER_LEGACY';
         SELECT PLG$USER_NAME, PLG$FIRST, PLG$MIDDLE, PLG$LAST FROM PLG$MF WHERE PLG$USER_NAME='USER_MULTIFACTOR';
     """
+    act.reset()
+    act.expected_stdout = expected_stdout
     act.isql(switches=['-q', act.vars['security-db']], input=check_user, connect_db=False, combine_output=True)
-
     assert act.clean_stdout == act.clean_expected_stdout
     
     drop_user = f"""

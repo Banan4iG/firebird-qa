@@ -62,8 +62,8 @@ def test_1(act: Action, conf: ConfigManager, new_config: Path):
     act.isql(switches=['-q'], input=create_user, combine_output=True)
     assert act.clean_stdout == ""
 
+    act.reset()
     act.expected_stderr = expected_stderr
-
     act.isql(switches=['-q'], input=create_user)
 
     assert act.clean_stderr == act.clean_expected_stderr
