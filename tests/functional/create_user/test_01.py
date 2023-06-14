@@ -54,13 +54,25 @@ def test_1(act: Action, conf: ConfigManager, new_config: Path):
     new_config.write_text(databases_conf)
     conf.replace(new_config)
 
-    create_user = f"""
+    create_srp = f"""
         CREATE USER user_srp PASSWORD 'test' FIRSTNAME 'fname' MIDDLENAME 'mname' LASTNAME 'lname' USING PLUGIN Srp;
+        commit;
+    """
+    act.isql(switches=['-q'], input=create_srp, combine_output=True)
+    assert act.clean_stdout == ""
+
+    create_legacy = f"""
         CREATE USER user_legacy PASSWORD 'test' FIRSTNAME 'fname' MIDDLENAME 'mname' LASTNAME 'lname' USING PLUGIN Legacy_UserManager;
+        commit;
+    """
+    act.isql(switches=['-q'], input=create_legacy, combine_output=True)
+    assert act.clean_stdout == ""
+
+    create_multifactor = f"""
         CREATE USER user_multifactor PASSWORD 'test' FIRSTNAME 'fname' MIDDLENAME 'mname' LASTNAME 'lname' USING PLUGIN {multifactor}_Manager;
         commit;
     """
-    act.isql(switches=['-q'], input=create_user, combine_output=True)
+    act.isql(switches=['-q'], input=create_multifactor, combine_output=True)
     assert act.clean_stdout == ""
 
     # Check user in security db
