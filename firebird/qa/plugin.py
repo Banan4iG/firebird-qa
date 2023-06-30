@@ -359,6 +359,7 @@ def pytest_configure(config):
     config.addinivalue_line("markers", "platform(platforms): Platform names")
     config.addinivalue_line("markers", "slow: Mark test as slow to run")
     config.addinivalue_line("markers", "encryption: Mark test as requiring the encryption plugin")
+    config.addinivalue_line("markers", "java: Mark test as requiring the javaEngine plugin")
     if config.getoption('help'):
         return
     config_path: Path = Path.cwd() / config.getoption('driver_config')
